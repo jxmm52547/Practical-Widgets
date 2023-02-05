@@ -1,7 +1,9 @@
 package xyz.jxmm;
 
 import xyz.jxmm.data.*;
+import xyz.jxmm.jrrp.ResetJrrpTop;
 import xyz.jxmm.tools.*;
+import xyz.jxmm.music.*;
 
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -18,7 +20,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.1.1")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.1.2")
                 .name("实用小组件")
                 .author("靖暄")
                 .build());
@@ -31,9 +33,9 @@ public final class PracticalWidgets extends JavaPlugin {
 
         try {//数据库相关
             Data.main();
-            JrrpTop.main(123L,"example", 0);
-            xyz.jxmm.jrrp.ResetJrrpTop.timerTask();
-        } catch (IOException | InterruptedException e) {
+            JrrpTop.main(123L,"example", 0,123456L);
+            ResetJrrpTop.timerTask();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -46,8 +48,8 @@ public final class PracticalWidgets extends JavaPlugin {
 
             if(msg.equals("/update")){
                 MainExample.update(group);
-            } else if (msg.equals("/update jrrpTop")) {
-//                JrrpTop.update(group);
+            } else if (msg.equals("/reset jrrptop")) {
+                xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
             } else if (JrrpMap.JrrpMap(msg)){
                 xyz.jxmm.jrrp.Main.main(sender, userName, group);
             } else if (msg.equals("/注册")) {
@@ -58,6 +60,8 @@ public final class PracticalWidgets extends JavaPlugin {
                 xyz.jxmm.jrrp.jrrpTop.jrrpTop(group);
             } else if (msg.equals("/reset")) {
                 xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
+            } else if(msg.startsWith("/点歌")){
+                xyz.jxmm.music.Main.main(msg,group);
             }
         });
     }

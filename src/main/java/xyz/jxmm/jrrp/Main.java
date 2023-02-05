@@ -52,7 +52,7 @@ public class Main {
                 json.get(sender.toString()).getAsJsonObject().add("jrrp", user);
                 json.get(sender.toString()).getAsJsonObject().addProperty("lastTime", LocalDateTime.now().toString());
 
-                top.add(xyz.jxmm.data.JrrpTop.main(sender,userName,jrrp));
+                top.add(xyz.jxmm.data.JrrpTop.main(sender,userName,jrrp,group.getId()));
 
                 try {
                     fileWriter("./PracticalWidgets/data.json", gson.toJson(json));
@@ -62,18 +62,6 @@ public class Main {
                 }
             }
 
-/*            int i;
-            for(i=1;i<=top.size();i++){
-                if (top.get(i).getAsJsonObject().get("user").getAsLong() == sender){
-                    top.get(i).getAsJsonObject().addProperty("jrrp", json.get(sender.toString()).getAsJsonObject().get("jrrp").getAsJsonObject().getAsInt());
-                    try {
-                        fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(top));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
- */
         }
 
     }

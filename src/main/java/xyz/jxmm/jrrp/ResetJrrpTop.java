@@ -9,28 +9,14 @@ import net.mamoe.mirai.contact.Group;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.TimeZone;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
 
 import static xyz.jxmm.tools.FileWriter.fileWriter;
 
-public class ResetJrrpTop {
+public class ResetJrrpTop extends Timer {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     static File file = new File("./PracticalWidgets/jrrpTop.json");
-
-    public static long getToday0TimeStamp() {
-        //当前时间的时间戳j
-        long time = System.currentTimeMillis();
-        long zero = time / (1000 * 3600 * 24) * (1000 * 3600 * 24) - TimeZone.getDefault().getRawOffset();
-        Timestamp timestamp = new Timestamp(zero);
-        //今天零点零分零秒
-        return timestamp.getTime();
-    }
 
     public static void reWrite(Group group) {
         file.delete();
@@ -47,15 +33,23 @@ public class ResetJrrpTop {
         }
     }
 
-    public static void timerTask() throws InterruptedException {
-        AtomicReference<Long> now = new AtomicReference<>(System.currentTimeMillis());
-        Long tomorrow = getToday0TimeStamp() + 86400000;
-        ScheduledExecutorService scheduledExecutorService =
-                Executors.newScheduledThreadPool(1);
-        scheduledExecutorService.scheduleAtFixedRate(() -> {
-            now.set(getToday0TimeStamp());
-            ResetJrrpTop.reWrite(null);
-        }, 0, tomorrow - now.get(), TimeUnit.MILLISECONDS);
+    public static void timerTask(){
+        //得到时间类
+        Calendar date = Calendar.getInstance();
+        //设置时间为 xx-xx-xx 00:00:00
+        date.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE), 0, 0, 0);
+        //一天的毫秒
+        long daySpan = 24 * 60 * 60 * 1000;
+        //得到定时器实例
+        Timer t = new Timer();
+        //使用匿名内方式进行方法覆盖
+        t.schedule(new TimerTask() {
+            public void run() {
+                //run中填写定时器主要执行的代码块
+                ResetJrrpTop.reWrite(null);
+            }
+        }, date.getTime(), daySpan); //daySpan是一天的毫秒数，也是执行间隔
+
     }
 
 }

@@ -22,12 +22,13 @@ public class JrrpTop {
     static File file = new File("./PracticalWidgets/jrrpTop.json");
 
     @NotNull
-    public static JsonObject main(Long sender,String username, int jrrp) {
+    public static JsonObject main(Long sender,String username, int jrrp, Long group) {
         JsonObject userExample = new JsonObject();
 
         userExample.addProperty("user", sender);
         userExample.addProperty("nick", username);
         userExample.addProperty("jrrp", jrrp);
+        userExample.addProperty("group", group);
 
         return userExample;
     }
@@ -35,30 +36,11 @@ public class JrrpTop {
     @NotNull
     public static JsonArray gen(){
         JsonArray exampleGen = new JsonArray();
-        exampleGen.add(main(123L,"example", 0));
+        exampleGen.add(main(123L,"example", 0,123456L));
 
         return exampleGen;
     }
 
-//    public static void update(Group group){
-//        JsonArray json;
-//        try {
-//            json = new Gson().fromJson(new FileReader(file), JsonArray.class);
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        json.add(main(123L,"example", 0));
-//        try {
-//            fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(json));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        if (group != null) {
-//            group.sendMessage("今日人品排行榜数据库手动更新成功");
-//        }
-//    }
 
     static void write() throws IOException {
         JsonArray exampleGen = gen();

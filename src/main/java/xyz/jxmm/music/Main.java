@@ -1,21 +1,30 @@
-package xyz.jxmm.dog;
+package xyz.jxmm.music;
+
+import xyz.jxmm.tools.*;
+
+import net.mamoe.mirai.contact.Group;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
-public class getValue {
+public class Main {
+    public static void main(String msg, Group group) {
+        String type = musicMap.musicMap(msg.substring(4,6));
+        String name = msg.substring(7).replaceAll(" ","%20");
 
-    public static String main() {
+
         URL url;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
+
         {
             try {
-                url = new URL("https://v2.alapi.cn/api/dog?format=text&token=1W5DiYcj77ygWtlh");
+                url = new URL("http://www.xmsj.org/?name=" + name + "&type=" + type);
                 URLConnection connection = url.openConnection();
 
                 connection.setRequestProperty("accept", "*/*");
@@ -33,7 +42,7 @@ public class getValue {
                 }
             }
             catch (IOException e) {
-                return String.valueOf(e);
+                group.sendMessage("IO异常:\n" + e);
             }
             finally {
                 try {
@@ -46,6 +55,8 @@ public class getValue {
             }
 
         }
-        return result.toString();
+        group.sendMessage(String.valueOf(result));
+
     }
+
 }

@@ -34,28 +34,26 @@ public class jrrpTop {
             nick.put(json.get(i).getAsJsonObject().get("nick").getAsString(),json.get(i).getAsJsonObject().get("jrrp").getAsInt());
         }
 
-
         HashMap<Long, Integer> top = new HashMap<>();
         int n;
         for (n=0;n<json.size();n++){
             top.put(json.get(n).getAsJsonObject().get("user").getAsLong(),json.get(n).getAsJsonObject().get("jrrp").getAsInt());
         }
 
-//        TreeSet<Long> treeSet=new TreeSet<>(top.keySet());   //借助treeset生成有序的key
-//        Iterator iterator=treeSet.iterator();
-//        HashMap<Long,Integer> helpmap=new LinkedHashMap<>();  //再利用linkedhashmap生成有序map
-//        while (iterator.hasNext()){
-//            int key=(int) iterator.next();
-//            Integer value=top.get(key);
-//            helpmap.put((long) key,value);
-//        }
+        HashMap<Long,Integer> groupNum = new HashMap<>();
+        int s;
+        for (s=0;s<json.size();s++){
+            groupNum.put(json.get(s).getAsJsonObject().get("group").getAsLong(),json.get(s).getAsJsonObject().get("jrrp").getAsInt());
+        }
 
         //1：把map转换成entryset，再转换成保存Entry对象的list。
-        List<Map.Entry<Long,Integer>> entrys= new ArrayList<>(top.entrySet());
-        List<Map.Entry<String,Integer>> entries = new ArrayList<>(nick.entrySet());
+        List<Map.Entry<Long,Integer>> jrrpNum= new ArrayList<>(top.entrySet());
+        List<Map.Entry<String,Integer>> nickStr = new ArrayList<>(nick.entrySet());
+        List<Map.Entry<Long,Integer>> groupList = new ArrayList<>(groupNum.entrySet());
         //2：调用Collections.sort(list,comparator)方法把Entry-list排序
-        entrys.sort(new MyComparator());
-        entries.sort(new MyComparator());
+        jrrpNum.sort(new MyComparator());
+        nickStr.sort(new MyComparator());
+        groupList.sort(new MyComparator());
         //3：遍历排好序的Entry-list，可得到按顺序输出的结果
         LocalDateTime time = LocalDateTime.now();
         String msg
@@ -67,13 +65,16 @@ public class jrrpTop {
                 + time.getMinute() + "分"
                 + time.getSecond() + "秒";
        List<String> username = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry1:entries){
+       List<Long> sendGroupList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry1:nickStr){
             username.add(entry1.getKey());
+        }
+        for (Map.Entry<Long, Integer> entry1:groupList){
+            sendGroupList.add(entry1.getKey());
         }
         int u = 0;
         int k = 1;
-        for(Map.Entry<Long,Integer> entry:entrys){
-//            group.sendMessage(entry.getKey().toString() + ',' + entry.getValue().toString());
+        for(Map.Entry<Long,Integer> entry:jrrpNum){
             msg += ("\n第")
                     +(k)
                     +("名:\n    ")
@@ -83,6 +84,8 @@ public class jrrpTop {
                     +(entry.getKey())
                     +("\n    人品值: ")
                     +(entry.getValue())
+                    +("\n    来自群: ")
+                    +(sendGroupList.get(u))
                     +("\n");
             u++;
             k++;
