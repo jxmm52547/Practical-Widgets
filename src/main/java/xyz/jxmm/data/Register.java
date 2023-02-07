@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
+import net.mamoe.mirai.message.code.MiraiCode;
+import net.mamoe.mirai.message.data.MessageChain;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,6 +27,7 @@ public class Register {
         }
 
         if (json.has(sender.toString())){
+            MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
             group.sendMessage("用户名: " + userName + "\n你已经注册过了,不要重复注册喔");
         } else {
             JsonObject jsobj = MainExample.main();

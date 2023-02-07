@@ -65,6 +65,11 @@
 * 新增music目录,为新功能做准备
 * 关于 **API** 锁死问题以及 **排行榜建议合并转发** 已经纳入规划，未来版本解决
 
+### V0.1.3
+* 修复 **今日人品排行榜** 显示来自何群信息bug
+* 改为**合并转发**方式发送排行榜 (来自[MiraiForum](https://mirai.mamoe.net/)中[firefairy](https://mirai.mamoe.net/user/firefairy)提出的建议)
+* ***此版本建议尽早更新！此版本建议尽早更新！此版本建议尽早更新！***
+
 ## 四.关于
 
 如果您发现 BUG 可以联系[靖暄](https://wpa.qq.com/msgrd?uin=1250838250)

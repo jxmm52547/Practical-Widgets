@@ -1,21 +1,22 @@
 package xyz.jxmm.jrrp;
 
+import com.sun.tools.javac.jvm.Code;
 import net.mamoe.mirai.contact.Group;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import xyz.jxmm.data.JrrpTop;
+import net.mamoe.mirai.message.code.MiraiCode;
+import net.mamoe.mirai.message.data.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class jrrpTop {
-    public static void jrrpTop(Group group) {
+    public static void jrrpTop(Group group, Long sender) {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         File file = new File("./PracticalWidgets/jrrpTop.json");
@@ -40,24 +41,29 @@ public class jrrpTop {
             top.put(json.get(n).getAsJsonObject().get("user").getAsLong(),json.get(n).getAsJsonObject().get("jrrp").getAsInt());
         }
 
-        HashMap<Long,Integer> groupNum = new HashMap<>();
+        Map<String,String> groupNum = new TreeMap<>(new MyComparatorKey());
         int s;
         for (s=0;s<json.size();s++){
-            groupNum.put(json.get(s).getAsJsonObject().get("group").getAsLong(),json.get(s).getAsJsonObject().get("jrrp").getAsInt());
+            groupNum.put(json.get(s).getAsJsonObject().get("jrrp").getAsString(),json.get(s).getAsJsonObject().get("group").getAsString());
+        }
+        List<String> userGroup = new ArrayList<>();
+        Set<String> keySet=groupNum.keySet();
+        Iterator it=keySet.iterator();
+        while (it.hasNext()) {
+            String next = (String)it.next();
+            userGroup.add(groupNum.get(next));
         }
 
         //1：把map转换成entryset，再转换成保存Entry对象的list。
         List<Map.Entry<Long,Integer>> jrrpNum= new ArrayList<>(top.entrySet());
         List<Map.Entry<String,Integer>> nickStr = new ArrayList<>(nick.entrySet());
-        List<Map.Entry<Long,Integer>> groupList = new ArrayList<>(groupNum.entrySet());
         //2：调用Collections.sort(list,comparator)方法把Entry-list排序
-        jrrpNum.sort(new MyComparator());
-        nickStr.sort(new MyComparator());
-        groupList.sort(new MyComparator());
+        jrrpNum.sort(new MyComparatorValue());
+        nickStr.sort(new MyComparatorValue());
         //3：遍历排好序的Entry-list，可得到按顺序输出的结果
         LocalDateTime time = LocalDateTime.now();
         String msg
-                = "比对时间: "
+                = "排行时间: "
                 + time.getYear() + "年"
                 + time.getMonthValue() + "月"
                 + time.getDayOfMonth() + "日  "
@@ -65,13 +71,10 @@ public class jrrpTop {
                 + time.getMinute() + "分"
                 + time.getSecond() + "秒";
        List<String> username = new ArrayList<>();
-       List<Long> sendGroupList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry1:nickStr){
             username.add(entry1.getKey());
         }
-        for (Map.Entry<Long, Integer> entry1:groupList){
-            sendGroupList.add(entry1.getKey());
-        }
+
         int u = 0;
         int k = 1;
         for(Map.Entry<Long,Integer> entry:jrrpNum){
@@ -85,19 +88,29 @@ public class jrrpTop {
                     +("\n    人品值: ")
                     +(entry.getValue())
                     +("\n    来自群: ")
-                    +(sendGroupList.get(u))
+                    +(userGroup.get(u))
                     +("\n");
             u++;
             k++;
         }
-        group.sendMessage(msg);
+
+        ForwardMessageBuilder builder = new ForwardMessageBuilder(group);
+        builder.add(2931519915L,"末酱",new PlainText(msg));
+
+        group.sendMessage(builder.build());
 
 
     }
 }
 
-class MyComparator implements Comparator<Map.Entry>{
+class MyComparatorValue implements Comparator<Map.Entry>{//按值排序
     public int compare(Map.Entry o1, Map.Entry o2) {
         return ((Integer)o2.getValue()).compareTo((Integer) o1.getValue());
+    }
+}
+
+class MyComparatorKey implements Comparator<String>{
+    public int compare(String o2, String o1) {
+        return o1.compareTo(o2);
     }
 }

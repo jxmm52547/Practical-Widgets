@@ -20,7 +20,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.1.2")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.1.3")
                 .name("实用小组件")
                 .author("靖暄")
                 .build());
@@ -57,7 +57,7 @@ public final class PracticalWidgets extends JavaPlugin {
             } else if (msg.equals("/舔狗日记")) {
                 xyz.jxmm.dog.Main.main(sender,userName, group);
             } else if (JrrpMap.JrrpTopMap(msg)) {
-                xyz.jxmm.jrrp.jrrpTop.jrrpTop(group);
+                xyz.jxmm.jrrp.jrrpTop.jrrpTop(group,sender);
             } else if (msg.equals("/reset")) {
                 xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
             } else if(msg.startsWith("/点歌")){

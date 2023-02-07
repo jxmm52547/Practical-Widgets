@@ -1,5 +1,7 @@
 package xyz.jxmm.dog;
 
+import net.mamoe.mirai.message.code.MiraiCode;
+import net.mamoe.mirai.message.data.MessageChain;
 import xyz.jxmm.dog.getValue;
 
 import com.google.gson.Gson;
@@ -28,8 +30,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
+
         if (!json.has(sender.toString())){
-            group.sendMessage("QQ号:  " + sender + "\n未注册,请使用[ /注册 ]先注册哦");
+            group.sendMessage(at+ "\n未注册,请使用[ /注册 ]先注册哦");
         } else {
             JsonObject user = json.get(sender.toString()).getAsJsonObject().get("dog").getAsJsonObject();
 
@@ -37,10 +41,10 @@ public class Main {
             String oldDayWeek = user.get("week").getAsString();
 
             if (toDayWeek.equals(oldDayWeek)){
-                group.sendMessage(userName + "\n已经看过了喔,今日属于您的日记为: \n" + user.get("dogValue"));
+                group.sendMessage(at + "\n已经看过了喔,今日属于您的日记为: \n" + user.get("dogValue"));
             } else {
                 String value =  getValue.main();
-                group.sendMessage(userName + " 今日属于您的日记为: \n" + value);
+                group.sendMessage(at + " 今日属于您的日记为: \n" + value);
 
                 user.addProperty("dogValue", value);
                 user.addProperty("week", toDayWeek);
