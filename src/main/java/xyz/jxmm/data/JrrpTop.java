@@ -45,7 +45,7 @@ public class JrrpTop {
     static void write() throws IOException {
         JsonArray exampleGen = gen();
         file.getParentFile().mkdirs();
-        fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(exampleGen));
+        fileWriter(file.getPath(), gson.toJson(exampleGen));
     }
 
 

@@ -9,6 +9,8 @@ import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.PlainText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,7 +38,11 @@ public class Main {
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
 
         if (!json.has(sender.toString())){
-            group.sendMessage("QQ号:  " + sender + "\n未注册,请使用[ /注册 ]先注册哦");
+            MessageChain chain = new MessageChainBuilder()
+                    .append(at)
+                    .append(new PlainText("\n未注册,请使用[ /注册 ]先注册哦"))
+                    .build();
+            group.sendMessage(chain);
         } else {
             JsonObject user = json.get(sender.toString()).getAsJsonObject().get("jrrp").getAsJsonObject();
 
@@ -44,11 +50,19 @@ public class Main {
             String oldDayWeek = user.get("week").getAsString();
 
             if (toDayWeek.equals(oldDayWeek)){
-                group.sendMessage(userName + "\n今日已查询,您的今日人品为: " + user.get("jrrpValue"));
+                MessageChain chain = new MessageChainBuilder()
+                        .append(at)
+                        .append(new PlainText("\n今日已查询,您的今日人品为: " + user.get("jrrpValue")))
+                        .build();
+                group.sendMessage(chain);
             } else {
                 int jrrp = new Random().nextInt(101);
 
-                group.sendMessage(userName + "  您的今日人品为:  " + jrrp);
+                MessageChain chain = new MessageChainBuilder()
+                        .append(at)
+                        .append(new PlainText("\n您的今日人品为:  " + jrrp))
+                        .build();
+                group.sendMessage(chain);
 
                 user.addProperty("jrrpValue", jrrp);
                 user.addProperty("week", toDayWeek);

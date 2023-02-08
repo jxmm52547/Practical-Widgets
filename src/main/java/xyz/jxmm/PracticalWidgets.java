@@ -4,6 +4,7 @@ import xyz.jxmm.data.*;
 import xyz.jxmm.jrrp.ResetJrrpTop;
 import xyz.jxmm.tools.*;
 import xyz.jxmm.music.*;
+import xyz.jxmm.config.Main;
 
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -13,14 +14,11 @@ import net.mamoe.mirai.event.EventChannel;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 
-import java.io.IOException;
-
-
 public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.1.3")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.1.4")
                 .name("实用小组件")
                 .author("靖暄")
                 .build());
@@ -35,6 +33,7 @@ public final class PracticalWidgets extends JavaPlugin {
             Data.main();
             JrrpTop.main(123L,"example", 0,123456L);
             ResetJrrpTop.timerTask();
+            Main.main();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

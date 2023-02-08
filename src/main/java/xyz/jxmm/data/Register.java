@@ -8,6 +8,8 @@ import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.PlainText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,9 +28,15 @@ public class Register {
             throw new RuntimeException(e);
         }
 
+        MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
+
         if (json.has(sender.toString())){
-            MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
-            group.sendMessage("用户名: " + userName + "\n你已经注册过了,不要重复注册喔");
+
+            MessageChain chain = new MessageChainBuilder()
+                    .append(at)
+                    .append(new PlainText("\n你已经注册过了,不要重复注册喔"))
+                    .build();
+            group.sendMessage(chain);
         } else {
             JsonObject jsobj = MainExample.main();
 
@@ -40,7 +48,11 @@ public class Register {
                 throw new RuntimeException(e);
             }
 
-            group.sendMessage("用户名: " + userName  + "\nQQ号: " + sender + "\n注册成功,欢迎使用!");
+            MessageChain chain = new MessageChainBuilder()
+                    .append(at)
+                    .append(new PlainText("\n注册成功,欢迎使用!"))
+                    .build();
+            group.sendMessage(chain);
         }
     }
 }
