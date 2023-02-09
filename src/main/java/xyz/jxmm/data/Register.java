@@ -1,6 +1,6 @@
 package xyz.jxmm.data;
 
-import static xyz.jxmm.tools.FileWriter.fileWriter;
+import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,10 +11,9 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 public class Register {
 
@@ -23,8 +22,8 @@ public class Register {
     public static void main(Long sender, String userName, Group group){
         JsonObject json;
         try {
-            json = new Gson().fromJson(new FileReader("./PracticalWidgets/data.json"), JsonObject.class);
-        } catch (FileNotFoundException e) {
+            json = new Gson().fromJson(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), JsonObject.class);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -42,11 +41,7 @@ public class Register {
 
             json.add(sender.toString(), jsobj);
 
-            try {
-                fileWriter("./PracticalWidgets/data.json", gson.toJson(json));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            fileWriter(file.getPath(), gson.toJson(json));
 
             MessageChain chain = new MessageChainBuilder()
                     .append(at)

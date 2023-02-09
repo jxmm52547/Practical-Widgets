@@ -2,10 +2,9 @@ package xyz.jxmm.data;
 
 import com.google.gson.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 public class Data {
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -17,8 +16,8 @@ public class Data {
 
     {
         try {
-            json = new Gson().fromJson(new FileReader("./PracticalWidgets/data.json"), JsonObject.class);
-        } catch (FileNotFoundException e) {
+            json = new Gson().fromJson(new InputStreamReader(Files.newInputStream(data.toPath()), StandardCharsets.UTF_8), JsonObject.class);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -32,9 +31,8 @@ public class Data {
 
         if (!jrrpTop.exists()){
             JrrpTop.write();
-        } else {
-//            JrrpTop.update(null);
         }
+
     }
 
 }

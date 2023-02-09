@@ -21,12 +21,12 @@ public class getValue {
         URL url;
         BufferedReader in = null;
         try {
-            properties.load(Files.newInputStream(file.toPath()));
+            properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         String ALAPIToken = properties.getProperty("ALAPIToken");
-        String TGRJ = "https://v2.alapi.cn/api/dog?format=text&token=" + ALAPIToken;
+        String TGRJ = "https://v2.alapi.cn/api/dog?format=json&token=" + ALAPIToken;
         StringBuilder result = new StringBuilder();
         {
             try {

@@ -8,10 +8,9 @@ import com.google.gson.GsonBuilder;
 import net.mamoe.mirai.contact.Group;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
-import static xyz.jxmm.tools.FileWriter.fileWriter;
+import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
 
 public class ResetJrrpTop extends Timer {
 
@@ -20,16 +19,9 @@ public class ResetJrrpTop extends Timer {
 
     public static void reWrite(Group group) {
         file.delete();
-        try {
-            fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(JrrpTop.gen()));
-            if(group!=null){
-                group.sendMessage("手动重置今日人品排行榜完成");
-            }
-        } catch (IOException e) {
-            if (group!=null){
-                group.sendMessage("手动重置今日人品排行榜出错\n原因: " + e);
-            }
-            throw new RuntimeException(e);
+        fileWriter(file.getPath(), gson.toJson(JrrpTop.gen(123456L,123L,"example",0)));
+        if(group!=null){
+            group.sendMessage("手动重置今日人品排行榜完成");
         }
     }
 

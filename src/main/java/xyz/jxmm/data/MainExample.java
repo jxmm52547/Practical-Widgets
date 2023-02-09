@@ -1,6 +1,6 @@
 package xyz.jxmm.data;
 
-import static xyz.jxmm.tools.FileWriter.fileWriter;
+import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,11 +55,7 @@ public class MainExample {
         }
 
         json.add("123456", main());
-        try {
-            fileWriter("./PracticalWidgets/data.json", gson.toJson(json));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        fileWriter(file.getPath(), gson.toJson(json));
 
         if (group != null) {
             group.sendMessage("数据库手动更新成功");
@@ -69,6 +65,6 @@ public class MainExample {
     static void write() throws IOException {
         JsonObject exampleGen = gen();
         file.getParentFile().mkdirs();
-        fileWriter("./PracticalWidgets/data.json", gson.toJson(exampleGen));
+        fileWriter(file.getPath(), gson.toJson(exampleGen));
     }
 }

@@ -51,10 +51,11 @@
 ### 2.数据库
 * 采用`.json`文件格式存储数据,文件位于`./PracticalWidgets`
 其中会包含主要数据和排行榜数据
-* 首次启动会自动创建，如果损坏可删除文件后重新启动 ***请勿手动更改数据库,否则将会导致 `舔狗日记`数据乱码***
+* 首次启动会自动创建，如果损坏可删除文件后重新启动 ~~请勿手动更改数据库,否则将会导致 `舔狗日记`数据乱码~~
 
 ### 3.配置文件
-* 采用`.properties`文件格式储存数据，文件位于`./PracticalWidgets`为未来做准备
+* 采用`.properties`文件格式储存数据，文件位于`./PracticalWidgets/config.properties` 为未来做准备
+* 配置文件有自动更新功能，您只需要在更新新版本后检查更新日志是否有新的配置信息，如果有可进行填写(无需重启即可生效)
 
 ## 三.更新日志
 
@@ -81,11 +82,23 @@
 * **今日人品排行榜**将会更换写法，做到区分群聊发送(获取当前群号然后遍历此群的今日人品做排行，这取决于用户在哪个群查看的**今日人品**)
 * 将就着先用着吧，靖暄这边高三应届毕业生，我尽力快点换写法
 
+### V0.1.5 (重大更新)
+* 配置文件增加用户自定义 `今日人品形容词`
+
+* 修复 `V0.1.4`版本 排行榜bug
+* 修复 `舔狗日记` 无法获取到数据导致数据库报错问题
+
+* 更换 `今日人品排行榜` 写法, 现在可以做到分群发送 排行榜 每个群有不同的排行榜数据
+* 更换 `舔狗日记` 获取写法
+
+* 解决数据库乱码问题
+* 代码更为完善
+
 ## 四.关于
 
 如果您发现 BUG 可以联系[靖暄](https://wpa.qq.com/msgrd?uin=1250838250)
 
-如果您有任何想要的功能也可联系靖暄或者加群提出建议，如果加群请回答您看到此内容的平台(GITHUB; MiraiForum; GITEE) **三选一**
+如果您有 **任何想要的功能** 也可联系靖暄或者加群提出建议，如果加群请回答您看到此内容的平台(GITHUB; MiraiForum; GITEE) **三选一**
 
-[点击加群](https://qm.qq.com/cgi-bin/qm/qr?k=_rYUOn7VOO4-34qPy5kTVrrT08s3sC1v&jump_from=webapi&authKey=xH5JaRthfo8upiNAQgV8ZEumcMRJYqmvE5w1Lgz/U2yskulZz7xWMrwm32+Mhs4f)
+[***点击催更***](https://qm.qq.com/cgi-bin/qm/qr?k=_rYUOn7VOO4-34qPy5kTVrrT08s3sC1v&jump_from=webapi&authKey=xH5JaRthfo8upiNAQgV8ZEumcMRJYqmvE5w1Lgz/U2yskulZz7xWMrwm32+Mhs4f)
 
