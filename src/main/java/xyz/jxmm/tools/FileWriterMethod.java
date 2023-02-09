@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 public class FileWriterMethod {
     public static void fileWriter(String filepath, String content) {
@@ -11,7 +12,7 @@ public class FileWriterMethod {
         OutputStreamWriter osw = null;
         try {
             fos = new FileOutputStream(filepath);
-            osw = new OutputStreamWriter(fos, "UTF-8");
+            osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
             osw.write(content);
             osw.flush();
         } catch (IOException e) {

@@ -14,14 +14,17 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.Properties;
 
 import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
+import static xyz.jxmm.config.Main.properties;
 
 public class Main {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     static File file = new File("./PracticalWidgets/data.json");
+
     public static void main(Long sender,String userName, Group group) {
         JsonObject json;
         try {
@@ -43,8 +46,15 @@ public class Main {
 
             String toDayWeek = LocalDateTime.now().getDayOfWeek().toString();
             String oldDayWeek = user.get("week").getAsString();
+            Properties properties;
 
-            if (getValue.main(group).equals("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)")){
+            try {
+                properties = xyz.jxmm.config.Main.properties();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (properties.getProperty("ALAPIToken").equals("123456")){
                 MessageChain chain = new MessageChainBuilder()
                         .append(at)
                         .append(new PlainText("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)"))
