@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "xyz.jxmm"
-version = "0.2.5"
+version = "0.2.6"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
