@@ -1,5 +1,7 @@
 package xyz.jxmm.dog;
 
+import xyz.jxmm.tools.*;
+
 import net.mamoe.mirai.contact.Group;
 
 import java.io.BufferedReader;
@@ -18,8 +20,6 @@ public class getValue {
     static File file = new File("./PracticalWidgets/config.properties");
 
     public static String main(Group group) {
-        URL url;
-        BufferedReader in = null;
         try {
             properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
         } catch (IOException e) {
@@ -27,46 +27,6 @@ public class getValue {
         }
         String ALAPIToken = properties.getProperty("ALAPIToken");
         String TGRJ = "https://v2.alapi.cn/api/dog?format=json&token=" + ALAPIToken;
-        StringBuilder result = new StringBuilder();
-        {
-            try {
-                if (ALAPIToken.equals("123456")) {
-                    result.append("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)");
-                } else {
-                    url = new URL(TGRJ);
-                    URLConnection connection = url.openConnection();
-
-                    connection.setRequestProperty("accept", "*/*");
-                    connection.setRequestProperty("connection", "Keep-Alive");
-                    connection.setRequestProperty("user-agent",
-                            "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-
-                    connection.connect();
-
-                    in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-
-                    String line;
-                    while ((line = in.readLine()) != null) {
-                        result.append(line);
-                    }
-                }
-
-
-            }
-            catch (IOException e) {
-                return String.valueOf(e);
-            }
-            finally {
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                }
-            }
-
-        }
-        return result.toString();
+        return URLConnect.URLConnect(TGRJ);
     }
 }

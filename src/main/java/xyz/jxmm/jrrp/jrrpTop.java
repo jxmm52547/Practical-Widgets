@@ -105,7 +105,7 @@ public class jrrpTop {
             }
 
             ForwardMessageBuilder builder = new ForwardMessageBuilder(group);
-            builder.add(2931519915L,"末酱",new PlainText(msg));
+            builder.add(group.getBot().getId(),group.getBot().getNick(),new PlainText(msg));
 
             group.sendMessage(builder.build());
         } else {

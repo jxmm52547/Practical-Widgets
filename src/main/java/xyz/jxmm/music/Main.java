@@ -44,32 +44,13 @@ public class Main {
         String ALAPIToken = properties.getProperty("ALAPIToken");
         StringBuilder result = new StringBuilder();
 
-        try {
-            if (ALAPIToken.equals("123456")){
-                group.sendMessage("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)");
-            } else {
-                String music = "https://v2.alapi.cn/api/music/search?limit=1&keyword=" + name + "&token=" + ALAPIToken;
-                url = new URL(music);
-
-                URLConnection connection = url.openConnection();
-
-                connection.setRequestProperty("accept", "*/*");
-                connection.setRequestProperty("connection", "Keep-Alive");
-                connection.setRequestProperty("user-agent",
-                        "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-
-                connection.connect();
-
-                in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-
-                String line;
-                while ((line = in.readLine()) != null) {
-                    result.append(line);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (ALAPIToken.equals("123456")){
+            group.sendMessage("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)");
+        } else {
+            String music = "https://v2.alapi.cn/api/music/search?limit=1&keyword=" + name + "&token=" + ALAPIToken;
+            result.append(URLConnect.URLConnect(music));
         }
+
         JsonObject json = new Gson().fromJson(result.toString(), JsonObject.class);
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
 
@@ -115,32 +96,18 @@ public class Main {
 
         String ALAPIToken = properties.getProperty("ALAPIToken");
         StringBuilder result = new StringBuilder();
-
         StringBuilder imgURL = new StringBuilder();
-        try {
-            if (ALAPIToken.equals("123456")){
-                group.sendMessage("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)");
-            } else {
+
+        if (ALAPIToken.equals("123456")){
+            group.sendMessage("请联系 BOT拥有者 前往配置文件填写Token后重试(无需重启)");
+        } else {
+            try {
                 Thread.sleep(1000);
-                String music = "https://v2.alapi.cn/api/music/detail?id=" + musicID + "&token=" + ALAPIToken;
-                url = new URL(music);
-
-                URLConnection connection = url.openConnection();
-
-                connection.setRequestProperty("accept", "*/*");
-                connection.setRequestProperty("connection", "Keep-Alive");
-                connection.setRequestProperty("user-agent",
-                        "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-
-                connection.connect();
-
-                in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-
-                String line;
-                while ((line = in.readLine()) != null) {
-                    result.append(line);
-                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+            String music = "https://v2.alapi.cn/api/music/detail?id=" + musicID + "&token=" + ALAPIToken;
+            result.append(URLConnect.URLConnect(music));
 
             JsonObject json = new Gson().fromJson(result.toString(), JsonObject.class);
             if (json.get("code").getAsInt() != 200){
@@ -157,8 +124,6 @@ public class Main {
                         .get("picUrl").getAsString());
 
             }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
         }
         return imgURL.toString();
     }
