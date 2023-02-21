@@ -70,9 +70,9 @@
 
 #### f. 查询hyp相关信息
 
-* `/hyp bw [PlayerID]` 查询 `起床战争` 信息
-* `/hyp sw [PlayerID]` 查询 `空岛战争` 信息
-* `/hyp player [PlayerID]` 查询玩家 `hypixel服务器` 一系列信息
+* `/hyp bw <PlayerID>` 查询 `起床战争` 信息
+* `/hyp sw <PlayerID>` 查询 `空岛战争` 信息
+* `/hyp player <PlayerID>` 查询玩家 `hypixel服务器` 一系列信息
 
 
 ### 2.数据库
@@ -137,6 +137,11 @@
 * 优化上版本代码
 * 新增 `询hypixel服务器相关信息` 功能
 * 配置文件更新
+
+### V0.3.1 *(2023.02.21)*
+* 修复数据库异常过大问题
+* 完善 `查询hypixel服务器相关信息` 功能
+* 主数据库更新, 新增版本条目, 方便查看
 
 ## 四.关于
 

@@ -35,6 +35,7 @@ public class MainExample {
         example.add("jrrp",jrrpExample);
         example.add("dog", dogExample);
         example.addProperty("lastTime", LocalDateTime.now().toString());
+        example.addProperty("version","0.3.1");
 
         return example;
     }
@@ -53,9 +54,17 @@ public class MainExample {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        if (json.get("123456").getAsJsonObject().has("version")){
+            if (!json.get("123456").getAsJsonObject().get("version").getAsString().equals("0.3.1")){
+                json.add("123456", main());
+                fileWriter(file.getPath(), gson.toJson(json));
+            }
+        } else {
+            json.add("123456", main());
+            fileWriter(file.getPath(), gson.toJson(json));
+        }
 
-        json.add("123456", main());
-        fileWriter(file.getPath(), gson.toJson(json));
+
 
         if (group != null) {
             group.sendMessage("数据库手动更新成功");

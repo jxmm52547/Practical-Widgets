@@ -21,7 +21,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.0")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.1")
                 .name("一点小功能")
                 .author("靖暄")
                 .build());
@@ -30,7 +30,7 @@ public final class PracticalWidgets extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("一点小功能  已加载!");//插件加载提示
-        getLogger().info("当前功能: 舔狗日记, 今日人品, 今日人品排行榜, 点歌, new对象");
+        getLogger().info("当前功能: 舔狗日记, 今日人品, 今日人品排行榜, 点歌, new对象, Hyp信息查询");
 
         try {//数据库相关
             Data.main();

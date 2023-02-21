@@ -9,6 +9,9 @@ import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
+import xyz.jxmm.Minecraft.bw.BedWars;
+import xyz.jxmm.Minecraft.player.Player;
+import xyz.jxmm.Minecraft.sw.SkyWars;
 
 public class Hypixel {
     public static void hypixel(String msg, Long sender, Group group){
@@ -45,10 +48,10 @@ public class Hypixel {
                     BedWars.bw(json,sender,group);
                     break;
                 case "sw":
-                    group.sendMessage("sw正在编写");
+                    SkyWars.sw(json,sender,group);
                     break;
                 case "player":
-                    group.sendMessage("player正在编写");
+                    Player.player(json,sender,group);
                     break;
             }
         }
@@ -61,7 +64,7 @@ public class Hypixel {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (hypixelURLConnect(uuid).equals("noHypixelAPI")){
-            chain.append("请前往配置文件填写hypiexAPI后重试");
+            chain.append("请前往配置文件填写hypixelAPI后重试");
 
             System.out.println("以下出现的报错如果是 NullPointerException, 这是正常现象，因为您未填写HypixelAPI, 如果不是请联系作者");
             System.out.println("如果您在配置文件未找到HypixelAPI填写位置,请重启mirai后检查配置文件, 如果还是没有请联系作者");
