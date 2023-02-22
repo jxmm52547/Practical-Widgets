@@ -21,7 +21,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.1")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.2")
                 .name("一点小功能")
                 .author("靖暄")
                 .build());
