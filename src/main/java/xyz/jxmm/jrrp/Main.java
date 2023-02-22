@@ -57,6 +57,8 @@ public class Main {
                         .append(new PlainText(express))
                         .build();
                 group.sendMessage(chain);
+
+                writJrrpTop(sender, userName, group, top, jrrp);
             } else {
                 int jrrp = new Random().nextInt(101);
                 String express = express(jrrp);
@@ -74,19 +76,28 @@ public class Main {
                 json.get(sender.toString()).getAsJsonObject().add("jrrp", user);
                 json.get(sender.toString()).getAsJsonObject().addProperty("lastTime", LocalDateTime.now().toString());
 
-                if (!top.has(String.valueOf(group.getId()))){
-                    top.add(String.valueOf(group.getId()),JrrpTop.userArray(sender, userName,jrrp));
-                } else {
-                    JsonArray groupValue = top.get(String.valueOf(group.getId())).getAsJsonArray();
-                    groupValue.add(JrrpTop.userExample(sender,userName,jrrp));
-                }
+                writJrrpTop(sender, userName, group, top, jrrp);
 
                 fileWriter("./PracticalWidgets/data.json", gson.toJson(json));
-                fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(top));
             }
 
         }
 
+    }
+
+    public static void writJrrpTop(Long sender, String userName, Group group, JsonObject top, int jrrp) {
+        if (!top.has(String.valueOf(group.getId()))){
+            top.add(String.valueOf(group.getId()), JrrpTop.userArray(sender, userName,jrrp));
+        } else {
+            JsonArray groupValue = top.get(String.valueOf(group.getId())).getAsJsonArray();
+            for (int i = 0; i < groupValue.size(); i++) {
+                if (groupValue.get(i).getAsJsonObject().get("user").getAsLong() != sender){
+                    groupValue.add(JrrpTop.userExample(sender,userName,jrrp));
+                }
+            }
+
+        }
+        fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(top));
     }
 
     public static String express(int jrrp) throws IOException {
