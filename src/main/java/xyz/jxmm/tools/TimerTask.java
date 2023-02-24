@@ -1,6 +1,6 @@
 package xyz.jxmm.tools;
 
-import xyz.jxmm.NewObject.ResetObject;
+import xyz.jxmm.newobject.ResetObject;
 import xyz.jxmm.jrrp.ResetJrrpTop;
 
 import java.util.Calendar;

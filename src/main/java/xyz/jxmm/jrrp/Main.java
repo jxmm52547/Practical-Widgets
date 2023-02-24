@@ -1,7 +1,6 @@
 package xyz.jxmm.jrrp;
 
 import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
-import xyz.jxmm.data.JrrpTop;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,7 +23,7 @@ public class Main {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     static File dataFile = new File("./PracticalWidgets/data.json");
-    static File topFile = new File("./PracticalWidgets/jrrpTop.json");
+    static File topFile = new File("./PracticalWidgets/JrrpTop.json");
 
     public static void main(Long sender, String userName, Group group) throws IOException {
         JsonObject json;
@@ -87,17 +86,17 @@ public class Main {
 
     public static void writJrrpTop(Long sender, String userName, Group group, JsonObject top, int jrrp) {
         if (!top.has(String.valueOf(group.getId()))){
-            top.add(String.valueOf(group.getId()), JrrpTop.userArray(sender, userName,jrrp));
+            top.add(String.valueOf(group.getId()), xyz.jxmm.data.JrrpTop.userArray(sender, userName,jrrp));
         } else {
             JsonArray groupValue = top.get(String.valueOf(group.getId())).getAsJsonArray();
             for (int i = 0; i < groupValue.size(); i++) {
                 if (groupValue.get(i).getAsJsonObject().get("user").getAsLong() != sender){
-                    groupValue.add(JrrpTop.userExample(sender,userName,jrrp));
+                    groupValue.add(xyz.jxmm.data.JrrpTop.userExample(sender,userName,jrrp));
                 }
             }
 
         }
-        fileWriter("./PracticalWidgets/jrrpTop.json", gson.toJson(top));
+        fileWriter("./PracticalWidgets/JrrpTop.json", gson.toJson(top));
     }
 
     public static String express(int jrrp) throws IOException {

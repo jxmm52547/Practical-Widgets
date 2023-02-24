@@ -24,7 +24,10 @@ public class Main {
                 + "41到60 = \n"
                 + "61到80 = \n"
                 + "81到99 = \n"
-                + "100 = 解锁成就顶级欧皇";
+                + "100 = 解锁成就顶级欧皇"
+                + "#HypixelAPI\n"
+                + "#请连接至hypixel服务器并输入指令 '/api' 获取您的Key, 如果忘记了您的api 可输入指令 '/api new' 获取新的API\n"
+                + "HypixelAPI = ";
         return cfg;
     }
 
@@ -55,7 +58,10 @@ public class Main {
                     + "41到60 = \n"
                     + "61到80 = \n"
                     + "81到99 = \n"
-                    + "100 = 解锁成就顶级欧皇";
+                    + "100 = 解锁成就顶级欧皇"
+                    + "#HypixelAPI\n"
+                    + "#请连接至hypixel服务器并输入指令 '/api' 获取您的Key, 如果忘记了您的api 可输入指令 '/api new' 获取新的API\n"
+                    + "HypixelAPI = ";
 
             //重新组建 配置文件
             FileWriterMethod.fileWriter(file.getPath(), cfg);

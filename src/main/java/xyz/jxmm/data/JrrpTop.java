@@ -14,7 +14,7 @@ import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
 public class JrrpTop {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    static File file = new File("./PracticalWidgets/jrrpTop.json");
+    static File file = new File("./PracticalWidgets/JrrpTop.json");
 
     @NotNull
 //    public static JsonObject main(Long sender,String username, int jrrp, Long group) {

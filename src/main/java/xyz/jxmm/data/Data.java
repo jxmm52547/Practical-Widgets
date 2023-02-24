@@ -10,7 +10,7 @@ public class Data {
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     static File data = new File("./PracticalWidgets/data.json");
 
-    static File jrrpTop = new File("./PracticalWidgets/jrrpTop.json");
+    static File jrrpTop = new File("./PracticalWidgets/JrrpTop.json");
 
     static JsonObject json;
 
@@ -30,7 +30,7 @@ public class Data {
         }
 
         if (!jrrpTop.exists()){
-            JrrpTop.write();
+            xyz.jxmm.data.JrrpTop.write();
         }
 
     }

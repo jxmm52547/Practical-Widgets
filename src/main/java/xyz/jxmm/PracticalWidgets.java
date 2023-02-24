@@ -3,9 +3,7 @@ package xyz.jxmm;
 import xyz.jxmm.data.*;
 import xyz.jxmm.data.Object;
 import xyz.jxmm.tools.*;
-import xyz.jxmm.music.*;
 import xyz.jxmm.config.Main;
-import xyz.jxmm.NewObject.*;
 
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -21,7 +19,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.2")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.3")
                 .name("一点小功能")
                 .author("靖暄")
                 .build());
@@ -64,13 +62,13 @@ public final class PracticalWidgets extends JavaPlugin {
             } else if (msg.equals("/舔狗日记")) {
                 xyz.jxmm.dog.Main.main(sender,userName, group);
             } else if (JrrpMap.JrrpTopMap(msg)) {
-                xyz.jxmm.jrrp.jrrpTop.jrrpTop(group,sender);
+                xyz.jxmm.jrrp.JrrpTop.jrrpTop(group,sender);
             } else if(msg.startsWith("/点歌")){
                 xyz.jxmm.music.Main.main(msg,group,sender);
             } else if(msg.startsWith("/new对象")){
-                NewObject.newObject(sender, group);
+                xyz.jxmm.newobject.NewObject.newObject(sender, group);
             } else if (msg.startsWith("/hyp ")){
-                xyz.jxmm.Minecraft.Hypixel.hypixel(msg,sender,group);
+                xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
             }
         });
     }

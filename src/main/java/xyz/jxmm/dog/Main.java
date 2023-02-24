@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.Properties;
 
 import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
-import static xyz.jxmm.config.Main.properties;
 
 public class Main {
 
@@ -68,7 +67,7 @@ public class Main {
                         .build();
                 group.sendMessage(chain);
             } else {
-                String value =  getValue.main(group);
+                String value =  GetValue.main(group);
                 JsonObject dog;
                 dog = new Gson().fromJson(value, JsonObject.class);
                 if (!dog.get("msg").getAsString().equals("success")){
