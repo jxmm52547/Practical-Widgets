@@ -12,6 +12,7 @@ import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 import xyz.jxmm.minecraft.bw.BedWars;
 import xyz.jxmm.minecraft.player.Player;
+import xyz.jxmm.minecraft.player.RecentGames;
 import xyz.jxmm.minecraft.sw.SkyWars;
 
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class Hypixel {
         StringBuilder ID = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder type = new StringBuilder();
-        JsonObject json = new JsonObject();
+        JsonObject json;
 
         if (handle.startsWith("bw")){
             ID.append(handle.replaceAll("bw ",""));//得到玩家ID
@@ -35,7 +36,7 @@ public class Hypixel {
                 stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
                 json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
                 type.append("bw");
-                err(json,chain,group,type,sender);
+                err(json,chain,group,type,sender,ID.toString());
             }
 
 
@@ -45,7 +46,7 @@ public class Hypixel {
                 stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
                 json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
                 type.append("sw");
-                err(json,chain,group,type,sender);
+                err(json,chain,group,type,sender,ID.toString());
             }
 
 
@@ -55,7 +56,7 @@ public class Hypixel {
                 stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
                 json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
                 type.append("player");
-                err(json,chain,group,type,sender);
+                err(json,chain,group,type,sender,ID.toString());
             }
 
         } else {
@@ -69,7 +70,7 @@ public class Hypixel {
 
     }
 
-    public static void err(JsonObject json, MessageChainBuilder chain, Group group, StringBuilder type, Long sender){
+    public static void err(JsonObject json, MessageChainBuilder chain, Group group, StringBuilder type, Long sender,String ID){
         if (Error.err(json,chain,group)){
             switch (type.toString()){
                 case "bw":
@@ -79,7 +80,8 @@ public class Hypixel {
                     SkyWars.sw(json,sender,group);
                     break;
                 case "player":
-                    Player.player(json,sender,group);
+                    JsonObject recentGames = new Gson().fromJson(RecentGames.main(ID,group,chain), JsonObject.class);
+                    Player.player(json,recentGames,sender,group);
                     break;
             }
         }

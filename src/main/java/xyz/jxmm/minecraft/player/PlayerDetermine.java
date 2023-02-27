@@ -1,5 +1,6 @@
 package xyz.jxmm.minecraft.player;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class PlayerDetermine {
@@ -13,6 +14,10 @@ public class PlayerDetermine {
 
     public static Boolean lastLogout(JsonObject playerJson){
         return playerJson.has("lastLogout");
+    }
+
+    public static Boolean userLanguage(JsonObject playerJson){
+        return playerJson.has("userLanguage");
     }
 
     public static Boolean arcade_arcade_winner(JsonObject arcade,JsonObject achievements){
@@ -29,5 +34,21 @@ public class PlayerDetermine {
 
     public static Boolean TNTGames(JsonObject TNTGames){
         return TNTGames.has("coins") && TNTGames.has("wins") && TNTGames.has("winstreak");
+    }
+
+    public static Boolean recentGames(JsonObject recentGames){
+        return recentGames.get("games").getAsJsonArray().size() > 0;
+    }
+
+    public static Boolean achievementPoints(JsonObject playerJson){
+        return playerJson.has("achievementPoints");
+    }
+
+    public static Boolean karma(JsonObject playerJson){
+        return playerJson.has("karma");
+    }
+
+    public static Boolean bwJson(JsonObject playerJson){
+        return playerJson.get("stats").getAsJsonObject().has("Bedwars");
     }
 }
