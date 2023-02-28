@@ -159,9 +159,10 @@
 
 ### V0.4.0 (重大更新) *(2023.02.28)*
 * 修复 `hyp相关信息查询` 中 大部分BUG  现在很少遇到报错, 都带有提示
-* 新增 `自定义指令前缀` 可在配置文件自定义您的指令前缀 默认 `/`
 
-**以下内容全部来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出**
+
+* **以下内容全部来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出**
+* 新增 `自定义指令前缀` 可在配置文件自定义您的指令前缀 默认 `/`
 * `hyp相关信息查询` 中 `player` 字段 新增显示 `大厅等级` 保留三位小数
 * `hyp相关信息查询` 中 `player` 字段 新增显示 `RANK` 
 * `hyp相关信息查询` 中 `player` 字段 新增显示 `玩家皮肤预览`
