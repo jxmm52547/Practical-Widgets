@@ -29,7 +29,7 @@ public class SkyWars {
                 chain.append(new PlainText("\n总游戏场次: "));
                 chain.append(new PlainText(String.valueOf(swJson.get("games_played_skywars").getAsInt())));
                 chain.append(new PlainText(" | 当前等级: "));
-                chain.append(new PlainText(swJson.get("levelFormatted").getAsString().replace("§7","").replace("⋆","✨")));
+                chain.append(new PlainText(swJson.get("levelFormatted").getAsString().replace(swJson.get("levelFormatted").getAsString().substring(0,1),"").replace("⋆","✨")));
             }
 
             if (skywars_experience(swJson)){

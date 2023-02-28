@@ -13,13 +13,18 @@ import net.mamoe.mirai.event.EventChannel;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Properties;
 
 public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.3.4")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.4.0")
                 .name("一点小功能")
                 .author("靖暄")
                 .build());
@@ -47,29 +52,43 @@ public final class PracticalWidgets extends JavaPlugin {
             String userName = g.getSenderName();
             Group group = g.getGroup();
 
-            if(msg.equals("/update")){
-                MainExample.update(group);
-            } else if (msg.equals("/reset jrrptop")) {
-                xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
-            } else if (JrrpMap.JrrpMap(msg)){
-                try {
-                    xyz.jxmm.jrrp.Main.main(sender, userName, group);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else if (msg.equals("/注册")) {
-                Register.main(sender, userName, group);
-            } else if (msg.equals("/舔狗日记")) {
-                xyz.jxmm.dog.Main.main(sender,userName, group);
-            } else if (JrrpMap.JrrpTopMap(msg)) {
-                xyz.jxmm.jrrp.JrrpTop.jrrpTop(group,sender);
-            } else if(msg.startsWith("/点歌")){
-                xyz.jxmm.music.Main.main(msg,group,sender);
-            } else if(msg.startsWith("/new对象")){
-                xyz.jxmm.newobject.NewObject.newObject(sender, group);
-            } else if (msg.startsWith("/hyp ")){
-                xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
+            Properties properties = new Properties();
+            File file = new File("./PracticalWidgets/config.properties");
+            try {
+                properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+
+            String prefix = properties.getProperty("prefix");
+            if (msg.startsWith(prefix)){;
+                msg = msg.replace(prefix,"");
+
+                if(msg.equals("update")){
+                    MainExample.update(group);
+                } else if (msg.equals("reset jrrptop")) {
+                    xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
+                } else if (JrrpMap.jrrpMap(msg)){
+                    try {
+                        xyz.jxmm.jrrp.Main.main(sender, userName, group);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (msg.equals("注册")) {
+                    Register.main(sender, userName, group);
+                } else if (msg.equals("舔狗日记")) {
+                    xyz.jxmm.dog.Main.main(sender,userName, group);
+                } else if (JrrpMap.JrrpTopMap(msg)) {
+                    xyz.jxmm.jrrp.JrrpTop.jrrpTop(group,sender);
+                } else if(msg.startsWith("点歌")){
+                    xyz.jxmm.music.Main.main(msg,group,sender);
+                } else if(msg.startsWith("new对象")){
+                    xyz.jxmm.newobject.NewObject.newObject(sender, group);
+                } else if (msg.startsWith("hyp ")){
+                    xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
+                }
+            }
+
         });
     }
 

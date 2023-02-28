@@ -44,6 +44,7 @@
 
 **无需下载[chat-command](https://github.com/project-mirai/chat-command)皆可在聊天内使用指令**
 **仅群内可用**
+**指令前缀: 默认 `/` 可在配置文件自行定义**
 
 #### a. 注册
 
@@ -155,6 +156,16 @@
 ### V0.3.4 *(2023.02.27)*
 * 修复 `hyp相关信息查询` 中 `玩家存在` 但 `玩家数据不存在` 得报错, 现在拥有回复, 且不会在控制台报错 (来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出的反馈)
 * 修复 `今日人品排行榜` 中 如果群成员试图 逆天改命 进行重复查询 `今日人品` 导致排行榜数据过大问题 (来自[GitHub](https://www.github.com/)中[光影](暂未得到链接))
+
+### V0.4.0 (重大更新) *(2023.02.28)*
+* 修复 `hyp相关信息查询` 中 大部分BUG  现在很少遇到报错, 都带有提示
+* 新增 `自定义指令前缀` 可在配置文件自定义您的指令前缀 默认 `/`
+
+**以下内容全部来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出**
+* `hyp相关信息查询` 中 `player` 字段 新增显示 `大厅等级` 保留三位小数
+* `hyp相关信息查询` 中 `player` 字段 新增显示 `RANK` 
+* `hyp相关信息查询` 中 `player` 字段 新增显示 `玩家皮肤预览`
+
 
 ## 四.关于
 

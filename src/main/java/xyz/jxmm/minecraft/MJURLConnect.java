@@ -13,6 +13,8 @@ public class MJURLConnect {
 
         if (result.equals("")){
             return "Connection timed out";
+        } else if (result.equals("java.net.ConnectException: Connection timed out: connect")) {
+            return "Connection timed out";
         } else {
             JsonObject json = gson.fromJson(result, JsonObject.class);
             return json.get("id").getAsString();

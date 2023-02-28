@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class PlayerDetermine {
+    public static Boolean rank(JsonObject playerJson){return playerJson.has("newPackageRank");}
+
     public static Boolean firstLogin(JsonObject playerJson){
         return playerJson.has("firstLogin");
     }
@@ -18,6 +20,14 @@ public class PlayerDetermine {
 
     public static Boolean userLanguage(JsonObject playerJson){
         return playerJson.has("userLanguage");
+    }
+
+    public static Boolean guild(JsonObject guild){
+        return !guild.get("guild").isJsonNull();
+    }
+
+    public static Boolean networkExp(JsonObject playerJson){
+        return playerJson.has("networkExp");
     }
 
     public static Boolean arcade_arcade_winner(JsonObject arcade,JsonObject achievements){
