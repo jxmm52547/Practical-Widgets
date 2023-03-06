@@ -74,6 +74,7 @@
 * `/hyp bw <PlayerID>` 查询 `起床战争` 信息
 * `/hyp sw <PlayerID>` 查询 `空岛战争` 信息
 * `/hyp player <PlayerID>` 查询玩家 `hypixel服务器` 一系列信息
+* `/hyp acd <PlayerID>` 查询 `街机游戏` 信息
 
 
 ### 2.数据库
@@ -89,7 +90,7 @@
 ## 三.更新日志
 
 ###  V0.1.0 *(2023.02.02)*
-首个打包好的插件，拥有其主要功能 **[今日人品;舔狗日记]**
+首个打包好地插件，拥有其主要功能 **[今日人品;舔狗日记]**
 
 ###  V0.1.1 *(2023.02.02)*
 完善代码,修改写法,增加 **今日人品排行榜**功能
@@ -149,23 +150,27 @@
 * 新增即便是在不同群也能查看到自己的人品值排行榜(在群A获取人品值后在群B再获取一次人品值就会写入数据库保留群B的排行数据)
 
 ### V0.3.3 *(2023.02.24)*
-* 修复 `hyp相关信息查询` 中 `玩家不存在` 或 `数据不存在` 的报错 或 直接不给回复 问题 (来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出的反馈)
+* 修复 `hyp相关信息查询` 中 `玩家不存在` 或 `数据不存在` 的报错 或 直接不给回复 问题 (来自[MiraiForum](https://mirai.mamoe.net/)中[@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出的反馈)
 * 修复 `自动更新数据库` 问题 (如果跨多个版本更新可能导致需要重启多次才会完整更新数据库功能)
 * 预计下版本更新 `hyp相关信息查询` 中添加更多游戏模式
 
 ### V0.3.4 *(2023.02.27)*
-* 修复 `hyp相关信息查询` 中 `玩家存在` 但 `玩家数据不存在` 得报错, 现在拥有回复, 且不会在控制台报错 (来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出的反馈)
-* 修复 `今日人品排行榜` 中 如果群成员试图 逆天改命 进行重复查询 `今日人品` 导致排行榜数据过大问题 (来自[GitHub](https://www.github.com/)中[光影](暂未得到链接))
+* 修复 `hyp相关信息查询` 中 `玩家存在` 但 `玩家数据不存在` 得报错, 现在拥有回复, 且不会在控制台报错 (来自[MiraiForum](https://mirai.mamoe.net/)中[@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出的反馈)
+* 修复 `今日人品排行榜` 中 如果群成员试图 逆天改命 进行重复查询 `今日人品` 导致排行榜数据过大问题 (来自[GitHub](https://www.github.com/)中[@光影](https://github.com/DUXING130))
 
 ### V0.4.0 (重大更新) *(2023.02.28)*
 * 修复 `hyp相关信息查询` 中 大部分BUG  现在很少遇到报错, 都带有提示
 
-
-* **以下内容全部来自[MiraiForum](https://mirai.mamoe.net/)中[MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出**
+* **以下内容全部来自[MiraiForum](https://mirai.mamoe.net/)中[@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出**
 * 新增 `自定义指令前缀` 可在配置文件自定义您的指令前缀 默认 `/`
 * `hyp相关信息查询` 中 `player` 字段 新增显示 `大厅等级` 保留三位小数
 * `hyp相关信息查询` 中 `player` 字段 新增显示 `RANK` 
 * `hyp相关信息查询` 中 `player` 字段 新增显示 `玩家皮肤预览`
+
+### V0.4.1 *(2023.03.06)*
+* `hyp信息查询` 中 新增 `街机游戏` 模块 `/hyp acd <ID>`  包含了绝大多数的街机游戏模式
+* `hyp信息查询` 中 `player` 字段 新增 `rank赠送数`
+* 修复 `hyp信息查询` 中 `player` 字段缺少 `【MVP++】` 问题
 
 
 ## 四.关于

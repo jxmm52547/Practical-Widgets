@@ -6,6 +6,12 @@ import com.google.gson.JsonObject;
 public class PlayerDetermine {
     public static Boolean rank(JsonObject playerJson){return playerJson.has("newPackageRank");}
 
+    public static Boolean giftingMeta(JsonObject playerJson){
+        return playerJson.has("giftingMeta");
+    }
+    public static Boolean ranksGiven(JsonObject giftingMeta){
+        return giftingMeta.has("ranksGiven");
+    }
     public static Boolean firstLogin(JsonObject playerJson){
         return playerJson.has("firstLogin");
     }

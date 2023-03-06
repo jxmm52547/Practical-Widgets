@@ -13,6 +13,7 @@ import net.mamoe.mirai.message.data.PlainText;
 
 import tax.cute.minecraftinfoapi.CommonException;
 
+import xyz.jxmm.minecraft.arcade.Arcade;
 import xyz.jxmm.minecraft.bw.BedWars;
 import xyz.jxmm.minecraft.player.Guild;
 import xyz.jxmm.minecraft.player.Player;
@@ -76,6 +77,17 @@ public class Hypixel {
                 }
             }
 
+        } else if (handle.startsWith("acd")) {
+            ID.append(handle.replaceAll("acd ", ""));
+            if (value(ID.toString(),group,chain)){
+                stringBuilder.append(analysis(ID.toString(),group,chain));
+                json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
+                type.append("acd");
+
+                if (error(json,chain,group)) {
+                    Arcade.acd(json,sender,group);
+                }
+            }
         } else {
             chain.append(new PlainText("指令不完整, 缺少关键字或关键字错误"));
             chain.append(new PlainText("\n/hyp <type> <playerID>"));
