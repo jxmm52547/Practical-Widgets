@@ -91,6 +91,15 @@ public class Hypixel {
         } else {
             chain.append(new PlainText("指令不完整, 缺少关键字或关键字错误"));
             chain.append(new PlainText("\n/hyp <type> <playerID>"));
+            chain.append(new PlainText("\n<type>包含如下关键字:\n<player>玩家系列数据\n<acd>街机游戏\n<bw>起床战争\n" +
+                    "<sw>空岛战争"));
+            /*
+
+<mm>密室杀手
+<tnt>掘战游戏
+<du>决斗游戏
+<ww>羊毛战争
+             */
             group.sendMessage(chain.build());
         }
 
@@ -106,25 +115,38 @@ public class Hypixel {
     public static String analysis(String ID , Group group,MessageChainBuilder chain){
         String uuid = MJURLConnect.moJangURLConnect(ID);
 
-        if (uuid.equals("Connection timed out")){
-            chain.append(new PlainText("连接超时, 这可能是因为玩家不存在, 请检查您输入的玩家ID是否正确\n或者请检查您的网络状况"));
-            group.sendMessage(chain.build());
-            return "";
-        } else {
-            //从hypixel官方API得到用户数据
-            StringBuilder stringBuilder = new StringBuilder();
-
-            if (hypixelURLConnect(uuid).equals("noHypixelAPI")){
-                chain.append("请前往配置文件填写hypixelAPI后重试");
-
-                System.out.println("以下出现的报错如果是 NullPointerException, 这是正常现象，因为您未填写HypixelAPI, 如果不是请联系作者");
-                System.out.println("如果您在配置文件未找到HypixelAPI填写位置,请重启mirai后检查配置文件, 如果还是没有请联系作者");
+        switch (uuid) {
+            case "":
+                chain.append(new PlainText("NULL\n未知错误, 从MJ官方无法得到任何信息"));
                 group.sendMessage(chain.build());
                 return "";
-            } else {
-                stringBuilder.append(hypixelURLConnect(uuid));
-                return stringBuilder.toString();
-            }
+            case "Connection timed out":
+                chain.append(new PlainText("连接超时, 这可能是因为玩家不存在, 请检查您输入的玩家ID是否正确\n或者请检查您的网络状况"));
+                group.sendMessage(chain.build());
+                return "";
+            case "FileNotFound":
+                chain.append(new PlainText("玩家不存在, 请检查输入的玩家ID是否正确"));
+                group.sendMessage(chain.build());
+                return "";
+            case "IO":
+                chain.append(new PlainText("玩家ID格式错误, 请输入正确的玩家ID"));
+                group.sendMessage(chain.build());
+                return "";
+            default:
+                //从hypixel官方API得到用户数据
+                StringBuilder stringBuilder = new StringBuilder();
+
+                if (hypixelURLConnect(uuid).equals("noHypixelAPI")) {
+                    chain.append("请前往配置文件填写hypixelAPI后重试");
+
+                    System.out.println("以下出现的报错如果是 NullPointerException, 这是正常现象，因为您未填写HypixelAPI, 如果不是请联系作者");
+                    System.out.println("如果您在配置文件未找到HypixelAPI填写位置,请重启mirai后检查配置文件, 如果还是没有请联系作者");
+                    group.sendMessage(chain.build());
+                    return "";
+                } else {
+                    stringBuilder.append(hypixelURLConnect(uuid));
+                    return stringBuilder.toString();
+                }
         }
 
     }

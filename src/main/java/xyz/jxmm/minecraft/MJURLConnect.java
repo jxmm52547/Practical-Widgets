@@ -12,9 +12,13 @@ public class MJURLConnect {
         String result = URLConnect.URLConnect(connectURL);
 
         if (result.equals("")){
+            return "";
+        } else if (result.startsWith("java.net.ConnectException:")) {
             return "Connection timed out";
-        } else if (result.equals("java.net.ConnectException: Connection timed out: connect")) {
-            return "Connection timed out";
+        } else if (result.startsWith("java.io.FileNotFoundException:")){
+            return "FileNotFound";
+        } else if (result.startsWith("java.io.IOException:")){
+            return "IO";
         } else {
             JsonObject json = gson.fromJson(result, JsonObject.class);
             return json.get("id").getAsString();

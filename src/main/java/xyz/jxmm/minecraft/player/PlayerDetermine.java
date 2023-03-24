@@ -36,6 +36,7 @@ public class PlayerDetermine {
         return playerJson.has("networkExp");
     }
 
+    /*
     public static Boolean arcade_arcade_winner(JsonObject arcade,JsonObject achievements){
         return arcade.has("coins") && achievements.has("arcade_arcade_winner");
     }
@@ -51,6 +52,8 @@ public class PlayerDetermine {
     public static Boolean TNTGames(JsonObject TNTGames){
         return TNTGames.has("coins") && TNTGames.has("wins") && TNTGames.has("winstreak");
     }
+    V0.4.2版本更新注释
+     */
 
     public static Boolean recentGames(JsonObject recentGames){
         return recentGames.get("games").getAsJsonArray().size() > 0;
@@ -64,7 +67,10 @@ public class PlayerDetermine {
         return playerJson.has("karma");
     }
 
+    /*
     public static Boolean bwJson(JsonObject playerJson){
         return playerJson.get("stats").getAsJsonObject().has("Bedwars");
     }
+    V0.4.2版本更新注释
+     */
 }

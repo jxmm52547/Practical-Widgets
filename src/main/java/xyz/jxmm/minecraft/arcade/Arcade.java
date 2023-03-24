@@ -29,7 +29,7 @@ public class Arcade {
             chain.append(new PlainText("\n玩家名:\n"));
             if (PlayerDetermine.rank(playerJson)){
                 String rank = playerJson.get("newPackageRank").getAsString();
-                boolean rankPlus = playerJson.has("rankPlusColor");
+                boolean rankPlus = playerJson.has("monthlyPackageRank");
                 switch (rank){
                     case "MVP_PLUS":
                         if (rankPlus) chain.append(new PlainText("【MVP++】"));

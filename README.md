@@ -172,6 +172,12 @@
 * `hyp信息查询` 中 `player` 字段 新增 `rank赠送数`
 * 修复 `hyp信息查询` 中 `player` 字段缺少 `【MVP++】` 问题
 
+### V0.4.2 - Alpha *(2023.03.25)*
+***该版本为 `V0.4.2测试版` 即上版本的修复版本, 缺少内容待下版本更新***
+* 修正 `hyp信息查询` 中 `MVP++` 判断错误问题
+* 为 `hyp信息查询` 中 新增 `<type>` 字段错误提醒
+* 为 `hyp信息查询` 功能预留文件夹, 用于新模式添加
+* 按照 [@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo) 要求 新增退群提醒 **(配置文件有更新)**
 
 ## 四.关于
 
@@ -181,3 +187,13 @@
 
 [***点击催更***](https://qm.qq.com/cgi-bin/qm/qr?k=_rYUOn7VOO4-34qPy5kTVrrT08s3sC1v&jump_from=webapi&authKey=xH5JaRthfo8upiNAQgV8ZEumcMRJYqmvE5w1Lgz/U2yskulZz7xWMrwm32+Mhs4f)
 
+**如果你也觉得 *Practical-Widgets* 做的好的话可以给靖暄赞助(备注上您的任意 平台主页地址 及 ID 将会列入赞助列表)**
+
+**赞助方式如下**
+> ^fold
+>
+>![微信](https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png)
+>![支付宝](https://i.postimg.cc/RVMKSFmy/1678152006444.jpg)
+>![数字人名币](https://i.postimg.cc/N0WRBkGk/Screenshot-2023-03-07-09-15-02-148-cn-gov-pbc-dce.jpg)
+>![QQ](https://i.postimg.cc/Kj5T7XP0/qrcode-20230307091527.png)
+>

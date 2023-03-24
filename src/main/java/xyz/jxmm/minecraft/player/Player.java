@@ -22,22 +22,25 @@ public class Player {
         MessageChainBuilder chain = new MessageChainBuilder().append(at);
         JsonObject playerJson;
         JsonObject giftingMeta;
+        /*
         JsonObject bwJson;
         JsonObject swJson;
         JsonObject arcade;
         JsonObject TNTGames;
         JsonObject achievements;
+        V0.4.2版本更新注释
+         */
         DecimalFormat decimalFormat = new DecimalFormat("0.000");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年-MM月-dd日-HH时-mm分-ss秒", Locale.CHINA);
 
         if (json.get("player").isJsonObject()){
             playerJson = json.get("player").getAsJsonObject();
-            achievements = playerJson.get("achievements").getAsJsonObject();
+//            achievements = playerJson.get("achievements").getAsJsonObject();  V0.4.2版本更新注释
 
             chain.append(new PlainText("\n玩家名:\n"));
             if (PlayerDetermine.rank(playerJson)){
                 String rank = playerJson.get("newPackageRank").getAsString();
-                boolean rankPlus = playerJson.has("rankPlusColor");
+                boolean rankPlus = playerJson.has("monthlyPackageRank");
                 switch (rank){
                     case "MVP_PLUS":
                         if (rankPlus) chain.append(new PlainText("【MVP++】"));
@@ -113,6 +116,8 @@ public class Player {
                 chain.append(new PlainText(String.valueOf(playerJson.get("karma").getAsInt())));
             } else {chain.append(new PlainText("null"));}
 
+            /* V0.4.2版本更新  注释这部分代码  用于简化player字段代码
+
             if (playerJson.get("stats").getAsJsonObject().has("Arcade")){
                 arcade = playerJson.get("stats").getAsJsonObject().get("Arcade").getAsJsonObject();
 
@@ -165,11 +170,12 @@ public class Player {
                     chain.append(new PlainText("\nTNT游戏数据null"));
                 }
             }
+             */
 
             URL url;
             byte[] data;
             try {
-                url = new URL("https://crafatar.com/renders/body/" + playerJson.get("uuid").getAsString());
+                url = new URL("https://crafatar.com/renders/body/" + playerJson.get("uuid").getAsString() + "?scale=10");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setConnectTimeout(5000);
