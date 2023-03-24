@@ -200,10 +200,8 @@
 
 <details>
 <summary>赞助方式如下</summary>
->
->![微信](https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png)
->![支付宝](https://i.postimg.cc/RVMKSFmy/1678152006444.jpg)
->![数字人名币](https://i.postimg.cc/N0WRBkGk/Screenshot-2023-03-07-09-15-02-148-cn-gov-pbc-dce.jpg)
->![QQ](https://i.postimg.cc/Kj5T7XP0/qrcode-20230307091527.png)
->
+![微信](https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png)
+![支付宝](https://i.postimg.cc/RVMKSFmy/1678152006444.jpg)
+![数字人名币](https://i.postimg.cc/N0WRBkGk/Screenshot-2023-03-07-09-15-02-148-cn-gov-pbc-dce.jpg)
+![QQ](https://i.postimg.cc/Kj5T7XP0/qrcode-20230307091527.png)
 </details>
