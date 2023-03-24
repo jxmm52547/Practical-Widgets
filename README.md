@@ -200,6 +200,8 @@
 
 <picture>
   <source srcset="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
+  <img alt="微信." src="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
+</picture>
 
 <details>
 <summary>赞助方式如下</summary>
