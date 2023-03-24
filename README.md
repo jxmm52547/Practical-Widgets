@@ -198,6 +198,9 @@
 
 **如果你也觉得 *Practical-Widgets* 做的好的话可以给靖暄赞助(备注上您的任意 平台主页地址 及 ID 将会列入赞助列表)**
 
+<picture>
+  <source srcset="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
+
 <details>
 <summary>赞助方式如下</summary>
 ![微信](https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png)
