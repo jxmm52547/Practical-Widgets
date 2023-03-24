@@ -201,6 +201,11 @@
 <details>
 <summary>赞助方式如下</summary>
 <picture>
+  <source media="微信" srcset="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
+  <source media="支付宝" srcset="https://i.postimg.cc/RVMKSFmy/1678152006444.jpg">
+  <source media="数字人民币)" srcset="https://i.postimg.cc/N0WRBkGk/Screenshot-2023-03-07-09-15-02-148-cn-gov-pbc-dce.jpg">
+  <source media="QQ" srcset="https://i.postimg.cc/Kj5T7XP0/qrcode-20230307091527.png">
+  
   <img alt="微信." src="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
   <img alt="支付宝." src="https://i.postimg.cc/RVMKSFmy/1678152006444.jpg">
   <img alt="数字人名币." src="https://i.postimg.cc/N0WRBkGk/Screenshot-2023-03-07-09-15-02-148-cn-gov-pbc-dce.jpg">
