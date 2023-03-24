@@ -15,6 +15,8 @@
 呜呜呜, 情人节没人一起过new一个对象陪我过
 #### e. 查询 hypixel 服务器信息
 每次想看数据都得上服务器, 麻烦死了
+#### g.退群提醒
+来自[MiraiForum](https://mirai.mamoe.net/)中[@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出
 
 ### 3.代码参考于
 [MiraiForum](https://mirai.mamoe.net/)  
@@ -34,6 +36,8 @@
 情人节没对象怎么办, 那就 new一个对象吧
 #### f.查询 hypixel 服务器信息
 要来跟我比比数据吗
+#### g.退群提醒
+当群成员退群时, 发送提醒至群内
 
 
 ## 二.使用方法
@@ -75,6 +79,11 @@
 * `/hyp sw <PlayerID>` 查询 `空岛战争` 信息
 * `/hyp player <PlayerID>` 查询玩家 `hypixel服务器` 一系列信息
 * `/hyp acd <PlayerID>` 查询 `街机游戏` 信息
+
+#### g. 退群提醒
+* 格式: $memberNick + $quit + , QQ号: + $memberID + , $quitExpress
+* 例子: 終末牽挂 退出了群聊, QQ号: 123456
+请前往配置文件填写 `quit` 和 `quitExpress` 字段
 
 
 ### 2.数据库
