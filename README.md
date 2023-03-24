@@ -201,7 +201,6 @@
 <details>
 <summary>赞助方式如下</summary>
 <picture>
-  <source srcset="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
   <img alt="微信." src="https://i.postimg.cc/k4zYrbz0/mm-facetoface-collect-qrcode-1676217553397.png">
 </picture>
 ![支付宝](https://i.postimg.cc/RVMKSFmy/1678152006444.jpg)
