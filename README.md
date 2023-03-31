@@ -15,8 +15,10 @@
 呜呜呜, 情人节没人一起过new一个对象陪我过
 #### e. 查询 hypixel 服务器信息
 每次想看数据都得上服务器, 麻烦死了
-#### g.退群提醒
+#### g.退群提醒 (Alpha)
 来自[MiraiForum](https://mirai.mamoe.net/)中[@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出
+#### h.签到 (Alpha - 2)
+来自[MiraiForum](https://mirai.mamoe.net/)中[@De6ris](https://mirai.mamoe.net/user/de6ris)提出自定义消息格式, 此功能用于测试
 
 ### 3.代码参考于
 [MiraiForum](https://mirai.mamoe.net/)  
@@ -38,6 +40,8 @@
 要来跟我比比数据吗
 #### g.退群提醒
 当群成员退群时, 发送提醒至群内
+#### h.签到
+没什么作用, 用来测试自定义消息格式用
 
 
 ## 二.使用方法
@@ -84,6 +88,9 @@
 * 格式: $memberNick + $quit + , QQ号: + $memberID + , $quitExpress
 * 例子: 終末牽挂 退出了群聊, QQ号: 123456
 请前往配置文件填写 `quit` 和 `quitExpress` 字段
+
+#### h. 签到
+* `/签到` 每天一次 存储签到次数 (详细查看数据库)
 
 
 ### 2.数据库
@@ -187,6 +194,10 @@
 * 为 `hyp信息查询` 中 新增 `<type>` 字段错误提醒
 * 为 `hyp信息查询` 功能预留文件夹, 用于新模式添加
 * 按照 [@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo) 要求 新增退群提醒 **(配置文件有更新)**
+
+### V0.4.2 - Alpha - 2 *(2023.03.31)*
+***该版本为 `V0.4.2测试版2` 即上版本的 新功能预发布 版本, 可能存在严重BUG***(这次细心了, 不出意外的话是不会有bug的, 但是不出意外的话肯定会出意外)
+* 新功能 `签到` 但是没有什么实际作用, 属于是按照 [MiraiForum](https://mirai.mamoe.net/) 中 [De6ris](https://mirai.mamoe.net/user/de6ris) 的要求测试 `自定义消息结构` 详细可查看配置文件
 
 ## 四.关于
 
