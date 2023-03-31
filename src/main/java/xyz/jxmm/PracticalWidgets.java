@@ -4,7 +4,7 @@ import xyz.jxmm.data.*;
 import xyz.jxmm.data.Object;
 import xyz.jxmm.tools.*;
 import xyz.jxmm.config.Main;
-import xyz.jxmm.member_leave.memberLeave;
+import xyz.jxmm.member_leave.MemberLeave;
 
 import net.mamoe.mirai.contact.Member;
 import net.mamoe.mirai.event.events.MemberLeaveEvent;
@@ -27,7 +27,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.4.2-Alpha")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.4.2-Alpha-2")
                 .name("一点小功能")
                 .author("靖暄")
                 .build());
@@ -36,7 +36,7 @@ public final class PracticalWidgets extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("一点小功能  已加载!");//插件加载提示
-        getLogger().info("当前功能: 舔狗日记, 今日人品, 今日人品排行榜, 点歌, new对象, Hyp信息查询, 退群提醒");
+        getLogger().info("当前功能: 舔狗日记, 今日人品, 今日人品排行榜, 点歌, new对象, Hyp信息查询, 退群提醒, 签到");
 
         try {//数据库相关
             Data.main();
@@ -67,39 +67,44 @@ public final class PracticalWidgets extends JavaPlugin {
             if (msg.startsWith(prefix)){;
                 msg = msg.replace(prefix,"");
 
-                if(msg.equals("update")){
-                    MainExample.update(group);
-                } else if (msg.equals("reset jrrptop")) {
-                    xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
-                } else if (JrrpMap.jrrpMap(msg)){
-                    try {
+                try {
+                    if(msg.equals("update")){
+                        MainExample.update(group);
+                    } else if (msg.equals("reset jrrptop")) {
+                        xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
+                    } else if (JrrpMap.jrrpMap(msg)){
                         xyz.jxmm.jrrp.Main.main(sender, userName, group);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    } else if (msg.equals("注册")) {
+                        Register.main(sender, userName, group);
+                    } else if (msg.equals("舔狗日记")) {
+                        xyz.jxmm.dog.Main.main(sender,userName, group);
+                    } else if (JrrpMap.JrrpTopMap(msg)) {
+                        xyz.jxmm.jrrp.JrrpTop.jrrpTop(group,sender);
+                    } else if(msg.startsWith("点歌")){
+                        xyz.jxmm.music.Main.main(msg,group,sender);
+                    } else if(msg.startsWith("new对象")){
+                        xyz.jxmm.new_object.NewObject.newObject(sender, group);
+                    } else if (msg.startsWith("hyp ")){
+                        xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
+                    } else if (msg.equals("签到")){
+                        xyz.jxmm.sign.Sign.sign(sender,group);
                     }
-                } else if (msg.equals("注册")) {
-                    Register.main(sender, userName, group);
-                } else if (msg.equals("舔狗日记")) {
-                    xyz.jxmm.dog.Main.main(sender,userName, group);
-                } else if (JrrpMap.JrrpTopMap(msg)) {
-                    xyz.jxmm.jrrp.JrrpTop.jrrpTop(group,sender);
-                } else if(msg.startsWith("点歌")){
-                    xyz.jxmm.music.Main.main(msg,group,sender);
-                } else if(msg.startsWith("new对象")){
-                    xyz.jxmm.new_object.NewObject.newObject(sender, group);
-                } else if (msg.startsWith("hyp ")){
-                    xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+
+
             }
 
         });
 
+        //群成员离开通知
         eventChannel.subscribeAlways(MemberLeaveEvent.class, ml ->{
             Group group = ml.getGroup();
             Member member = ml.getMember();
 
             try {
-                memberLeave.memberLeave(group,member);
+                MemberLeave.memberLeave(group,member);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

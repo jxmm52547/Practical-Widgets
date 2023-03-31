@@ -40,7 +40,18 @@ public class Main {
                 + "#退出了群聊\n"
                 + "quit = 退出了群聊\n"
                 + "#自定义形容\n"
-                + "quitExpress = ";
+                + "quitExpress = \n\n"
+
+                + "#签到提示    采用半自定义语句, 预计未来使用全自定义语句\n"
+                + "#这里 & 后接固定结构, 两个 $ 中包含的是自定义语句    可研究下列例子\n"
+                + "#已签到\n"
+                + "hasBeenSigned = &@sender &hasBeenSignedExpress&\n"
+                + "hasBeenSignedExpress = 今日已签到, 不可以重复签到哦~\n"
+                + "#解析: @123456 今日已签到, 不可以重复签到哦~\n"
+                + "#未签到\n"
+                + "sign = &@sender $signExpress$\n"
+                + "signExpress = 签到成功~不知道送你什么, 就给你记录一次签到次数吧\n"
+                + "#解析: @123456 签到成功~不知道送你什么, 就给你记录一次签到次数吧";
         return cfg;
     }
 
@@ -87,7 +98,18 @@ public class Main {
                     + "#退出了群聊\n"
                     + "quit = 退出了群聊\n"
                     + "#自定义形容\n"
-                    + "quitExpress = ";
+                    + "quitExpress = \n\n"
+
+                    + "#签到提示    采用半自定义语句, 预计未来使用全自定义语句\n"
+                    + "#这里 & 后接固定结构, 两个 $ 中包含的是自定义语句    可研究下列例子\n"
+                    + "#已签到\n"
+                    + "hasBeenSigned = &@sender &hasBeenSignedExpress&\n"
+                    + "hasBeenSignedExpress = 今日已签到, 不可以重复签到哦~\n"
+                    + "#解析: @123456 今日已签到, 不可以重复签到哦~\n"
+                    + "#未签到\n"
+                    + "sign = &@sender $signExpress$\n"
+                    + "signExpress = 签到成功~不知道送你什么, 就给你记录一次签到次数吧\n"
+                    + "#解析: @123456 签到成功~不知道送你什么, 就给你记录一次签到次数吧";
 
             //重新组建 配置文件
             FileWriterMethod.fileWriter(file.getPath(), cfg);
@@ -134,7 +156,18 @@ public class Main {
                     + "#退出了群聊\n"
                     + "quit = 退出了群聊\n"
                     + "#自定义形容\n"
-                    + "quitExpress = ";
+                    + "quitExpress = \n\n"
+
+                    + "#签到提示    采用半自定义语句, 预计未来使用全自定义语句\n"
+                    + "#这里 & 后接固定结构, 两个 $ 中包含的是自定义语句    可研究下列例子\n"
+                    + "#已签到\n"
+                    + "hasBeenSigned = &@sender &hasBeenSignedExpress&\n"
+                    + "hasBeenSignedExpress = 今日已签到, 不可以重复签到哦~\n"
+                    + "#解析: @123456 今日已签到, 不可以重复签到哦~\n"
+                    + "#未签到\n"
+                    + "sign = &@sender $signExpress$\n"
+                    + "signExpress = 签到成功~不知道送你什么, 就给你记录一次签到次数吧\n"
+                    + "#解析: @123456 签到成功~不知道送你什么, 就给你记录一次签到次数吧";
             FileWriterMethod.fileWriter(file.getPath(),cfg);
         } else if (!properties().containsKey("prefix")){ //如果没有 prefix 这个key就进行更新
             String ALAPIToken = properties.getProperty("ALAPIToken");
@@ -178,7 +211,18 @@ public class Main {
                     + "#退出了群聊\n"
                     + "quit = 退出了群聊\n"
                     + "#自定义形容\n"
-                    + "quitExpress = ";
+                    + "quitExpress = \n\n"
+
+                    + "#签到提示    采用半自定义语句, 预计未来使用全自定义语句\n"
+                    + "#这里 & 后接固定结构, 两个 $ 中包含的是自定义语句    可研究下列例子\n"
+                    + "#已签到\n"
+                    + "hasBeenSigned = &@sender &hasBeenSignedExpress&\n"
+                    + "hasBeenSignedExpress = 今日已签到, 不可以重复签到哦~\n"
+                    + "#解析: @123456 今日已签到, 不可以重复签到哦~\n"
+                    + "#未签到\n"
+                    + "sign = &@sender $signExpress$\n"
+                    + "signExpress = 签到成功~不知道送你什么, 就给你记录一次签到次数吧\n"
+                    + "#解析: @123456 签到成功~不知道送你什么, 就给你记录一次签到次数吧";
             FileWriterMethod.fileWriter(file.getPath(),cfg);
         } else if (!properties().containsKey("quit")){ //如果没有 quit 这个key就进行更新
             String prefix = properties.getProperty("prefix");
@@ -224,7 +268,78 @@ public class Main {
                     + "#退出了群聊\n"
                     + "quit = 退出了群聊\n"
                     + "#自定义形容\n"
-                    + "quitExpress = ";
+                    + "quitExpress = \n\n"
+
+                    + "#签到提示    采用半自定义语句, 预计未来使用全自定义语句\n"
+                    + "#这里 & 后接固定结构, 两个 $ 中包含的是自定义语句    可研究下列例子\n"
+                    + "#已签到\n"
+                    + "hasBeenSigned = &@sender &hasBeenSignedExpress&\n"
+                    + "hasBeenSignedExpress = 今日已签到, 不可以重复签到哦~\n"
+                    + "#解析: @123456 今日已签到, 不可以重复签到哦~\n"
+                    + "#未签到\n"
+                    + "sign = &@sender $signExpress$\n"
+                    + "signExpress = 签到成功~不知道送你什么, 就给你记录一次签到次数吧\n"
+                    + "#解析: @123456 签到成功~不知道送你什么, 就给你记录一次签到次数吧";
+            FileWriterMethod.fileWriter(file.getPath(),cfg);
+        } else if (!properties().containsKey("sign")){ //如果没有 sign 这个 key 就进行更新
+            String prefix = properties.getProperty("prefix");
+
+            String ALAPIToken = properties.getProperty("ALAPIToken");
+
+            String $0 = properties.getProperty("0");
+            String $1$20 = properties.getProperty("1到20");
+            String $21$40 = properties.getProperty("21到40");
+            String $41$60 = properties.getProperty("41到60");
+            String $61$80 = properties.getProperty("61到80");
+            String $81$99 = properties.getProperty("81到99");
+            String $100 = properties.getProperty("100");
+
+            String HypixelAPI = properties.getProperty("HypixelAPI");
+
+            String quit = properties().getProperty("quit");
+            String quitExpress = properties().getProperty("quitExpress");
+
+            String cfg = "#这里是配置文件,请谨慎填写内容\n\n"
+
+                    + "#指令前缀 默认 /\n"
+                    + "prefix = " + prefix + "\n\n"
+
+                    + "#token相关\n"
+                    + "#ALAPI  请前往www.alapi.cn注册/登录账号后在个人中心找到自己的token密钥\n"
+                    + "ALAPIToken = " + ALAPIToken + "\n\n"
+
+                    + "#今日人品相关\n"
+                    + "#自定义 今日人品 形容词\n"
+                    + "0 = " + $0 + "\n"
+                    + "1到20 = " + $1$20 + "\n"
+                    + "21到40 = " + $21$40 +  "\n"
+                    + "41到60 = " + $41$60 + "\n"
+                    + "61到80 = " + $61$80 + "\n"
+                    + "81到99 = " + $81$99 + "\n"
+                    + "100 = " + $100 + "\n\n"
+
+                    + "#HypixelAPI\n"
+                    + "#请连接至hypixel服务器并输入指令 '/api' 获取您的Key, 如果忘记了您的api 可输入指令 '/api new' 获取新的API\n"
+                    + "HypixelAPI = " + HypixelAPI + "\n\n"
+
+                    + "#当群成员退出群聊时自定义回复\n"
+                    + "#格式: $memberNick + $quit + , QQ号: + $memberID + , $quitExpress\n"
+                    + "#例子: 終末牽挂 退出了群聊, QQ号: 123456\n"
+                    + "#退出了群聊\n"
+                    + "quit = " + quit + "\n"
+                    + "#自定义形容\n"
+                    + "quitExpress = " + quitExpress + "\n\n"
+
+                    + "#签到提示    采用半自定义语句, 预计未来使用全自定义语句\n"
+                    + "#这里 & 后接固定结构, 两个 $ 中包含的是自定义语句    可研究下列例子\n"
+                    + "#已签到\n"
+                    + "hasBeenSigned = &@sender $hasBeenSignedExpress$\n"
+                    + "hasBeenSignedExpress = 今日已签到, 不可以重复签到哦~\n"
+                    + "#解析: @123456 今日已签到, 不可以重复签到哦~\n"
+                    + "#未签到\n"
+                    + "sign = &@sender 签到成功~ $signExpress$\n"
+                    + "signExpress = 不知道送你什么, 就给你记录一次签到次数吧\n"
+                    + "#解析: @123456 签到成功~ 不知道送你什么, 就给你记录一次签到次数吧";
             FileWriterMethod.fileWriter(file.getPath(),cfg);
         }
         //以上内容为储存用户填写的value

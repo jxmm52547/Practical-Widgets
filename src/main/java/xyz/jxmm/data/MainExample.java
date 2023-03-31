@@ -25,6 +25,7 @@ public class MainExample {
         JsonObject example = new JsonObject();
         JsonObject jrrpExample = new JsonObject();
         JsonObject dogExample = new JsonObject();
+        JsonObject signExample = new JsonObject();
 
         jrrpExample.addProperty("jrrpValue", 0);
         jrrpExample.addProperty("week", "这是模板");
@@ -32,10 +33,14 @@ public class MainExample {
         dogExample.addProperty("dogValue","String");
         dogExample.addProperty("week", "请勿删除");
 
+        signExample.addProperty("签到次数",0);
+        signExample.addProperty("week","签到判断");
+
         example.add("jrrp",jrrpExample);
         example.add("dog", dogExample);
+        example.add("sign",signExample);
         example.addProperty("lastTime", LocalDateTime.now().toString());
-        example.addProperty("version","0.3.1");
+        example.addProperty("version","0.4.2 - Alpha - 2"); //每次版本更新修改
 
         return example;
     }
@@ -55,7 +60,7 @@ public class MainExample {
             throw new RuntimeException(e);
         }
         if (json.get("123456").getAsJsonObject().has("version")){
-            if (!json.get("123456").getAsJsonObject().get("version").getAsString().equals("0.3.1")){
+            if (!json.get("123456").getAsJsonObject().get("version").getAsString().equals("0.4.2 - Alpha - 2")){ //每次版本更新修改
                 json.add("123456", main());
                 fileWriter(file.getPath(), gson.toJson(json));
             }
@@ -71,7 +76,7 @@ public class MainExample {
         }
     }
 
-    static void write() throws IOException {
+    static void write() {
         JsonObject exampleGen = gen();
         file.getParentFile().mkdirs();
         fileWriter(file.getPath(), gson.toJson(exampleGen));

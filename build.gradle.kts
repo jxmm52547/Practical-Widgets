@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "xyz.jxmm"
-version = "0.4.2 - Alpha"
+version = "0.4.2 - Alpha - 2"
 
 allprojects {
     repositories {
