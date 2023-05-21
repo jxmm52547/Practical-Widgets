@@ -105,10 +105,6 @@
 <details>
 <summary>赞助方式如下</summary>
 <picture>
-  <source srcset="https://mirai.mamoe.net/assets/uploads/files/1683460706921-vx.png">
-  <source srcset="https://mirai.mamoe.net/assets/uploads/files/1683460723852-zfb.jpg">
-  <source srcset="https://mirai.mamoe.net/assets/uploads/files/1683460741277-%E6%95%B0%E5%AD%97%E4%BA%BA%E6%B0%91%E5%B8%81.jpg">
-  <source srcset="https://mirai.mamoe.net/assets/uploads/files/1683460952559-qq.png">
   <img alt="微信." src="https://mirai.mamoe.net/assets/uploads/files/1683460706921-vx.png">
   <img alt="支付宝." src="https://mirai.mamoe.net/assets/uploads/files/1683460723852-zfb.jpg">
   <img alt="数字人名币." src="https://mirai.mamoe.net/assets/uploads/files/1683460741277-%E6%95%B0%E5%AD%97%E4%BA%BA%E6%B0%91%E5%B8%81.jpg">
