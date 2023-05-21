@@ -106,10 +106,10 @@
 <summary>赞助方式如下</summary>
 <picture>
   
-  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/86377f31-c0cf-4994-bdb0-00ed88de4861">
-  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/0e015f2d-3a3c-4d33-82b0-0d4ac04a94de">
-  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/e1adb785-db5d-45bf-a08f-781674e745fc">
-  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/43812bb4-02a9-4505-97ef-75832683b2f3">
+  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/86377f31-c0cf-4994-bdb0-00ed88de4861" style="visibility:visible;max-width:100%;">
+  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/0e015f2d-3a3c-4d33-82b0-0d4ac04a94de" style="visibility:visible;max-width:100%;">
+  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/e1adb785-db5d-45bf-a08f-781674e745fc" style="visibility:visible;max-width:100%;">
+  <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/43812bb4-02a9-4505-97ef-75832683b2f3" style="visibility:visible;max-width:100%;">
   
 </picture>
 </details>
