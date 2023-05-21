@@ -105,9 +105,9 @@
 <details>
 <summary>赞助方式如下</summary>
 <picture>
-  <img alt="微信." src="https://mirai.mamoe.net/assets/uploads/files/1683460706921-vx.png">
-  <img alt="支付宝." src="https://mirai.mamoe.net/assets/uploads/files/1683460723852-zfb.jpg">
-  <img alt="数字人名币." src="https://mirai.mamoe.net/assets/uploads/files/1683460741277-%E6%95%B0%E5%AD%97%E4%BA%BA%E6%B0%91%E5%B8%81.jpg">
-  <img alt="QQ." src="https://mirai.mamoe.net/assets/uploads/files/1683460952559-qq.png">
+  ![vx](https://github.com/jxmm52547/Practical-Widgets/assets/84485811/86377f31-c0cf-4994-bdb0-00ed88de4861)
+  ![zfb](https://github.com/jxmm52547/Practical-Widgets/assets/84485811/0e015f2d-3a3c-4d33-82b0-0d4ac04a94de)
+  ![数字人民币](https://github.com/jxmm52547/Practical-Widgets/assets/84485811/e1adb785-db5d-45bf-a08f-781674e745fc)
+  ![QQ](https://github.com/jxmm52547/Practical-Widgets/assets/84485811/43812bb4-02a9-4505-97ef-75832683b2f3)
 </picture>
 </details>
