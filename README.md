@@ -89,7 +89,7 @@
 | V0.4.1             | 2023.03.06 | <li>`hyp信息查询` 中 新增 `街机游戏` 模块 `/hyp acd <ID>`  包含了绝大多数的街机游戏模式</li><br/><li>`hyp信息查询` 中 `player` 字段 新增 `rank赠送数`</li><br/><li>修复 `hyp信息查询` 中 `player` 字段缺少 `【MVP++】` 问题</li>                                                                                                                                                                                                            |
 | V0.4.2 - Alpha     | 2023.03.25 | ***该版本为 `V0.4.2测试版` 即上版本的修复版本, 缺少内容待下版本更新***<br/><li>修正 `hyp信息查询` 中 `MVP++` 判断错误问题</li><br/><li>为 `hyp信息查询` 中 新增 `<type>` 字段错误提醒</li><br/><li>为 `hyp信息查询` 功能预留文件夹, 用于新模式添加</li><br/><li>按照 [@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo) 要求 新增退群提醒 **(配置文件有更新)**</li>                                                                                                        |
 | V0.4.2 - Alpha - 2 | 2023.03.31 | ***该版本为 `V0.4.2测试版2` 即上版本的 新功能预发布 版本, 可能存在严重BUG***(这次细心了, 不出意外的话是不会有bug的, 但是不出意外的话肯定会出意外)<li>新功能 `签到` 但是没有什么实际作用, 属于是按照 [MiraiForum](https://mirai.mamoe.net/) 中 [De6ris](https://mirai.mamoe.net/user/de6ris) 的要求测试 `自定义消息结构` 详细可查看配置文件</li>                                                                                                                                         |
-
+| V0.4.3             | 2023.09.24 | <li>新增可控的退群提醒, 详情见配置文件更新</li><br><li>完善了几个测试版</li><br><li>修复已知bug</li><br><li>`hyp信息查询` 中 新增 `密室杀手` 模块</li>                                                                                                                                                                                                                                                                           |
 
 ## 四.关于
 
@@ -101,15 +101,14 @@
 
 **如果你也觉得 *Practical-Widgets* 做的好的话可以给靖暄赞助(备注上您的任意 平台主页地址 及 ID 将会列入赞助列表)**
 
-
 <details>
 <summary>赞助方式如下</summary>
 <picture>
-  
+
   <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/86377f31-c0cf-4994-bdb0-00ed88de4861" style="visibility:visible;max-width:100%;">
   <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/0e015f2d-3a3c-4d33-82b0-0d4ac04a94de" style="visibility:visible;max-width:100%;">
   <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/e1adb785-db5d-45bf-a08f-781674e745fc" style="visibility:visible;max-width:100%;">
   <img src="https://github.com/jxmm52547/Practical-Widgets/assets/84485811/43812bb4-02a9-4505-97ef-75832683b2f3" style="visibility:visible;max-width:100%;">
-  
+
 </picture>
 </details>
