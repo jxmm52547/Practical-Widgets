@@ -46,27 +46,37 @@ public class Sign {
             String oldDayWeek = signJson.get("week").getAsString();
 
             if (toDayWeek.equals(oldDayWeek)) {  //今日已签到
-                StringBuilder firstHBS = new StringBuilder();
-                firstHBS.append(properties.getProperty("hasBeenSigned"));
+                String firstHBS = properties.getProperty("hasBeenSigned");
 
                 String express = properties.getProperty("hasBeenSignedExpress");
 
-                if (hasString(firstHBS.toString(),"$hasBeenSignedExpress$")){
-                    for (int i = 0; i < firstHBS.length(); i++) {
-                        char c = firstHBS.charAt(i);
-                        if (c == '$'){
-                            firstHBS.replace(i,i+22,express);
-                        }
-                    }
-                }
-                String format = firstHBS.toString();
+                String format = "";
 
+                if (hasString(firstHBS,"$hasBeenSignedExpress$")){
+                    System.out.println("in");
+                    format += firstHBS.replaceAll("\\$hasBeenSignedExpress\\$",express);
+
+//                    for (int i = 0; i < firstHBS.length(); i++) {
+//                        char c = firstHBS.charAt(i);
+//                        if (c == '$'){
+//                            for (int m = i; m < firstHBS.length(); m++){
+//                                char c1 = firstHBS.charAt(m);
+//                                if (c1 == '$'){
+//                                    firstHBS.replace(i,m,express);
+//                                    break;
+//                                }
+//                            }
+//                            break;
+//                        }
+//                    }
+                }
+
+                System.out.println(format);
                 sendMessage(at,group,chain,format);
 
 
 
             } else {  //未签到
-                System.out.println("in");
                 JsonObject user = json.get(sender.toString()).getAsJsonObject().get("sign").getAsJsonObject();
 
                 int signTimes = user.get("签到次数").getAsInt();
@@ -78,20 +88,21 @@ public class Sign {
 
                 json.get(sender.toString()).getAsJsonObject().add("sign", user);
 
-                StringBuilder firstSign = new StringBuilder();
-                firstSign.append(properties.getProperty("sign"));
-
+                String firstSign = properties.getProperty("sign");
                 String express = properties.getProperty("signExpress");
 
-                if (hasString(firstSign.toString(),"$signExpress$")){
-                    for (int i = 0; i < firstSign.length(); i++) {
-                        char c = firstSign.charAt(i);
-                        if (c == '$'){
-                            firstSign.replace(i,i+22,express);
-                        }
-                    }
+                String format = "";
+
+                if (hasString(firstSign,"$signExpress$")){
+                    format = firstSign.replaceAll("\\$signExpress\\$",express);
+
+//                    for (int i = 0; i < firstSign.length(); i++) {
+//                        char c = firstSign.charAt(i);
+//                        if (c == '$'){
+//                            firstSign.replace(i,i+22,express);
+//                        }
+//                    }
                 }
-                String format = firstSign.toString();
 
                 sendMessage(at,group,chain,format);
                 fileWriter("./PracticalWidgets/data.json", gson.toJson(json));
@@ -102,6 +113,8 @@ public class Sign {
 
     public static void sendMessage(MessageChain at,Group group,MessageChainBuilder chain,String format){
         if (hasString(format,"&@sender")){  //需要 @sender 时
+
+
 
             if (format.startsWith("&@sender")) {  //首先 @sender
                 chain.append(at);

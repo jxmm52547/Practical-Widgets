@@ -15,6 +15,7 @@ import tax.cute.minecraftinfoapi.CommonException;
 
 import xyz.jxmm.minecraft.arcade.Arcade;
 import xyz.jxmm.minecraft.bw.BedWars;
+import xyz.jxmm.minecraft.mm.MurderMystery;
 import xyz.jxmm.minecraft.player.Guild;
 import xyz.jxmm.minecraft.player.Player;
 import xyz.jxmm.minecraft.player.RecentGames;
@@ -88,11 +89,24 @@ public class Hypixel {
                     Arcade.acd(json,sender,group);
                 }
             }
+        } else if (handle.startsWith("mm")) {
+            ID.append(handle.replaceAll("mm ", ""));
+            if (value(ID.toString(),group,chain)){
+                stringBuilder.append(analysis(ID.toString(),group,chain));
+                json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
+                type.append("mm");
+
+                if (error(json,chain,group)) {
+                    MurderMystery.mm(json,sender,group);
+                }
+            }
+
         } else {
             chain.append(new PlainText("指令不完整, 缺少关键字或关键字错误"));
             chain.append(new PlainText("\n/hyp <type> <playerID>"));
-            chain.append(new PlainText("\n<type>包含如下关键字:\n<player>玩家系列数据\n<acd>街机游戏\n<bw>起床战争\n" +
-                    "<sw>空岛战争"));
+            chain.append(new PlainText("\n<type>包含如下关键字:\nplayer 玩家系列数据\nacd 街机游戏\nbw 起床战争\n" +
+                    "sw 空岛战争\nmm 密室杀手"));
+            chain.append(new PlainText("\n<playerID> 玩家ID(非UUID, 会通过ID转换至UUID, 暂不支持直接通过UUID查询)"));
             /*
 
 <mm>密室杀手
@@ -130,6 +144,10 @@ public class Hypixel {
                 return "";
             case "IO":
                 chain.append(new PlainText("玩家ID格式错误, 请输入正确的玩家ID"));
+                group.sendMessage(chain.build());
+                return "";
+            case "reset":
+                chain.append(new PlainText("链接已重置, 请稍后再试"));
                 group.sendMessage(chain.build());
                 return "";
             default:

@@ -52,7 +52,7 @@ public class JrrpTop {
         return groupObject;
     }
 
-    static void write() throws IOException {
+    static void write() {
         JsonObject exampleGen = gen(123456L,123L,"example",0);
         file.getParentFile().mkdirs();
         fileWriter(file.getPath(), gson.toJson(exampleGen));

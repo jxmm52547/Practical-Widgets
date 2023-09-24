@@ -36,7 +36,7 @@ public class Main {
 
         try {
             properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
-            name = URLEncoder.encode(name,"UTF-8");
+            name = URLEncoder.encode(name, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

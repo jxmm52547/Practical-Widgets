@@ -15,7 +15,7 @@ import java.util.Properties;
 public class MemberLeave {
 
     static File cfg = new File("./PracticalWidgets/config.properties");
-    public static void memberLeave(Group group, Member member) throws IOException {
+    public static void memberLeave(Group group, Member member,String nick) throws IOException {
         String quit = "";
         String quitExpress = "";
         Properties properties = new Properties();
@@ -32,6 +32,8 @@ public class MemberLeave {
         chain.append(new PlainText(quit));
         chain.append(new PlainText(", QQ号: "));
         chain.append(new PlainText(Long.toString(memberID)));
+        chain.append(new PlainText(", 群昵称: "));
+        chain.append(new PlainText(nick));
 
         if (quitExpress != null){
             chain.append(new PlainText(", "));

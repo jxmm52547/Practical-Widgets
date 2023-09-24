@@ -8,6 +8,7 @@ import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.minecraft.Nick;
 import xyz.jxmm.minecraft.player.PlayerDetermine;
 
 import java.text.DecimalFormat;
@@ -23,26 +24,8 @@ public class SkyWars {
         if (json.get("player").isJsonObject()){
             playerJson = json.get("player").getAsJsonObject();
 
-            chain.append(new PlainText("\n玩家名:\n"));
-            if (PlayerDetermine.rank(playerJson)){
-                String rank = playerJson.get("newPackageRank").getAsString();
-                boolean rankPlus = playerJson.has("monthlyPackageRank");
-                switch (rank){
-                    case "MVP_PLUS":
-                        if (rankPlus) chain.append(new PlainText("【MVP++】"));
-                        else chain.append(new PlainText("【MVP+】"));
-                        break;
-                    case "MVP":
-                        chain.append(new PlainText("【MVP】"));
-                        break;
-                    case "VIP_PLUS":
-                        chain.append(new PlainText("【VIP+】"));
-                        break;
-                    case "VIP":
-                        chain.append(new PlainText("【VIP】"));
-                        break;
-                }
-            }
+            chain.append(new PlainText(Nick.nick(playerJson))); //玩家名称前缀
+
             chain.append(new PlainText(playerJson.get("displayname").getAsString()));
             chain.append(new PlainText(" | 空岛战争 数据如下:"));
 
@@ -53,7 +36,7 @@ public class SkyWars {
                     chain.append(new PlainText("\n总游戏场次: "));
                     chain.append(new PlainText(String.valueOf(swJson.get("games_played_skywars").getAsInt())));
                     chain.append(new PlainText(" | 当前等级: "));
-                    chain.append(new PlainText(swJson.get("levelFormatted").getAsString().replace(swJson.get("levelFormatted").getAsString().substring(0,1),"").replace("⋆","✨")));
+                    chain.append(new PlainText(swJson.get("levelFormatted").getAsString().replace(swJson.get("levelFormatted").getAsString().substring(0,2),"").replace("⋆","✨")));
                 }
 
                 if (skywars_experience(swJson)){
@@ -63,14 +46,14 @@ public class SkyWars {
                     chain.append(new PlainText(swJson.get("coins").getAsInt() + "💰"));
                 }
 
-                if (win_streak(swJson)){
+                if (wins(swJson)){
                     chain.append(new PlainText("\n胜场数: "));
-                    chain.append(new PlainText(String.valueOf(swJson.get("win_streak").getAsInt())));
+                    chain.append(new PlainText(String.valueOf(swJson.get("wins").getAsInt())));
                     chain.append(new PlainText(" | 败场数: "));
                     chain.append(new PlainText(String.valueOf(swJson.get("losses").getAsInt())));
                     chain.append(new PlainText(" | 胜率: "));
                     chain.append(new PlainText(String.valueOf(decimalFormat.format(
-                            (float) swJson.get("win_streak").getAsInt() /
+                            (float) swJson.get("wins").getAsInt() /
                                     (float) swJson.get("losses").getAsInt()))));
                 }
 

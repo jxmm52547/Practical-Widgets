@@ -27,7 +27,7 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.4.2-Alpha-2")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.4.3")
                 .name("一点小功能")
                 .author("靖暄")
                 .build());
@@ -64,7 +64,7 @@ public final class PracticalWidgets extends JavaPlugin {
             }
 
             String prefix = properties.getProperty("prefix");
-            if (msg.startsWith(prefix)){;
+            if (msg.startsWith(prefix)){
                 msg = msg.replace(prefix,"");
 
                 try {
@@ -86,7 +86,7 @@ public final class PracticalWidgets extends JavaPlugin {
                         xyz.jxmm.new_object.NewObject.newObject(sender, group);
                     } else if (msg.startsWith("hyp ")){
                         xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
-                    } else if (msg.equals("签到")){
+                    } else if (msg.equals("签到") || msg.equals("sign")){
                         xyz.jxmm.sign.Sign.sign(sender,group);
                     }
                 } catch (IOException e) {
@@ -100,14 +100,30 @@ public final class PracticalWidgets extends JavaPlugin {
 
         //群成员离开通知
         eventChannel.subscribeAlways(MemberLeaveEvent.class, ml ->{
-            Group group = ml.getGroup();
-            Member member = ml.getMember();
 
+            Properties properties = new Properties();
+            File file = new File("./PracticalWidgets/config.properties");
             try {
-                MemberLeave.memberLeave(group,member);
+                properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            if (properties.getProperty("memberQuitSwitch").equals("true")){
+                Group group = ml.getGroup();
+                Member member = ml.getMember();
+                String nick = ml.getMember().getNick();
+
+                try {
+                    MemberLeave.memberLeave(group,member,nick);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                System.out.println("群成员退出,未开启退出提醒,仅控制台提醒");
+            }
+
+
         });
     }
 

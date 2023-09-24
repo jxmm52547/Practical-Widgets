@@ -30,8 +30,12 @@ public class BedWars {
                 boolean rankPlus = playerJson.has("monthlyPackageRank");
                 switch (rank){
                     case "MVP_PLUS":
-                        if (rankPlus) chain.append(new PlainText("【MVP++】"));
-                        else chain.append(new PlainText("【MVP+】"));
+                        if (rankPlus && playerJson.get("monthlyPackageRank").getAsString().equals("SUPERSTAR")){
+                            chain.append(new PlainText("【MVP++】"));
+                        }
+                        else{
+                            chain.append(new PlainText("【MVP+】"));
+                        }
                         break;
                     case "MVP":
                         chain.append(new PlainText("【MVP】"));

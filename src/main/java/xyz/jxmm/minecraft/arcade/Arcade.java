@@ -9,6 +9,7 @@ import net.mamoe.mirai.message.data.ForwardMessageBuilder;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.minecraft.Nick;
 import xyz.jxmm.minecraft.player.PlayerDetermine;
 
 import java.text.DecimalFormat;
@@ -26,26 +27,7 @@ public class Arcade {
             playerJson = json.get("player").getAsJsonObject();
             achievements = playerJson.get("achievements").getAsJsonObject();
 
-            chain.append(new PlainText("\n玩家名:\n"));
-            if (PlayerDetermine.rank(playerJson)){
-                String rank = playerJson.get("newPackageRank").getAsString();
-                boolean rankPlus = playerJson.has("monthlyPackageRank");
-                switch (rank){
-                    case "MVP_PLUS":
-                        if (rankPlus) chain.append(new PlainText("【MVP++】"));
-                        else chain.append(new PlainText("【MVP+】"));
-                        break;
-                    case "MVP":
-                        chain.append(new PlainText("【MVP】"));
-                        break;
-                    case "VIP_PLUS":
-                        chain.append(new PlainText("【VIP+】"));
-                        break;
-                    case "VIP":
-                        chain.append(new PlainText("【VIP】"));
-                        break;
-                }
-            }
+            chain.append(new PlainText(Nick.nick(playerJson))); //玩家名称前缀
             chain.append(new PlainText(json.get("player").getAsJsonObject().get("displayname").getAsString()));
             chain.append(new PlainText(" | 街机游戏 数据如下:"));
 

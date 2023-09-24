@@ -19,6 +19,8 @@ public class MJURLConnect {
             return "FileNotFound";
         } else if (result.startsWith("java.io.IOException:")){
             return "IO";
+        } else if (result.startsWith("java.net.SocketException:")){
+            return "reset";
         } else {
             JsonObject json = gson.fromJson(result, JsonObject.class);
             return json.get("id").getAsString();

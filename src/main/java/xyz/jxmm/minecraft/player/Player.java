@@ -8,6 +8,7 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 import net.mamoe.mirai.utils.ExternalResource;
+import xyz.jxmm.minecraft.Nick;
 
 import java.io.*;
 import java.net.*;
@@ -37,26 +38,8 @@ public class Player {
             playerJson = json.get("player").getAsJsonObject();
 //            achievements = playerJson.get("achievements").getAsJsonObject();  V0.4.2版本更新注释
 
-            chain.append(new PlainText("\n玩家名:\n"));
-            if (PlayerDetermine.rank(playerJson)){
-                String rank = playerJson.get("newPackageRank").getAsString();
-                boolean rankPlus = playerJson.has("monthlyPackageRank");
-                switch (rank){
-                    case "MVP_PLUS":
-                        if (rankPlus) chain.append(new PlainText("【MVP++】"));
-                        else chain.append(new PlainText("【MVP+】"));
-                        break;
-                    case "MVP":
-                        chain.append(new PlainText("【MVP】"));
-                        break;
-                    case "VIP_PLUS":
-                        chain.append(new PlainText("【VIP+】"));
-                        break;
-                    case "VIP":
-                        chain.append(new PlainText("【VIP】"));
-                        break;
-                }
-            }
+            chain.append(new PlainText(Nick.nick(playerJson))); //玩家名称前缀
+
             chain.append(new PlainText(playerJson.get("displayname").getAsString()));
 
             chain.append(new PlainText("\nRANK赠送数: "));
@@ -64,8 +47,8 @@ public class Player {
                 giftingMeta = playerJson.get("giftingMeta").getAsJsonObject();
                 if (PlayerDetermine.ranksGiven(giftingMeta)){
                     chain.append(new PlainText(String.valueOf(giftingMeta.get("ranksGiven").getAsInt())));
-                } else chain.append(new PlainText("null"));
-            } else chain.append(new PlainText("null"));
+                } else chain.append(new PlainText("0"));
+            } else chain.append(new PlainText("0"));
 
             chain.append(new PlainText("\n首次登录时间: "));
             if (PlayerDetermine.firstLogin(playerJson)){
@@ -92,7 +75,7 @@ public class Player {
             chain.append(new PlainText("\n玩家所属公会: "));
             if (PlayerDetermine.guild(guild)){
                 chain.append(new PlainText(guild.get("guild").getAsJsonObject().get("name").getAsString()));
-            } else {chain.append(new PlainText("null"));}
+            } else {chain.append(new PlainText("无"));}
 
             chain.append(new PlainText("\n大厅等级: "));
             if (PlayerDetermine.networkExp(playerJson)){
