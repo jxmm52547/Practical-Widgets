@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.*;
+import xyz.jxmm.perm.Determine;
 import xyz.jxmm.tools.*;
 
 import net.mamoe.mirai.contact.Group;
@@ -87,6 +88,12 @@ public class Main {
                     musicURL
             );
             group.sendMessage(musicShare);
+        }
+    }
+
+    public static void perm(String msg,Long sender,Group group){
+        if (Determine.main(sender,group,"song")){
+            main(msg, group, sender);
         }
     }
 

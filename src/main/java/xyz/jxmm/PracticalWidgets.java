@@ -1,7 +1,10 @@
 package xyz.jxmm;
 
+import net.mamoe.mirai.contact.ContactList;
+import net.mamoe.mirai.event.events.BotOnlineEvent;
 import xyz.jxmm.data.*;
 import xyz.jxmm.data.Object;
+import xyz.jxmm.perm.Perm;
 import xyz.jxmm.tools.*;
 import xyz.jxmm.config.Main;
 import xyz.jxmm.member_leave.MemberLeave;
@@ -27,18 +30,22 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.4.3")
-                .name("一点小功能")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.5.0")
+                .name("Practical-Widgets")
                 .author("靖暄")
                 .build());
     }
 
+    public static String version(){
+        return "0.5.0";  //每次更新修改
+    }
+
     @Override
     public void onEnable() {
-        getLogger().info("一点小功能  已加载!");//插件加载提示
-        getLogger().info("当前功能: 舔狗日记, 今日人品, 今日人品排行榜, 点歌, new对象, Hyp信息查询, 退群提醒, 签到");
+        getLogger().info("Practical-Widgets  已加载!");//插件加载提示
 
         try {//数据库相关
+            Perm.example();
             Data.main();
             JrrpTop.main();
             TimerTask.timerTask();
@@ -47,6 +54,12 @@ public final class PracticalWidgets extends JavaPlugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        EventChannel<Event> botOnline = GlobalEventChannel.INSTANCE.parentScope(this);
+        botOnline.subscribeAlways(BotOnlineEvent.class, b -> {
+            ContactList<Group> groupContactList = b.getBot().getGroups();
+            Perm.creatNew(groupContactList);
+        });
 
         EventChannel<Event> eventChannel = GlobalEventChannel.INSTANCE.parentScope(this);
         eventChannel.subscribeAlways(GroupMessageEvent.class, g -> {
@@ -69,25 +82,29 @@ public final class PracticalWidgets extends JavaPlugin {
 
                 try {
                     if(msg.equals("update")){
-                        MainExample.update(group);
+                        MainExample.perm(group,sender);
                     } else if (msg.equals("reset jrrptop")) {
-                        xyz.jxmm.jrrp.ResetJrrpTop.reWrite(group);
+                        xyz.jxmm.jrrp.ResetJrrpTop.perm(group,sender);
                     } else if (JrrpMap.jrrpMap(msg)){
-                        xyz.jxmm.jrrp.Main.main(sender, userName, group);
+                        xyz.jxmm.jrrp.Main.perm(userName,sender, group);
                     } else if (msg.equals("注册")) {
-                        Register.main(sender, userName, group);
+                        Register.perm(sender, group);
                     } else if (msg.equals("舔狗日记")) {
-                        xyz.jxmm.dog.Main.main(sender,userName, group);
+                        xyz.jxmm.dog.Main.perm(userName, sender, group);
                     } else if (JrrpMap.JrrpTopMap(msg)) {
-                        xyz.jxmm.jrrp.JrrpTop.jrrpTop(group,sender);
+                        xyz.jxmm.jrrp.JrrpTop.perm(sender, group);
                     } else if(msg.startsWith("点歌")){
-                        xyz.jxmm.music.Main.main(msg,group,sender);
+                        xyz.jxmm.music.Main.perm(msg, sender, group);
                     } else if(msg.startsWith("new对象")){
-                        xyz.jxmm.new_object.NewObject.newObject(sender, group);
+                        xyz.jxmm.new_object.NewObject.perm(sender, group);
                     } else if (msg.startsWith("hyp ")){
-                        xyz.jxmm.minecraft.Hypixel.hypixel(msg,sender,group);
+                        xyz.jxmm.minecraft.Hypixel.perm(msg,sender,group);
                     } else if (msg.equals("签到") || msg.equals("sign")){
-                        xyz.jxmm.sign.Sign.sign(sender,group);
+                        xyz.jxmm.sign.Sign.perm(sender,group);
+                    } else if (msg.startsWith("bl ")){
+                        xyz.jxmm.perm.BlackList.blackLIst(msg,sender,group);
+                    } else if (msg.startsWith("perm ")) {
+                        xyz.jxmm.perm.PermissionGenerator.permissionGenerator(msg.replaceAll("perm ",""),sender,group);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -11,7 +11,11 @@ import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.data.MainExample;
+import xyz.jxmm.perm.Determine;
+import static xyz.jxmm.tools.FileReaderMethod.fileReader;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,20 +30,19 @@ public class Sign {
     static File cfg = new File("./PracticalWidgets/config.properties");
     static Properties properties = new Properties();
 
-    public static void sign(Long sender, Group group) throws IOException {
+    public static void sign(Long sender, Group group){
         MessageChainBuilder chain = new MessageChainBuilder();
 
         JsonObject json;
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
 
-        properties.load(new InputStreamReader(Files.newInputStream(cfg.toPath()), StandardCharsets.UTF_8));
-        json = new Gson().fromJson(new InputStreamReader(Files.newInputStream(data.toPath()), StandardCharsets.UTF_8), JsonObject.class);
+        try {
+            properties.load(new InputStreamReader(Files.newInputStream(cfg.toPath()), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        json = new Gson().fromJson(fileReader(data.getPath()), JsonObject.class);
 
-        if (!json.has(sender.toString())) {
-            chain.append(at);
-            chain.append(new PlainText("\n未注册,请使用[ /注册 ]先注册哦"));
-            group.sendMessage(chain.build());
-        } else {
             JsonObject signJson = json.get(sender.toString()).getAsJsonObject().get("sign").getAsJsonObject();
 
             String toDayWeek = LocalDateTime.now().getDayOfWeek().toString();
@@ -53,7 +56,6 @@ public class Sign {
                 String format = "";
 
                 if (hasString(firstHBS,"$hasBeenSignedExpress$")){
-                    System.out.println("in");
                     format += firstHBS.replaceAll("\\$hasBeenSignedExpress\\$",express);
 
 //                    for (int i = 0; i < firstHBS.length(); i++) {
@@ -71,10 +73,7 @@ public class Sign {
 //                    }
                 }
 
-                System.out.println(format);
                 sendMessage(at,group,chain,format);
-
-
 
             } else {  //未签到
                 JsonObject user = json.get(sender.toString()).getAsJsonObject().get("sign").getAsJsonObject();
@@ -108,6 +107,41 @@ public class Sign {
                 fileWriter("./PracticalWidgets/data.json", gson.toJson(json));
 
             }
+    }
+
+    public static void perm(Long sender,Group group) throws IOException {
+        if (Determine.main(sender,group,"sign")){
+            register(group,sender);
+        }
+    }
+
+    public static void register(Group group,Long sender){
+        JsonObject json = json = new Gson().fromJson(fileReader(data.getPath()), JsonObject.class);
+        MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
+
+        if (Determine.register(group)){
+            if (!json.has(sender.toString())){
+                MessageChain chain = new MessageChainBuilder()
+                        .append(at)
+                        .append(new PlainText(" 未注册,请使用[ /注册 ]先注册哦"))
+                        .build();
+                group.sendMessage(chain);
+            } else {
+                sign(sender,group);
+            }
+        } else if (!json.has(sender.toString())){
+            MessageChain chain = new MessageChainBuilder()
+                    .append(at)
+                    .append(new PlainText("已为您自动注册"))
+                    .build();
+            group.sendMessage(chain);
+
+            JsonObject jsobj = MainExample.main();
+            json.add(sender.toString(), jsobj);
+            fileWriter(data.getPath(), gson.toJson(json));
+            sign(sender,group);
+        } else {
+            sign(sender,group);
         }
     }
 

@@ -10,6 +10,7 @@ import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.perm.Determine;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,14 +20,23 @@ public class Register {
 
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     static File file = new File("./PracticalWidgets/data.json");
-    public static void main(Long sender, String userName, Group group){
-        JsonObject json;
-        try {
-            json = new Gson().fromJson(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), JsonObject.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
+    public static void perm(Long sender,Group group) throws IOException {
+        MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
+
+        if (Determine.register(group)){
+            main(sender,group);
+        } else {
+            MessageChain chain = new MessageChainBuilder()
+                    .append(at)
+                    .append(new PlainText(" 此群已开启自动注册, 无需手动注册"))
+                    .build();
+            group.sendMessage(chain);
+        }
+    }
+
+    public static void main(Long sender, Group group) throws IOException {
+        JsonObject json = new Gson().fromJson(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8), JsonObject.class);
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
 
         if (json.has(sender.toString())){

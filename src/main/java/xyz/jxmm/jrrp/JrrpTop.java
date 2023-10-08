@@ -10,6 +10,7 @@ import net.mamoe.mirai.message.data.ForwardMessageBuilder;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.perm.Determine;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -121,6 +122,12 @@ public class JrrpTop {
 
 
 
+    }
+
+    public static void perm(Long sender,Group group){
+        if (Determine.main(sender,group,"jrrp-top")){
+            jrrpTop(group, sender);
+        }
     }
 }
 

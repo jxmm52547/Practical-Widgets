@@ -1,7 +1,5 @@
 package xyz.jxmm.minecraft;
 
-import static xyz.jxmm.minecraft.HypURLConnect.hypixelURLConnect;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -11,8 +9,6 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 
-import tax.cute.minecraftinfoapi.CommonException;
-
 import xyz.jxmm.minecraft.arcade.Arcade;
 import xyz.jxmm.minecraft.bw.BedWars;
 import xyz.jxmm.minecraft.mm.MurderMystery;
@@ -20,11 +16,13 @@ import xyz.jxmm.minecraft.player.Guild;
 import xyz.jxmm.minecraft.player.Player;
 import xyz.jxmm.minecraft.player.RecentGames;
 import xyz.jxmm.minecraft.sw.SkyWars;
+import xyz.jxmm.perm.Determine;
 
-import java.io.IOException;
+import static xyz.jxmm.minecraft.HypURLConnect.hypixelURLConnect;
 
 
 public class Hypixel {
+
     public static void hypixel(String msg, Long sender, Group group){
         //信息部分
         String handle = msg.replaceAll("hyp ","");
@@ -108,11 +106,9 @@ public class Hypixel {
                     "sw 空岛战争\nmm 密室杀手"));
             chain.append(new PlainText("\n<playerID> 玩家ID(非UUID, 会通过ID转换至UUID, 暂不支持直接通过UUID查询)"));
             /*
-
-<mm>密室杀手
-<tnt>掘战游戏
-<du>决斗游戏
-<ww>羊毛战争
+                <tnt>掘战游戏
+                <du>决斗游戏
+                <ww>羊毛战争
              */
             group.sendMessage(chain.build());
         }
@@ -167,6 +163,12 @@ public class Hypixel {
                 }
         }
 
+    }
+
+    public static void perm(String msg,Long sender,Group group){
+        if (Determine.main(sender,group,"hyp")){
+            hypixel(msg,sender,group);
+        }
     }
 
     public static Boolean value(String ID, Group group, MessageChainBuilder chain){

@@ -1,7 +1,7 @@
 # Practical-Widgets
 
 ## 一.介绍
-### 1. 此项目为[靖暄](https://wpa.qq.com/msgrd?uin=1250838250)个人制作用于添加任何想到的小功能[Mirai Console](https://github.com/mamoe/mirai-console) 插件，同样兼容[Mirai core](https://github.com/sonder-joker/mirai-compose)
+### 1. 此项目为[靖暄](https://wpa.qq.com/msgrd?uin=1250838250)个人制作用于添加任何想到的小功能[Mirai Console](https://github.com/mamoe/mirai-console) 插件
 
 ### 2. 灵感来源于
 
@@ -14,6 +14,7 @@
 | 5   | hyp相关信息       | 每次想看数据都得上服务器，麻烦死了                                                                                         |
 | 6   | 退群提醒(Alpha)   | 来自[MiraiForum](https://mirai.mamoe.net/)中[@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo)提出         |
 | 7   | 签到(Alpha - 2) | 来自[MiraiForum](https://mirai.mamoe.net/)中[@De6ris](https://mirai.mamoe.net/user/de6ris)提出自定义消息格式, 此功能用于测试 |
+| 8   |  权限系统         |  P-W使用者强烈建议                                                                                               |
 
 
 ### 3.代码参考于
@@ -31,6 +32,7 @@
 | 6   | hyp相关信息       | 要来跟我比比数据吗                                      |
 | 7   | 退群提醒(Alpha)   | 当群成员退群时, 发送提醒至群内                               |
 | 8   | 签到(Alpha - 2) | 没什么作用, 用来测试自定义消息格式用                            |
+| 9   | 权限系统          | 终于有权限系统啦！                                      |
 
 
 ## 二.使用方法
@@ -67,6 +69,30 @@
 * 采用`.properties`文件格式储存数据，文件位于`./PracticalWidgets/config.properties` 为未来做准备
 * 配置文件有自动更新功能，您只需要在更新新版本后检查更新日志是否有新的配置信息，如果有可进行填写(无需重启即可生效)
 
+### 4.权限系统
+* 采用`.json`文件格式存储数据,文件位于`./PracticalWidgets/perm`
+* 管理员数据`admin.json`
+* 黑名单数据`blackList.json`
+* 群权限`EnableGroup.json`决定群是否启用某功能
+* 用户权限`GroupMemberPerm.json`决定用户在某群是否拥有某功能权限
+* 首次启动会创建, 如某一段数据损坏可删除这一段后重启, 会进行自行修复
+* 支持实时修改, 手动更改后无需重启
+
+#### a.指令
+* `/perm [groupID] [memberID] <type> <true | false>`  控制群或成员权限
+* `/bl <add | rm> <groupID | memberID>`  添加或删除黑名单
+
+***PS: `groupID` 为填写群号, 且必须在群号前添加 `g` 否则识别为成员QQ号  例如`groupID=g1003931532`***
+
+#### b.用法
+* `[...]` 内为可填内容, `<...>` 内为必填内容
+* `groupID` 为群号, `memberID` 为成员QQ号
+* 若 `[groupID]` `[memberID]` 均不存在 则控制当前群聊的权限  即`EnableGroup.json`
+* 若只存在 `[groupID]` 则控制群号为 `groupID` 的群聊权限  即`EnableGroup.json`
+* 若只存在 `[memberID]` 则控制当前群聊下, QQ号为 `memberID` 的群成员权限  即`GroupMemberPerm.json`
+* 若 `[groupID]` `[memberID]` 均存在 则控制群号为 `groupID` 下QQ号为 `memberID` 的群成员权限 即`GroupMemberPerm.json`
+
+
 ## 三.更新日志
 
 | 版本号                | 发布时间       | 更新内容                                                                                                                                                                                                                                                                                                                                                                                  |
@@ -90,7 +116,7 @@
 | V0.4.2 - Alpha     | 2023.03.25 | ***该版本为 `V0.4.2测试版` 即上版本的修复版本, 缺少内容待下版本更新***<br/><li>修正 `hyp信息查询` 中 `MVP++` 判断错误问题</li><br/><li>为 `hyp信息查询` 中 新增 `<type>` 字段错误提醒</li><br/><li>为 `hyp信息查询` 功能预留文件夹, 用于新模式添加</li><br/><li>按照 [@MC__luoluo](https://mirai.mamoe.net/user/mc__luoluo) 要求 新增退群提醒 **(配置文件有更新)**</li>                                                                                                        |
 | V0.4.2 - Alpha - 2 | 2023.03.31 | ***该版本为 `V0.4.2测试版2` 即上版本的 新功能预发布 版本, 可能存在严重BUG***(这次细心了, 不出意外的话是不会有bug的, 但是不出意外的话肯定会出意外)<li>新功能 `签到` 但是没有什么实际作用, 属于是按照 [MiraiForum](https://mirai.mamoe.net/) 中 [De6ris](https://mirai.mamoe.net/user/de6ris) 的要求测试 `自定义消息结构` 详细可查看配置文件</li>                                                                                                                                         |
 | V0.4.3             | 2023.09.24 | <li>新增可控的退群提醒, 详情见配置文件更新</li><br><li>完善了几个测试版</li><br><li>修复已知bug</li><br><li>`hyp信息查询` 中 新增 `密室杀手` 模块</li>                                                                                                                                                                                                                                                                           |
-
+| V0.5.0             | 2023.10.08 | <li>新增权限系统</li></br><li>新增可选的自动注册功能, 存在于`EnableGroup.json`中</li></br><li>修复已知bug</li></br> ***这个版本的bug请及时反馈给靖暄!***                                                                                                                                                                                                                                                                    |
 ## 四.关于
 
 如果您发现 BUG 可以联系[靖暄](https://wpa.qq.com/msgrd?uin=1250838250)

@@ -13,6 +13,7 @@ import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.perm.Determine;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,6 +75,12 @@ public class NewObject {
             main.addProperty(object.toString(),sender);
 
             fileWriter("./PracticalWidgets/object.json", gson.toJson(main));
+        }
+    }
+
+    public static void perm(Long sender,Group group){
+        if (Determine.main(sender,group,"new-object")){
+            newObject(sender,group);
         }
     }
 

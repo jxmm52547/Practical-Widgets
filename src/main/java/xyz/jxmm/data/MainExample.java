@@ -11,6 +11,8 @@ import kotlinx.serialization.json.Json;
 import net.mamoe.mirai.contact.Group;
 
 import org.jetbrains.annotations.NotNull;
+import xyz.jxmm.PracticalWidgets;
+import xyz.jxmm.perm.Determine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +34,7 @@ public class MainExample {
         example.add("sign",sign());
 
         example.addProperty("lastTime", LocalDateTime.now().toString());
-        example.addProperty("version","0.4.3"); //每次版本更新修改
+        example.addProperty("version",PracticalWidgets.version()); //每次版本更新修改
 
         return example;
     }
@@ -65,6 +67,14 @@ public class MainExample {
         return exampleGen;
     }
 
+    public static void perm(Group group,Long sender){
+        if (Determine.admin(group,sender)){
+            update(group);
+        } else {
+            group.sendMessage("你没有管理员权限!");
+        }
+    }
+
     public static void update(Group group){
         JsonObject json;
 
@@ -75,7 +85,7 @@ public class MainExample {
         }
 
         if (json.get("123456").getAsJsonObject().has("version")){
-            if (!json.get("123456").getAsJsonObject().get("version").getAsString().equals("0.4.3")){ //每次版本更新修改
+            if (!json.get("123456").getAsJsonObject().get("version").getAsString().equals(PracticalWidgets.version())){ //每次版本更新修改
                 json.add("123456", main());
                 fileWriter(file.getPath(), gson.toJson(json));
             }
@@ -92,7 +102,7 @@ public class MainExample {
                 json.add(key,user);
             }
             user.addProperty("lastTime", LocalDateTime.now().toString());
-            user.addProperty("version","0.4.3"); //每次版本更新修改
+            user.addProperty("version",PracticalWidgets.version());
             json.add(key,user);
 
         }
