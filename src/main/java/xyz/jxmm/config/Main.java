@@ -416,9 +416,9 @@ public class Main {
 
             FileWriterMethod.fileWriter(file.getPath(),cfg);
 
-        } else {
-            FileWriterMethod.fileWriter(file.getPath(),latest());
         }
+
+        FileWriterMethod.fileWriter(file.getPath(),latest());
         //以上内容为储存用户填写的value
     }
 
