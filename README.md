@@ -92,6 +92,14 @@
 * 若只存在 `[memberID]` 则控制当前群聊下, QQ号为 `memberID` 的群成员权限  即`GroupMemberPerm.json`
 * 若 `[groupID]` `[memberID]` 均存在 则控制群号为 `groupID` 下QQ号为 `memberID` 的群成员权限 即`GroupMemberPerm.json`
 
+#### c.例子
+* `/perm jrrp false` 关闭当前群聊的 `jrrp` 功能
+* `/perm g1003931532 jrrp true` 开启群号 `1003931532` 的 `jrrp` 功能
+* `/perm 1250838250 sign false` 关闭当前群聊下 QQ号 `1250838250` 的 `sign` 功能
+* `/perm g1003931532 1250838250 hyp true` 开启群号 `1003931532` 下 QQ号 `1250838250` 的 `hyp` 功能
+* `/bl add g1003931532` 将群 `1003931532` 列入黑名单
+* `/bl rm 1250838250` 将QQ号 `1250838250` 的用户 移出黑名单
+
 
 ## 三.更新日志
 
@@ -117,6 +125,8 @@
 | V0.4.2 - Alpha - 2 | 2023.03.31 | ***该版本为 `V0.4.2测试版2` 即上版本的 新功能预发布 版本, 可能存在严重BUG***(这次细心了, 不出意外的话是不会有bug的, 但是不出意外的话肯定会出意外)<li>新功能 `签到` 但是没有什么实际作用, 属于是按照 [MiraiForum](https://mirai.mamoe.net/) 中 [De6ris](https://mirai.mamoe.net/user/de6ris) 的要求测试 `自定义消息结构` 详细可查看配置文件</li>                                                                                                                                         |
 | V0.4.3             | 2023.09.24 | <li>新增可控的退群提醒, 详情见配置文件更新</li><br><li>完善了几个测试版</li><br><li>修复已知bug</li><br><li>`hyp信息查询` 中 新增 `密室杀手` 模块</li>                                                                                                                                                                                                                                                                           |
 | V0.5.0             | 2023.10.08 | <li>新增权限系统</li></br><li>新增可选的自动注册功能, 存在于`EnableGroup.json`中</li></br><li>修复已知bug</li></br> ***这个版本的bug请及时反馈给靖暄!***                                                                                                                                                                                                                                                                    |
+| V0.5.1             | 2023.10.10 | <li>修复权限文件无法自动创建问题</li></br><li>修复配置文件跨版本更新插件时无法更新配置文件问题</li></br><li>新增分群控制退群提醒</li></br>                                                                                                                                                                                                                                                                                            |
+
 ## 四.关于
 
 如果您发现 BUG 可以联系[靖暄](https://wpa.qq.com/msgrd?uin=1250838250)
