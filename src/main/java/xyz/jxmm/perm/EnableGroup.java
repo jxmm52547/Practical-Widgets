@@ -25,6 +25,7 @@ public class EnableGroup {
         group.addProperty("new-object",true);
         group.addProperty("hyp",true);
         group.addProperty("sign",true);
+        group.addProperty("groupMemberQuit",true);
 
         return group;
     }

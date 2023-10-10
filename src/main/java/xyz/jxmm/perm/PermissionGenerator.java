@@ -34,7 +34,7 @@ public class PermissionGenerator {
                 group.sendMessage(chain.build());
             }
 
-        } else if (msg.startsWith("g")){
+        } else if (msg.startsWith("g") && msg.matches("^g\\d+$")){
             //g开头代表指定群号
             String groupID = msg.substring(0,msg.indexOf(" "));
             msg = msg.replaceAll(groupID + " ","");

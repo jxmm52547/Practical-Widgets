@@ -30,14 +30,14 @@ public final class PracticalWidgets extends JavaPlugin {
     public static final PracticalWidgets INSTANCE = new PracticalWidgets();
 
     private PracticalWidgets() {
-        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", "0.5.0")
+        super(new JvmPluginDescriptionBuilder("xyz.jxmm.Practical_Widgets", version())
                 .name("Practical-Widgets")
                 .author("靖暄")
                 .build());
     }
 
     public static String version(){
-        return "0.5.0";  //每次更新修改
+        return "0.5.1";  //每次更新修改
     }
 
     @Override
@@ -130,14 +130,9 @@ public final class PracticalWidgets extends JavaPlugin {
                 Group group = ml.getGroup();
                 Member member = ml.getMember();
                 String nick = ml.getMember().getNick();
-
-                try {
-                    MemberLeave.memberLeave(group,member,nick);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                MemberLeave.perm(group,member,nick);
             } else {
-                System.out.println("群成员退出,未开启退出提醒,仅控制台提醒");
+                System.out.println("群成员退出,未开启退出提醒,仅控制台提醒用于提示, 请查看上方控制台事件信息");
             }
 
 

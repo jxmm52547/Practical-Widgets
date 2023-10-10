@@ -9,21 +9,26 @@ import net.mamoe.mirai.contact.Group;
 import xyz.jxmm.PracticalWidgets;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static xyz.jxmm.tools.FileReaderMethod.fileReader;
-
+import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
 
 public class Perm {
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+    static File explorer = new File("./PracticalWidgets/perm/");
     static File admin = new File("./PracticalWidgets/perm/admin.json");
     static File blackList = new File("./PracticalWidgets/perm/blackList.json");
     static File enableGroup = new File("./PracticalWidgets/perm/EnableGroup.json");
     static File groupMemberPerm = new File("./PracticalWidgets/perm/GroupMemberPerm.json");
 
     public static void example(){
+        explorer.mkdirs();
+        
         if (!admin.exists()){
             Admin.gen(123456L);
         } else {
@@ -54,6 +59,37 @@ public class Perm {
 
         if (!jsonObject.get("version").getAsString().equals(PracticalWidgets.version())){
             // V0.5.0 预留更新入口
+            jsonObject.addProperty("version",PracticalWidgets.version());
+            switch (file.getName()){
+                case "admin.json":
+                    break;
+                case "blackList.json":
+                    break;
+                case "EnableGroup.json":
+                    JsonArray groupID = new Gson().fromJson(Arrays.toString(jsonObject.keySet().toArray()), JsonArray.class);
+
+                    JsonObject groupJson;
+                    JsonArray typeName;
+
+                    for (int j = 1; j < groupID.size(); j++) {
+                        groupJson = jsonObject.get(groupID.get(j).getAsString()).getAsJsonObject();
+                        typeName = new Gson().fromJson(Arrays.toString(groupJson.keySet().toArray()), JsonArray.class);
+
+                        //重置配置文件
+                        jsonObject.add(groupID.get(j).getAsString(),EnableGroup.group());
+                        JsonObject updatedGroupJson = jsonObject.get(groupID.get(j).getAsString()).getAsJsonObject();
+
+                        //覆写重置之前的值
+                        for (int i = 0; i < typeName.size(); i++) {
+                            updatedGroupJson.addProperty(typeName.get(i).getAsString(),groupJson.get(typeName.get(i).getAsString()).getAsBoolean());
+                        }
+                        jsonObject.add(groupID.get(j).getAsString(),updatedGroupJson);
+                    }
+                    fileWriter(file.getPath(),gson.toJson(jsonObject));
+                    break;
+                case "GroupMemberPerm.json":
+                    break;
+            }
         }
 
     }
