@@ -10,12 +10,11 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 import xyz.jxmm.minecraft.Nick;
-import xyz.jxmm.minecraft.player.PlayerDetermine;
 
 import java.text.DecimalFormat;
 
 public class Arcade {
-    public static void acd(JsonObject json, Long sender, Group group){
+    public static void arc(JsonObject json, Long sender, Group group){
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
         MessageChainBuilder chain = new MessageChainBuilder().append(at);
         JsonObject playerJson;
@@ -103,6 +102,24 @@ public class Arcade {
                 chain.append(new PlainText(" | 击杀数: "));
                 chain.append(new PlainText("null"));
                  */
+
+                //心跳水立方
+                chain.append(new PlainText("\n心跳水立方数据如下: "));
+                if (acdJson.has("dropper")){
+                    JsonObject dropper = acdJson.get("dropper").getAsJsonObject();
+
+                    chain.append(new PlainText("\n    已玩次数: "));
+                    if (game_played(dropper)) {
+                        chain.append(new PlainText(String.valueOf(dropper.get("games_played").getAsInt())));
+                    } else chain.append(new PlainText("null"));
+
+                    chain.append(new PlainText(" | 完成次数: "));
+                    if (games_finished(dropper)){
+                        chain.append(new PlainText(String.valueOf(dropper.get("games_finished").getAsInt())));
+                    } else chain.append(new PlainText("null"));
+
+                } else chain.append(new PlainText("null"));
+
 
                 //末影掘战
                 /*
@@ -375,12 +392,12 @@ public class Arcade {
                         chain.append(new PlainText(String.valueOf(pixel_party.get("wins").getAsInt())));
                     } else chain.append(new PlainText("null"));
 
-                    chain.append(new PlainText("\n    今典模式胜场数: "));
+                    chain.append(new PlainText("\n    经典模式胜场数: "));
                     if (wins_normal(pixel_party)){
                         chain.append(new PlainText(String.valueOf(pixel_party.get("wins_normal").getAsInt())));
                     } else chain.append(new PlainText("null"));
 
-                    chain.append(new PlainText(" | 今典模式回合完成数: "));
+                    chain.append(new PlainText(" | 经典模式回合完成数: "));
                     if (rounds_completed_normal(pixel_party)){
                         chain.append(new PlainText(String.valueOf(pixel_party.get("rounds_completed_normal").getAsInt())));
                     } else chain.append(new PlainText("null"));

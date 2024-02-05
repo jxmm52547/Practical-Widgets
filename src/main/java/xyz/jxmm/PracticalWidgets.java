@@ -2,6 +2,9 @@ package xyz.jxmm;
 
 import net.mamoe.mirai.contact.ContactList;
 import net.mamoe.mirai.event.events.BotOnlineEvent;
+import net.mamoe.mirai.event.events.GroupMessagePostSendEvent;
+import net.mamoe.mirai.message.data.MessageSource;
+import net.mamoe.mirai.message.data.QuoteReply;
 import xyz.jxmm.data.*;
 import xyz.jxmm.data.Object;
 import xyz.jxmm.perm.Perm;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Properties;
 
 public final class PracticalWidgets extends JavaPlugin {
@@ -37,7 +41,19 @@ public final class PracticalWidgets extends JavaPlugin {
     }
 
     public static String version(){
-        return "0.5.1";  //每次更新修改
+        return "0.5.2";  //每次更新修改
+    }
+
+    public static String perfix(){
+        Properties properties = new Properties();
+        File file = new File("./PracticalWidgets/config.properties");
+        try {
+            properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return properties.getProperty("prefix");
     }
 
     @Override
@@ -63,20 +79,13 @@ public final class PracticalWidgets extends JavaPlugin {
 
         EventChannel<Event> eventChannel = GlobalEventChannel.INSTANCE.parentScope(this);
         eventChannel.subscribeAlways(GroupMessageEvent.class, g -> {
+            MessageSource source = g.getSource();
             String msg = g.getMessage().contentToString();
             Long sender = g.getSender().getId();
             String userName = g.getSenderName();
             Group group = g.getGroup();
 
-            Properties properties = new Properties();
-            File file = new File("./PracticalWidgets/config.properties");
-            try {
-                properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            String prefix = properties.getProperty("prefix");
+            String prefix = perfix();
             if (msg.startsWith(prefix)){
                 msg = msg.replace(prefix,"");
 
@@ -94,10 +103,10 @@ public final class PracticalWidgets extends JavaPlugin {
                     } else if (JrrpMap.JrrpTopMap(msg)) {
                         xyz.jxmm.jrrp.JrrpTop.perm(sender, group);
                     } else if(msg.startsWith("点歌")){
-                        xyz.jxmm.music.Main.perm(msg, sender, group);
+                        xyz.jxmm.music.Main.perm(msg, sender, group, source, false,0);
                     } else if(msg.startsWith("new对象")){
                         xyz.jxmm.new_object.NewObject.perm(sender, group);
-                    } else if (msg.startsWith("hyp ")){
+                    } else if (msg.startsWith("hyp")){
                         xyz.jxmm.minecraft.Hypixel.perm(msg,sender,group);
                     } else if (msg.equals("签到") || msg.equals("sign")){
                         xyz.jxmm.sign.Sign.perm(sender,group);
@@ -110,30 +119,36 @@ public final class PracticalWidgets extends JavaPlugin {
                     throw new RuntimeException(e);
                 }
 
+            }
+
+            //给点歌用的
+            QuoteReply music = source.getOriginalMessage().get(QuoteReply.Key);
+            if(music != null && msg.length() <= 2){
+                String musicName = music.getSource().getOriginalMessage().contentToString();
+                if (musicName.startsWith("/点歌 ")){
+                    musicName = musicName.replaceAll("/点歌 ","");
+                    int id = Integer.parseInt(msg);
+                    if (id > 0 && id <= 10){
+                        xyz.jxmm.music.Main.perm(musicName, sender, group, source, true,id);
+                    } else {
+                        group.sendMessage(new QuoteReply(source).plus("请回复 1~10 点歌"));
+                    }
+
+                }
 
             }
 
         });
 
+
+
         //群成员离开通知
         eventChannel.subscribeAlways(MemberLeaveEvent.class, ml ->{
 
-            Properties properties = new Properties();
-            File file = new File("./PracticalWidgets/config.properties");
-            try {
-                properties.load(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (properties.getProperty("memberQuitSwitch").equals("true")){
-                Group group = ml.getGroup();
-                Member member = ml.getMember();
-                String nick = ml.getMember().getNick();
-                MemberLeave.perm(group,member,nick);
-            } else {
-                System.out.println("群成员退出,未开启退出提醒,仅控制台提醒用于提示, 请查看上方控制台事件信息");
-            }
+            Group group = ml.getGroup();
+            Member member = ml.getMember();
+            String nick = ml.getMember().getNick();
+            MemberLeave.perm(group,member,nick);
 
 
         });

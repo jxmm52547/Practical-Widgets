@@ -13,10 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Properties;
 
-import static xyz.jxmm.minecraft.HypURLConnect.hypixelURLConnect;
-
-public class RecentGames {
-    public static String main(String ID , Group group, MessageChainBuilder chain){
+public class Online {
+    public static String main(String ID, Group group, MessageChainBuilder chain){
         String uuid;
         if (ID.length() < 32){
             uuid = MJURLConnect.moJangURLConnect(ID);
@@ -30,7 +28,6 @@ public class RecentGames {
             group.sendMessage(chain.build());
             return "";
         }
-
     }
 
     public static String err(String uuid,Group group,MessageChainBuilder chain){
@@ -39,23 +36,11 @@ public class RecentGames {
             group.sendMessage(chain.build());
             return "";
         } else {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            if (recent(uuid).equals("noHypixelAPI")){
-                chain.append("请前往配置文件填写hypixelAPI后重试");
-
-                System.out.println("以下出现的报错如果是 NullPointerException, 这是正常现象，因为您未填写HypixelAPI, 如果不是请联系作者");
-                System.out.println("如果您在配置文件未找到HypixelAPI填写位置,请重启mirai后检查配置文件, 如果还是没有请联系作者");
-                group.sendMessage(chain.build());
-                return "";
-            } else {
-                stringBuilder.append(recent(uuid));
-                return stringBuilder.toString();
-            }
+            return online(uuid);
         }
     }
 
-    public static String recent(String uuid){
+    public static String online(String uuid){
         Properties properties = new Properties();
         File cfg = new File("./PracticalWidgets/config.properties");
 
@@ -65,7 +50,7 @@ public class RecentGames {
             throw new RuntimeException(e);
         }
         String HypixelAPI = properties.getProperty("HypixelAPI");
-        String connectURL = "https://api.hypixel.net/recentgames?key=" + HypixelAPI + "&uuid=" + uuid;
+        String connectURL = "https://api.hypixel.net/v2/status?key=" + HypixelAPI + "&uuid=" + uuid;
         return URLConnect.URLConnect(connectURL);
     }
 }

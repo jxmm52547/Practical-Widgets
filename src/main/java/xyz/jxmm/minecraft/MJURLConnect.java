@@ -21,6 +21,8 @@ public class MJURLConnect {
             return "IO";
         } else if (result.startsWith("java.net.SocketException:")){
             return "reset";
+        } else if (result.startsWith("javax.net.ssl.SSLHandshakeException:")) {
+            return "PKIX";
         } else {
             JsonObject json = gson.fromJson(result, JsonObject.class);
             return json.get("id").getAsString();

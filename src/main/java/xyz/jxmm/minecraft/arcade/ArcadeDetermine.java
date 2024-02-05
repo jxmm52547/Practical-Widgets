@@ -38,6 +38,11 @@ public class ArcadeDetermine {
 //龙之战
 
 
+//心跳水立方
+    public static Boolean game_played(JsonObject dropper){return dropper.has("games_played");}
+    public static Boolean games_finished(JsonObject dropper){return dropper.has("games_finished");}
+
+
 //末影掘战
 
 

@@ -16,6 +16,6 @@ public class BedWarsDetermine {
         return bwJson.has("final_kills_bedwars") && bwJson.has("final_deaths_bedwars");
     }
     public static Boolean wins_bedwars(JsonObject bwJson){
-        return bwJson.has("wins_bedwars") && bwJson.has("losses_bedwars");
+        return bwJson.has("wins_bedwars") && bwJson.has("losses_bedwars") && bwJson.has("games_played_bedwars");
     }
 }

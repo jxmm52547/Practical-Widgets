@@ -99,8 +99,9 @@ public class BedWars {
                     chain.append(new PlainText(String.valueOf(bwJson.get("deaths_bedwars").getAsInt() + bwJson.get("final_deaths_bedwars").getAsInt())));
                     chain.append(new PlainText(" | 总KD: "));
                     chain.append(new PlainText(decimalFormat.format(
-                            (float)(bwJson.get("kills_bedwars").getAsInt() + bwJson.get("final_kills_bedwars").getAsInt()) /
-                                    (float)(bwJson.get("kills_bedwars").getAsInt() + bwJson.get("final_deaths_bedwars").getAsInt()))));
+                            (float) (bwJson.get("kills_bedwars").getAsInt() + bwJson.get("final_kills_bedwars").getAsInt()) /
+                                    (float) (bwJson.get("deaths_bedwars").getAsInt() + bwJson.get("final_deaths_bedwars").getAsInt())
+                    )));
                 }
 
                 if (wins_bedwars(bwJson)){
@@ -111,11 +112,13 @@ public class BedWars {
                     chain.append(new PlainText(" | 总胜率: "));
                     chain.append(new PlainText(decimalFormat.format(
                             (float)bwJson.get("wins_bedwars").getAsInt() /
-                                    (float)bwJson.get("losses_bedwars").getAsInt())));
+                                    (float)bwJson.get("games_played_bedwars").getAsInt())));
                 }
             } else {
                 chain.append(new PlainText("无法得到 起床战争 数据"));
             }
+        } else if (json.get("player").isJsonNull()){
+            chain.append(new PlainText("<playerID> 不存在"));
         }
 
         group.sendMessage(chain.build());

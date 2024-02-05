@@ -156,8 +156,8 @@ public class MurderMystery {
                     } else chain.append(new PlainText("null"));
                 } else chain.append(new PlainText("null"));
 
-                //今典模式
-                chain.append(new PlainText("\n今典模式数据如下: "));
+                //经典模式
+                chain.append(new PlainText("\n经典模式数据如下: "));
 
                 //场次
                 chain.append(new PlainText("\n场次: "));
@@ -218,19 +218,19 @@ public class MurderMystery {
                     chain.append(new PlainText(String.valueOf(mmJson.get("murderer_wins_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //今典模式总击杀
-                chain.append(new PlainText("\n今典模式总击杀: "));
+                //经典模式总击杀
+                chain.append(new PlainText("\n经典模式总击杀: "));
                 if (kills_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("kills_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //今典模式总死亡
+                //经典模式总死亡
                 chain.append(new PlainText(" | 死亡: "));
                 if (deaths_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("deaths_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //今典模式KD
+                //经典模式KD
                 chain.append(new PlainText(" | KD: "));
                 if (kills_MURDER_CLASSIC(mmJson) && deaths_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(decimalFormat.format(
@@ -409,19 +409,19 @@ public class MurderMystery {
                 chain.append(new PlainText("\n感染模式数据如下: "));
 
                 //总场次
-                chain.append(new PlainText("\n总场次: "));
+                chain.append(new PlainText("\n场次: "));
                 if (games_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("games_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总胜场
-                chain.append(new PlainText(" | 总胜场: "));
+                chain.append(new PlainText(" | 胜场: "));
                 if (wins_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("wins_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总胜率
-                chain.append(new PlainText(" | 总胜率: "));
+                chain.append(new PlainText(" | 胜率: "));
                 if (games_MURDER_INFECTION(mmJson) && wins_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(decimalFormat.format(
                             (float) mmJson.get("wins_MURDER_INFECTION").getAsInt() /
@@ -432,19 +432,19 @@ public class MurderMystery {
                 } else chain.append(new PlainText("null"));
 
                 //总击杀
-                chain.append(new PlainText("\n总击杀: "));
+                chain.append(new PlainText("\n击杀: "));
                 if (kills_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("wins_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总死亡
-                chain.append(new PlainText(" | 总死亡: "));
+                chain.append(new PlainText(" | 死亡: "));
                 if (deaths_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("deaths_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总KD
-                chain.append(new PlainText(" | 总KD: "));
+                chain.append(new PlainText(" | KD: "));
                 if (kills_MURDER_INFECTION(mmJson) && deaths_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(decimalFormat.format(
                             (float) mmJson.get("kills_MURDER_INFECTION").getAsInt() /

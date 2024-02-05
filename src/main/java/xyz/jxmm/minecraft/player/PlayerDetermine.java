@@ -4,6 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class PlayerDetermine {
+    public static Boolean online(JsonObject online){return online.has("session");}
+    public static Boolean mode(JsonObject session){return  session.has("mode");}
+    public static Boolean map(JsonObject session){return  session.has("map");}
     public static Boolean rank(JsonObject playerJson){return playerJson.has("newPackageRank");}
 
     public static Boolean giftingMeta(JsonObject playerJson){

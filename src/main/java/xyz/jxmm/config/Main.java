@@ -436,6 +436,7 @@ public class Main {
         String $81$99 = null;
         String $100 = null;
         String HypixelAPI = null;
+//        String memberQuitSwitch = null;
         String quit = null;
         String quitExpress = null;
         String hasBeenSigned = null;
@@ -455,6 +456,8 @@ public class Main {
         if (properties.containsKey("100")){$100 = properties.getProperty("100");}
 
         if (properties.containsKey("HypixelAPI")) {HypixelAPI = properties.getProperty("HypixelAPI");}
+
+//        if (properties.containsKey("memberQuitSwitch")) {memberQuitSwitch = properties.getProperty("memberQuitSwitch");}
 
         if (properties.containsKey("quit")){quit = properties.getProperty("quit");}
         if (properties.containsKey("quitExpress")){quitExpress =properties.getProperty("quitExpress");}
@@ -487,10 +490,12 @@ public class Main {
                 + "#请前往 https://developer.hypixel.net/dashboard/ 获取自己的API填写  (以后有望取消这个key, 用靖暄的APP API)\n"
                 + "HypixelAPI = " + HypixelAPI + "\n\n"
 
+                /*
                 //0.4.3更新内容
                 + "#退群提醒开关  默认开启\n"
-                + "memberQuitSwitch = true\n\n"
+                + "memberQuitSwitch = " + memberQuitSwitch + "\n\n"
                 //结束
+                 */
 
                 + "#当群成员退出群聊时自定义回复\n"
                 + "#格式: $memberNick + $quit + , QQ号: + $memberID, 群昵称: + $memberNick , $quitExpress\n"

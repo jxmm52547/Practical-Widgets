@@ -3,10 +3,7 @@ package xyz.jxmm.minecraft.player;
 import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
-import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.MessageChainBuilder;
-import net.mamoe.mirai.message.data.PlainText;
+import net.mamoe.mirai.message.data.*;
 import net.mamoe.mirai.utils.ExternalResource;
 import xyz.jxmm.minecraft.Nick;
 
@@ -18,7 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Player {
-    public static void player(JsonObject json,JsonObject recentGames,JsonObject guild, Long sender, Group group){
+    public static void player(JsonObject json,JsonObject recentGames,JsonObject guild,JsonObject online, Long sender, Group group){
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
         MessageChainBuilder chain = new MessageChainBuilder().append(at);
         JsonObject playerJson;
@@ -38,9 +35,37 @@ public class Player {
             playerJson = json.get("player").getAsJsonObject();
 //            achievements = playerJson.get("achievements").getAsJsonObject();  V0.4.2版本更新注释
 
-            chain.append(new PlainText(Nick.nick(playerJson))); //玩家名称前缀
-
+            chain.append(new PlainText("\n" + Nick.nick(playerJson))); //玩家名称前缀
             chain.append(new PlainText(playerJson.get("displayname").getAsString()));
+
+            chain.append(new PlainText(" | 在线状态: "));
+            if (PlayerDetermine.online(online)){
+                JsonObject session = online.get("session").getAsJsonObject();
+                boolean onlineStatus = session.get("online").getAsBoolean();
+                if (onlineStatus) {
+                    chain.append(new PlainText("ONLINE\uD83D\uDFE2"));
+                    chain.append(new PlainText("\n" + session.get("gameType").getAsString() + " 大厅"));
+                    if (PlayerDetermine.mode(session) && session.get("mode").getAsString().equals("LOBBY")){
+                        chain.append(new PlainText(" | 闲置中"));
+                    } else {
+                        if (PlayerDetermine.mode(session)){
+                            chain.append(new PlainText(" | 游戏模式:\n"));
+                            chain.append(new PlainText(session.get("mode").getAsString()));
+                        }
+                        if (PlayerDetermine.map(session)){
+                            chain.append(new PlainText("\n地图: "));
+                            chain.append(new PlainText(session.get("map").getAsString()));
+                        }
+
+                    }
+                }
+                else {
+                    chain.append(new PlainText("OFFLINE\uD83D\uDD34"));
+                }
+
+            } else {
+                chain.append(new PlainText("ERROR"));
+            }
 
             chain.append(new PlainText("\nRANK赠送数: "));
             if (PlayerDetermine.giftingMeta(playerJson)){
@@ -57,12 +82,12 @@ public class Player {
                 chain.append(new PlainText("null"));
             }
 
-            chain.append(new PlainText("\n上次登录时间: "));
+            chain.append(new PlainText("\n最后登录时间: "));
             if (PlayerDetermine.lastLogin(playerJson)){
                 chain.append(new PlainText(simpleDateFormat.format(new Date(playerJson.get("lastLogin").getAsLong()))));
             } else {chain.append(new PlainText("null"));}
 
-            chain.append(new PlainText("\n上次注销时间: "));
+            chain.append(new PlainText("\n最后退出时间: "));
             if (PlayerDetermine.lastLogout(playerJson)){
                 chain.append(new PlainText(simpleDateFormat.format(new Date(playerJson.get("lastLogout").getAsLong()))));
             } else {chain.append(new PlainText("null"));}
@@ -77,10 +102,12 @@ public class Player {
                 chain.append(new PlainText(guild.get("guild").getAsJsonObject().get("name").getAsString()));
             } else {chain.append(new PlainText("无"));}
 
-            chain.append(new PlainText("\n大厅等级: "));
+            chain.append(new PlainText("\nHypixel等级: "));
             if (PlayerDetermine.networkExp(playerJson)){
-                int ex = playerJson.get("networkExp").getAsInt();
-                double xp = Math.sqrt((0.0008 * ex) + 12.25) - 2.5;
+                String ex = playerJson.get("networkExp").toString();
+                long l = (long) Double.parseDouble(ex);
+                double xp = Math.sqrt((0.0008 * l) + 12.25) - 2.5;
+
                 chain.append(new PlainText(decimalFormat.format(xp)));
             } else {chain.append(new PlainText("null"));}
 
@@ -158,7 +185,7 @@ public class Player {
             URL url;
             byte[] data;
             try {
-                url = new URL("https://crafatar.com/renders/body/" + playerJson.get("uuid").getAsString() + "?scale=10");
+                url = new URL("https://crafatar.com/renders/body/" + playerJson.get("uuid").getAsString() + "?scale=10" + "&overlay");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setConnectTimeout(5000);
@@ -175,6 +202,10 @@ public class Player {
                 data = outStream.toByteArray();
 
             } catch (IOException e) {
+                chain.append(new PlainText("\n\n皮肤图片加载失败, 可能是API出现问题"));
+                chain.append(new PlainText("\n可查看 crafatar.com 确认是否无法加载"));
+                group.sendMessage(chain.build());
+                System.out.println("以对下方报错进行处理, 若 crafatar.com 正常访问请联系作者");
                 throw new RuntimeException(e);
             }
 
