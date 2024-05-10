@@ -44,7 +44,7 @@ public class BlackList {
         if (Determine.admin(group,sender)){
             String type = msg.replaceAll("bl ","");
             if (type.startsWith("add")){
-                String value = type.replaceAll("add ","");
+                String value = type.replaceAll("add ","").replaceAll(" ","");
 
                 if (value.startsWith("@")){
                     if (value.replaceAll("@","").equals(sender.toString())){
@@ -72,7 +72,7 @@ public class BlackList {
             }
 
             else if (type.startsWith("rm")){
-                String value = type.replaceAll("rm ","");
+                String value = type.replaceAll("rm ","").replaceAll(" ","");
 
                 if (value.startsWith("@")){
                     if (value.replaceAll("@","").equals(sender.toString())){

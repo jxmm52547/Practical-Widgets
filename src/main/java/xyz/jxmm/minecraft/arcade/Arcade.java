@@ -498,6 +498,155 @@ public class Arcade {
                     chain.append(new PlainText(String.valueOf(acdJson.get("windows_repaired_zombies").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
+                //僵尸末日穷途末路
+                chain.append(new PlainText("\n\n僵尸末日穷途末路: "));
+
+                chain.append(new PlainText("\n    生存回合数: "));
+                if (deter(acdJson,"total_rounds_survived_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("total_rounds_survived_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 胜场: "));
+                if (deter(acdJson, "wins_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("wins_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 最佳回合数: "));
+                if (deter(acdJson, "best_round_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("best_round_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    僵尸击杀数: "));
+                if (deter(acdJson, "zombie_kills_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("zombie_kills_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 玩家复活数: "));
+                if (deter(acdJson, "players_revived_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("players_revived_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    开门数: "));
+                if (deter(acdJson, "doors_opened_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("doors_opened_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 窗户修复数: "));
+                if (deter(acdJson,"windows_repaired_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("windows_repaired_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    被击倒次数: "));
+                if (deter(acdJson, "times_knocked_down_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("times_knocked_down_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 死亡数: "));
+                if (deter(acdJson, "deaths_zombies_deadend")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("deaths_zombies_deadend").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+
+                //僵尸末日坏血之宫
+                chain.append(new PlainText("\n\n僵尸末日坏血之宫: "));
+
+                chain.append(new PlainText("\n    生存回合数: "));
+                if (deter(acdJson,"total_rounds_survived_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("total_rounds_survived_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 胜场: "));
+                if (deter(acdJson, "wins_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("wins_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 最佳回合数: "));
+                if (deter(acdJson, "best_round_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("best_round_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    僵尸击杀数: "));
+                if (deter(acdJson, "zombie_kills_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("zombie_kills_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 玩家复活数: "));
+                if (deter(acdJson, "players_revived_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("players_revived_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    开门数: "));
+                if (deter(acdJson, "doors_opened_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("doors_opened_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 窗户修复数: "));
+                if (deter(acdJson,"windows_repaired_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("windows_repaired_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    被击倒次数: "));
+                if (deter(acdJson, "times_knocked_down_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("times_knocked_down_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 死亡数: "));
+                if (deter(acdJson, "deaths_zombies_badblood")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("deaths_zombies_badblood").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+
+                //僵尸末日外星游乐园
+                chain.append(new PlainText("\n\n僵尸末日外形游乐园: "));
+
+                chain.append(new PlainText("\n    生存回合数: "));
+                if (deter(acdJson,"total_rounds_survived_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("total_rounds_survived_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 胜场: "));
+                if (deter(acdJson, "wins_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("wins_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 最佳回合数: "));
+                if (deter(acdJson, "best_round_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("best_round_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    僵尸击杀数: "));
+                if (deter(acdJson, "zombie_kills_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("zombie_kills_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 玩家复活数: "));
+                if (deter(acdJson, "players_revived_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("players_revived_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    开门数: "));
+                if (deter(acdJson, "doors_opened_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("doors_opened_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 窗户修复数: "));
+                if (deter(acdJson,"windows_repaired_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("windows_repaired_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText("\n    被击倒次数: "));
+                if (deter(acdJson, "times_knocked_down_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("times_knocked_down_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 死亡数: "));
+                if (deter(acdJson, "deaths_zombies_alienarcadium")){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("deaths_zombies_alienarcadium").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+
+
+
             } else {
                 chain.append(new PlainText("无法得到 街机游戏 数据"));
             }

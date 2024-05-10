@@ -4,17 +4,14 @@ import xyz.jxmm.tools.*;
 
 import net.mamoe.mirai.contact.Group;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Properties;
 
-public class getValue {
+public class GetValue {
 
     static Properties properties = new Properties();
     static File file = new File("./PracticalWidgets/config.properties");

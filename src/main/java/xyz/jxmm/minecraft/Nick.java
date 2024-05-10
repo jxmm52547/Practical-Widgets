@@ -61,7 +61,7 @@ public class Nick {
 
         map.put("DARK_GREEN","深绿");
         map.put("DARK_RED","深红");
-        map.put("DARE_AQUA","深水绿");
+        map.put("DARK_AQUA","深水绿");
         map.put("DARK_PURPLE","暗紫");
         map.put("深灰","");
         map.put("BLACK","黑");

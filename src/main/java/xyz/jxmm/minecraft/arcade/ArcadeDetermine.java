@@ -233,4 +233,6 @@ public class ArcadeDetermine {
     public static Boolean windows_repaired_zombies(JsonObject acdJson){
         return acdJson.has("windows_repaired_zombies");
     }
+
+    public  static Boolean deter(JsonObject json,String str){return json.has(str);}
 }

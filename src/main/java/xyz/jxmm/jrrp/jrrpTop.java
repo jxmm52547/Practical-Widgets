@@ -10,6 +10,7 @@ import net.mamoe.mirai.message.data.ForwardMessageBuilder;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.perm.Determine;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -17,11 +18,11 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class jrrpTop {
+public class JrrpTop {
     public static void jrrpTop(Group group, Long sender) {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-        File file = new File("./PracticalWidgets/jrrpTop.json");
+        File file = new File("./PracticalWidgets/JrrpTop.json");
 
         JsonObject json;
 
@@ -121,6 +122,12 @@ public class jrrpTop {
 
 
 
+    }
+
+    public static void perm(Long sender,Group group){
+        if (Determine.main(sender,group,"jrrp-top")){
+            jrrpTop(group, sender);
+        }
     }
 }
 
