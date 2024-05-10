@@ -191,7 +191,7 @@ public class Hypixel {
     public static String analysis(String ID , Group group,MessageChainBuilder chain){
         StringBuilder uuid = new StringBuilder();
         if (ID.length() < 32){
-            uuid.append(MJURLConnect.moJangURLConnect(ID));
+            uuid.append(MJURLConnect.moJangURLConnect(ID,"name"));
             return mojangErr(uuid.toString(),group,chain);
         } else if (ID.length() == 32){
             return mojangErr(ID,group,chain);

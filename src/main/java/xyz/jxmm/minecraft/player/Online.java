@@ -17,7 +17,7 @@ public class Online {
     public static String main(String ID, Group group, MessageChainBuilder chain){
         String uuid;
         if (ID.length() < 32){
-            uuid = MJURLConnect.moJangURLConnect(ID);
+            uuid = MJURLConnect.moJangURLConnect(ID,"name");
             return err(uuid,group,chain);
         } else if (ID.length() == 32){
             return err(ID,group,chain);

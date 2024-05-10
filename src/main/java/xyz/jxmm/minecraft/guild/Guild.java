@@ -9,6 +9,7 @@ import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.ForwardMessageBuilder;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.minecraft.MJURLConnect;
 import xyz.jxmm.minecraft.Nick;
 
 import java.text.DecimalFormat;
@@ -16,6 +17,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+
+import static xyz.jxmm.minecraft.guild.GuildDetermine.determine;
 
 public class Guild {
 
@@ -36,10 +39,10 @@ public class Guild {
     }
     public static void guild(JsonObject json, Long sender, Group group){
         MessageChainBuilder chain = new MessageChainBuilder().append(MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]"));
-        MessageChainBuilder ranksChain = new MessageChainBuilder().append(MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]"));
-        MessageChainBuilder membersChain = new MessageChainBuilder().append(MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]"));
+        MessageChainBuilder achievementChain = new MessageChainBuilder();
+        MessageChainBuilder membersChain = new MessageChainBuilder();
 
-        DecimalFormat decimalFormat = new DecimalFormat("0.000");
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
         JsonArray members = new JsonArray();
         JsonArray ranks = new JsonArray();
@@ -61,6 +64,12 @@ public class Guild {
             chain.append(new PlainText("\n公会名称: "));
             chain.append(new PlainText(json.get("name").getAsString()));
 
+            chain.append(new PlainText(" | 会长: "));
+            chain.append(new PlainText(MJURLConnect.moJangURLConnect(members.get(0).getAsJsonObject().get("uuid").getAsString(),"uuid")));
+
+            chain.append(new PlainText("\n成员数量: "));
+            chain.append(new PlainText(String.valueOf(members.size())));
+
             chain.append(new PlainText(" | 公会创建时间: "));
             long created = json.get("created").getAsLong();
             Instant instant = Instant.ofEpochMilli(created);
@@ -69,20 +78,60 @@ public class Guild {
 
             //描述
             if (json.has("description")){
-                chain.append(new PlainText("描述: "));
-                chain.append(new PlainText("\n" + json.get("description").getAsString()));
+                chain.append(new PlainText("\n描述: "));
+                chain.append(new PlainText(json.get("description").getAsString()));
             }
 
             //经验 & 等级
+            int exp = json.get("exp").getAsInt();
+            int[] expNeeded = {100000, 150000, 250000, 500000, 750000, 1000000, 1250000, 1500000, 2000000, 2500000, 2500000, 2500000, 2500000, 2500000, 3000000};
+            
+            chain.append(new PlainText("\n等级: "));
+            int level = 0;
+            for (int j : expNeeded) {
+                if (exp >= j) {
+                    exp -= j;
+                    level++;
+                } else break;
+            }
+            while (exp>=3000000){
+                level++;
+                exp -= 3000000;
+            }
+            chain.append(new PlainText(String.valueOf(level)));
+
             chain.append(new PlainText("\n总经验: "));
-            chain.append(new PlainText(String.valueOf(json.get("exp").getAsLong())));
+            int ex = json.get("exp").getAsInt();
+            if (ex >= 100000 & ex < 1000000){
+                chain.append(new PlainText(decimalFormat.format((float)ex/1000) + "K"));
+            } else if (ex > 1000000){
+                chain.append(new PlainText(decimalFormat.format((float)ex/1000000) + "M"));
+            } else {
+                chain.append(new PlainText(String.valueOf(ex)));
+            }
 
-            chain.append(new PlainText(" | 等级: "));
-            String ex = json.get("exp").toString();
-            long l = (long) Double.parseDouble(ex);
-            double xp = Math.sqrt((0.0008 * l) + 12.25) - 2.5;
-
-            chain.append(new PlainText(decimalFormat.format(xp)));
+            String target = "100K";
+            exp = json.get("exp").getAsInt();
+            int target1 = 100000;
+            int index = 0;
+            for (int j : expNeeded) {
+                if (exp >= j) {
+                    exp -= j;
+                    target = Tool.exp(index);
+                    target1 = expNeeded[index];
+                    index++;
+                } else break;
+            }
+            while (exp>=3000000){
+                target = "3M";
+                target1 = 3000000;
+                exp -= 3000000;
+            }
+            chain.append(new PlainText(
+                    "("+ decimalFormat.format((float) exp / (float)1000000) +
+                            "/" + target + " " +
+                            decimalFormat.format((float) exp / (float) target1 * 100) +
+                            "%)"));
 
             //标签 & 颜色
             if (json.has("tag")) {
@@ -93,8 +142,43 @@ public class Guild {
                 chain.append(new PlainText(" " + Nick.color(json.get("tagColor").getAsString())));
             }
 
+            //公会成就
+            achievementChain.append(new PlainText("公会成就:\n"));
+
+            achievementChain.append(new PlainText("最高同时在线: "));
+            achievementChain.append(new PlainText(String.valueOf(achievements.get("ONLINE_PLAYERS").getAsInt())));
+
+            achievementChain.append(new PlainText("\n每日最高经验: "));
+            if (determine(achievements,"EXPERIENCE_KINGS")){
+                ex = achievements.get("EXPERIENCE_KINGS").getAsInt();
+                if (ex >= 100000 & ex < 1000000){
+                    achievementChain.append(new PlainText(decimalFormat.format((float)ex/1000) + "K"));
+                } else if (ex > 1000000){
+                    achievementChain.append(new PlainText(decimalFormat.format((float)ex/1000000) + "M"));
+                } else {
+                    achievementChain.append(new PlainText(String.valueOf(ex)));
+                }
+            } else achievementChain.append(new PlainText("null"));
+
+            achievementChain.append(new PlainText("\n公会胜场数: "));
+            if (determine(achievements, "WINNERS")) {
+                achievementChain.append(new PlainText(String.valueOf(achievements.get("WINNERS").getAsInt())));
+            } else achievementChain.append(new PlainText("null"));
+
+            achievementChain.append(new PlainText("\n平均每位成员经验:"));
+            achievementChain.append(new PlainText("\n今日: "));
+            if (determine(achievements,"EXPERIENCE_KINGS")){
+                achievementChain.append(new PlainText(decimalFormat.format(
+                        (float) achievements.get("EXPERIENCE_KINGS").getAsInt()  /
+                        (float) members.size())
+                ));
+            }
+
+
+
+
             //ranks  职位列表
-            ranksChain.append(new PlainText(" 职位列表: "));
+            achievementChain.append(new PlainText(" 职位列表: "));
             StringBuilder stringBuilderDefaultRank = new StringBuilder().append("\n默认职位: ");
             StringBuilder sbRank = new StringBuilder();
             for (int i = 0; i < ranks.size(); i++) {
@@ -117,9 +201,10 @@ public class Guild {
                 sbRank.append("\n  创建时间: ").append(localDateTime1);
                 sbRank.append("\n  权重: ").append(priority);
             }
-            ranksChain.append(new PlainText(stringBuilderDefaultRank.toString()));
-            ranksChain.append(new PlainText(sbRank.toString()));
+            achievementChain.append(new PlainText(stringBuilderDefaultRank.toString()));
+            achievementChain.append(new PlainText(sbRank.toString()));
 
+            /*
             //成员列表
             membersChain.append(new PlainText(" 成员列表: "));
             membersChain.append(new PlainText("总人数: "));
@@ -152,9 +237,11 @@ public class Guild {
             membersChain.append(new PlainText(String.valueOf(totalMembers)));
             membersChain.append(new PlainText(sbMember.toString()));
 
+             */
+
             ForwardMessageBuilder builder = new ForwardMessageBuilder(group);
             builder.add(group.getBot().getId(),group.getBot().getNick(),chain.build());
-            builder.add(group.getBot().getId(),group.getBot().getNick(),ranksChain.build());
+            builder.add(group.getBot().getId(),group.getBot().getNick(),achievementChain.build());
             builder.add(group.getBot().getId(),group.getBot().getNick(),membersChain.build());
             group.sendMessage(builder.build());
         }

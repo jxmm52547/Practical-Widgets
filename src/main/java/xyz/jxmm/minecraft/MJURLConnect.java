@@ -7,8 +7,13 @@ import xyz.jxmm.tools.URLConnect;
 
 public class MJURLConnect {
     static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    public static String moJangURLConnect(String playerName){
-        String connectURL = "https://api.mojang.com/users/profiles/minecraft/" + playerName;
+    public static String moJangURLConnect(String playerName,String type){
+        String connectURL = "";
+        if (type.equals("name")){
+            connectURL = "https://api.mojang.com/users/profiles/minecraft/" + playerName;
+        } else if (type.equals("uuid")) {
+            connectURL = "https://sessionserver.mojang.com/session/minecraft/profile/" + playerName;
+        }
         String result = URLConnect.URLConnect(connectURL);
 
         if (result.equals("")){
@@ -23,9 +28,13 @@ public class MJURLConnect {
             return "reset";
         } else if (result.startsWith("javax.net.ssl.SSLHandshakeException:")) {
             return "PKIX";
-        } else {
+        } else if (type.equals("name")){
             JsonObject json = gson.fromJson(result, JsonObject.class);
             return json.get("id").getAsString();
+        } else if (type.equals("uuid")) {
+            JsonObject json = gson.fromJson(result, JsonObject.class);
+            return json.get("name").getAsString();
         }
+        return "";
     }
 }

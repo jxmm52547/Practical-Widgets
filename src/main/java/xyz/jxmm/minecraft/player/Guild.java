@@ -15,7 +15,7 @@ import java.util.Properties;
 
 public class Guild {
     public static String main(String ID, Group group, MessageChainBuilder chain){
-        String uuid = MJURLConnect.moJangURLConnect(ID);
+        String uuid = MJURLConnect.moJangURLConnect(ID,"name");
         StringBuilder stringBuilder = new StringBuilder();
 
         if (uuid.equals("Connection timed out")){
