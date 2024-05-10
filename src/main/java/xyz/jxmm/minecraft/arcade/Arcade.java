@@ -597,7 +597,7 @@ public class Arcade {
 
 
                 //僵尸末日外星游乐园
-                chain.append(new PlainText("\n\n僵尸末日外形游乐园: "));
+                chain.append(new PlainText("\n\n僵尸末日外星游乐园: "));
 
                 chain.append(new PlainText("\n    生存回合数: "));
                 if (deter(acdJson,"total_rounds_survived_zombies_alienarcadium")){
