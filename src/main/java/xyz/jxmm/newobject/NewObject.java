@@ -1,4 +1,4 @@
-package xyz.jxmm.newobject;
+package xyz.jxmm.NewObject;
 
 import static xyz.jxmm.tools.FileWriterMethod.fileWriter;
 
