@@ -22,6 +22,8 @@ import static xyz.jxmm.minecraft.guild.GuildDetermine.determine;
 
 public class Guild {
 
+    static DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
     public static void common(String msg,Long sender,Group group,MessageChainBuilder chain){
         JsonObject json = new JsonObject();
         if (msg.startsWith("player")){ //玩家ID
@@ -42,7 +44,7 @@ public class Guild {
         MessageChainBuilder achievementChain = new MessageChainBuilder();
         MessageChainBuilder membersChain = new MessageChainBuilder();
 
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
 
         JsonArray members = new JsonArray();
         JsonArray ranks = new JsonArray();
@@ -102,13 +104,7 @@ public class Guild {
 
             chain.append(new PlainText("\n总经验: "));
             int ex = json.get("exp").getAsInt();
-            if (ex >= 100000 & ex < 1000000){
-                chain.append(new PlainText(decimalFormat.format((float)ex/1000) + "K"));
-            } else if (ex > 1000000){
-                chain.append(new PlainText(decimalFormat.format((float)ex/1000000) + "M"));
-            } else {
-                chain.append(new PlainText(String.valueOf(ex)));
-            }
+            chain.append(new PlainText(formatExp(ex)));
 
             String target = "100K";
             exp = json.get("exp").getAsInt();
@@ -151,13 +147,7 @@ public class Guild {
             achievementChain.append(new PlainText("\n每日最高经验: "));
             if (determine(achievements,"EXPERIENCE_KINGS")){
                 ex = achievements.get("EXPERIENCE_KINGS").getAsInt();
-                if (ex >= 100000 & ex < 1000000){
-                    achievementChain.append(new PlainText(decimalFormat.format((float)ex/1000) + "K"));
-                } else if (ex > 1000000){
-                    achievementChain.append(new PlainText(decimalFormat.format((float)ex/1000000) + "M"));
-                } else {
-                    achievementChain.append(new PlainText(String.valueOf(ex)));
-                }
+                achievementChain.append(new PlainText(formatExp(ex)));
             } else achievementChain.append(new PlainText("null"));
 
             achievementChain.append(new PlainText("\n公会胜场数: "));
@@ -165,7 +155,42 @@ public class Guild {
                 achievementChain.append(new PlainText(String.valueOf(achievements.get("WINNERS").getAsInt())));
             } else achievementChain.append(new PlainText("null"));
 
+
+            achievementChain.append(new PlainText("\n公会每周经验: "));
+            Set<String> set = new HashSet<>();
+            int sum = 0;
+
+            //总计
+            for (int i = 0; i < members.size(); i++) {
+                JsonObject expHistory = new JsonObject();
+                if (determine(members.get(i).getAsJsonObject(),"expHistory")){
+                    expHistory = members.get(i).getAsJsonObject().get("expHistory").getAsJsonObject();
+                }
+                set = expHistory.keySet();
+                for (String j : set) {
+                    sum += expHistory.get(j).getAsInt();
+                }
+            }
+            achievementChain.append(new PlainText(formatExp(sum)));
+            int weekExp = sum; //周 平均每位成员经验
+
+            //周每日
+            for (String s : set) {
+                achievementChain.append(new PlainText("\n" + s + ": "));
+                sum = 0;
+                for (int i = 0; i < members.size(); i++) {
+                    JsonObject expHistory = new JsonObject();
+                    if (determine(members.get(i).getAsJsonObject(),"expHistory")){
+                        expHistory = members.get(i).getAsJsonObject().get("expHistory").getAsJsonObject();
+                    } else continue;
+                    sum += expHistory.get(s).getAsInt();
+                }
+                achievementChain.append(new PlainText(formatExp(sum)));
+            }
+
+
             achievementChain.append(new PlainText("\n平均每位成员经验:"));
+            //今日
             achievementChain.append(new PlainText("\n今日: "));
             if (determine(achievements,"EXPERIENCE_KINGS")){
                 achievementChain.append(new PlainText(decimalFormat.format(
@@ -173,10 +198,15 @@ public class Guild {
                         (float) members.size())
                 ));
             }
+            //一周
+            achievementChain.append(new PlainText(" | 一周: "));
+            achievementChain.append(new PlainText(decimalFormat.format(
+                    (float) weekExp  /
+                            (float) members.size())
+            ));
 
 
-
-
+            /*
             //ranks  职位列表
             achievementChain.append(new PlainText(" 职位列表: "));
             StringBuilder stringBuilderDefaultRank = new StringBuilder().append("\n默认职位: ");
@@ -203,6 +233,8 @@ public class Guild {
             }
             achievementChain.append(new PlainText(stringBuilderDefaultRank.toString()));
             achievementChain.append(new PlainText(sbRank.toString()));
+
+             */
 
             /*
             //成员列表
@@ -246,9 +278,16 @@ public class Guild {
             group.sendMessage(builder.build());
         }
 
+    }
 
-
-
-
+    //格式化经验值
+    public static String formatExp(int ex){
+        if (ex >= 100000 & ex < 1000000){
+            return decimalFormat.format((float)ex/1000) + "K";
+        } else if (ex > 1000000){
+            return decimalFormat.format((float)ex/1000000) + "M";
+        } else {
+            return String.valueOf(ex);
+        }
     }
 }
