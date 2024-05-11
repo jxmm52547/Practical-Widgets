@@ -9,11 +9,13 @@ import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.ForwardMessageBuilder;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
+import xyz.jxmm.tools.MyComparatorValue;
 import xyz.jxmm.minecraft.MJURLConnect;
 import xyz.jxmm.minecraft.Nick;
 
 import java.text.DecimalFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -26,20 +28,23 @@ public class Guild {
 
     public static void common(String msg,Long sender,Group group,MessageChainBuilder chain){
         JsonObject json = new JsonObject();
+        String id = null;
         if (msg.startsWith("player")){ //玩家ID
             msg = msg.replaceAll("player ","");
+            id = msg;
             json = new Gson().fromJson(Tool.main(msg,group,chain,"player"), JsonObject.class);
         } else if (msg.startsWith("name")) { //公会name
             msg = msg.replaceAll("name ","");
             json = new Gson().fromJson(Tool.guild(msg,"name"), JsonObject.class);
         } else { //默认 玩家ID
+            id = msg;
             json = new Gson().fromJson(Tool.main(msg,group,chain,"player"), JsonObject.class);
         }
 
-        guild(json,sender,group);
+        guild(json,sender,group,id);
 
     }
-    public static void guild(JsonObject json, Long sender, Group group){
+    public static void guild(JsonObject json, Long sender, Group group, String id){
         MessageChainBuilder chain = new MessageChainBuilder().append(MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]"));
         MessageChainBuilder achievementChain = new MessageChainBuilder();
         MessageChainBuilder membersChain = new MessageChainBuilder();
@@ -66,13 +71,13 @@ public class Guild {
             chain.append(new PlainText("\n公会名称: "));
             chain.append(new PlainText(json.get("name").getAsString()));
 
-            chain.append(new PlainText(" | 会长: "));
+            chain.append(new PlainText("\n会长: "));
             chain.append(new PlainText(MJURLConnect.moJangURLConnect(members.get(0).getAsJsonObject().get("uuid").getAsString(),"uuid")));
 
             chain.append(new PlainText("\n成员数量: "));
             chain.append(new PlainText(String.valueOf(members.size())));
 
-            chain.append(new PlainText(" | 公会创建时间: "));
+            chain.append(new PlainText("\n公会创建时间: "));
             long created = json.get("created").getAsLong();
             Instant instant = Instant.ofEpochMilli(created);
             LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -176,7 +181,7 @@ public class Guild {
 
             //周每日
             for (String s : set) {
-                achievementChain.append(new PlainText("\n" + s + ": "));
+                achievementChain.append(new PlainText("\n    " + s + ": "));
                 sum = 0;
                 for (int i = 0; i < members.size(); i++) {
                     JsonObject expHistory = new JsonObject();
@@ -204,6 +209,88 @@ public class Guild {
                     (float) weekExp  /
                             (float) members.size())
             ));
+
+            if (id == null) {
+                membersChain.append(new PlainText("name 查询无玩家信息!"));
+            } else {
+                membersChain.append(new PlainText("成员: " + id));
+
+                String uuid = MJURLConnect.moJangURLConnect(id,"name");
+
+                for (int i = 0; i < members.size(); i++) {
+                    JsonObject member = members.get(i).getAsJsonObject();
+                    if (member.get("uuid").getAsString().equals(uuid)){
+                        //rank
+                        membersChain.append(new PlainText("\n成员rank: "));
+                        membersChain.append(member.get("rank").getAsString());
+
+                        //加入时间
+                        membersChain.append(new PlainText("\n加入时间: "));
+                        instant = Instant.ofEpochMilli(member.get("joined").getAsLong());
+                        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                        membersChain.append(new PlainText(String.valueOf(localDate)));
+
+                        //任务
+                        if (determine(member,"questParticipation")){
+                            membersChain.append(new PlainText("\n完成公会任务: "));
+                            membersChain.append(new PlainText(String.valueOf(member.get("questParticipation").getAsInt())));
+                        }
+
+                        //经验
+                        if (determine(member,"expHistory")){
+                            membersChain.append(new PlainText("\n个人每周经验: "));
+                            sum = 0;
+                            JsonObject expHistory = member.get("expHistory").getAsJsonObject();
+                            for (String s : set) {
+                                sum += expHistory.get(s).getAsInt();
+                            }
+                            membersChain.append(new PlainText(formatExp(sum)));
+
+                            for (String s : set) {
+                                membersChain.append(new PlainText("\n    " + s + ": "));
+                                membersChain.append(new PlainText(formatExp(expHistory.get(s).getAsInt())));
+                                //排名
+                                membersChain.append(new PlainText(" #"));
+                                Map<String,Integer> name = new HashMap<>();
+//                                Map<String,Integer> vue = new HashMap<>();
+                                for (int j = 0; j < members.size(); j++) {
+                                    name.put(members.get(j).getAsJsonObject().get("uuid").getAsString(),
+                                            members.get(j).getAsJsonObject().get("expHistory").getAsJsonObject().get(s).getAsInt());
+//                                    vue = name;
+                                }
+                                List<Map.Entry<String,Integer>> strName= new ArrayList<>(name.entrySet());
+//                                List<Map.Entry<String,Integer>> vueValue = new ArrayList<>(vue.entrySet());
+                                strName.sort(new MyComparatorValue());
+//                                vueValue.sort(new MyComparatorValue());
+
+                                List<String> uuidList = new ArrayList<>();
+                                for (Map.Entry<String, Integer> entry1:strName){
+                                    uuidList.add(entry1.getKey());
+                                }
+                                int x = 1;
+                                for (String string : uuidList){
+                                    if (string.equals(uuid)){
+                                        membersChain.append(new PlainText(String.valueOf(x)));
+                                        membersChain.append(new PlainText("/"));
+                                        membersChain.append(new PlainText(String.valueOf(members.size() + 1)));
+                                        break;
+                                    } else x++;
+                                }
+
+
+                            }
+
+
+                        }
+
+
+                        break;
+                    }
+                }
+
+
+
+            }
 
 
             /*

@@ -11,6 +11,7 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 import xyz.jxmm.perm.Determine;
+import xyz.jxmm.tools.MyComparatorValue;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -131,14 +132,3 @@ public class JrrpTop {
     }
 }
 
-class MyComparatorValue implements Comparator<Map.Entry>{//按值排序
-    public int compare(Map.Entry o1, Map.Entry o2) {
-        return ((Integer)o2.getValue()).compareTo((Integer) o1.getValue());
-    }
-}
-
-class MyComparatorKey implements Comparator<String>{
-    public int compare(String o2, String o1) {
-        return o1.compareTo(o2);
-    }
-}

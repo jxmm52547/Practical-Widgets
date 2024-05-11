@@ -16,7 +16,7 @@ public class MJURLConnect {
         }
         String result = URLConnect.URLConnect(connectURL);
 
-        if (result.equals("")){
+        if (result.isEmpty()){
             return "";
         } else if (result.startsWith("java.net.ConnectException:")) {
             return "Connection timed out";
