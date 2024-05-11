@@ -39,7 +39,7 @@ public final class PracticalWidgets extends JavaPlugin {
     }
 
     public static String version(){
-        return "0.5.2";  //每次更新修改
+        return "0.6.0";  //每次更新修改
     }
 
     public static String perfix(){
