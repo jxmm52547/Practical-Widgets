@@ -1,4 +1,4 @@
-package xyz.jxmm.Minecraft;
+package xyz.jxmm.minecraft;
 
 import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
@@ -7,10 +7,11 @@ import net.mamoe.mirai.message.data.PlainText;
 
 public class Error {
     public static Boolean err(JsonObject json, MessageChainBuilder chain, Group group){
-        if (!json.get("success").getAsBoolean()){//当返回的 "success" 字段不为 真 时进行解析原因
-            String err = json.get("cause").getAsString();
+
+        if (json != null && !json.get("success").getAsBoolean()){//当返回的 "success" 字段不为 真 时进行解析原因
+            String err = json.get("cause").getAsString().substring(0,1);
             switch (err) {
-                case "Missing one or more fields [...]":
+                case "M":
                     chain.append(new PlainText("返回错误 - 400\n"));
                     chain.append(new PlainText("原因: \n"));
                     chain.append(new PlainText("Missing one or more fields [...]"));
@@ -19,7 +20,7 @@ public class Error {
 
                     group.sendMessage(chain.build());
                     break;
-                case "Invalid API key":
+                case "I":
                     chain.append(new PlainText("返回错误 - 403\n"));
                     chain.append(new PlainText("原因: \n"));
                     chain.append(new PlainText("Invalid API key"));
@@ -28,7 +29,7 @@ public class Error {
 
                     group.sendMessage(chain.build());
                     break;
-                case "Key throttle":
+                case "K":
                     chain.append(new PlainText("返回错误 - 429\n"));
                     chain.append(new PlainText("原因: \n"));
                     chain.append(new PlainText("Key throttle"));

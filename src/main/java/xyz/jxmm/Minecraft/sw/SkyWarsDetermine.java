@@ -1,4 +1,4 @@
-package xyz.jxmm.Minecraft.sw;
+package xyz.jxmm.minecraft.sw;
 
 import com.google.gson.JsonObject;
 
@@ -10,7 +10,7 @@ public class SkyWarsDetermine {
     public static Boolean skywars_experience(JsonObject swJson){
         return swJson.has("skywars_experience") && swJson.has("coins");
     }
-    public static Boolean win_streak(JsonObject swJson){
+    public static Boolean wins(JsonObject swJson){
         return swJson.has("win_streak") && swJson.has("losses");
     }
     public static Boolean kills(JsonObject swJson){

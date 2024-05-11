@@ -1,4 +1,4 @@
-package xyz.jxmm.Minecraft;
+package xyz.jxmm.minecraft;
 
 import xyz.jxmm.tools.URLConnect;
 
