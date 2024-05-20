@@ -51,6 +51,7 @@ public class Fish {
             chain.append(new PlainText(" | 钓鱼 数据如下: "));
 
 
+            group.sendMessage(chain.build());
         }
     }
 }
