@@ -45,6 +45,28 @@ public class Arcade {
                     chain.append(new PlainText(String.valueOf(achievements.get("arcade_arcade_winner").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
+                //心跳水立方
+                chain.append(new PlainText("\n心跳水立方数据如下: "));
+                if (acdJson.has("dropper")){
+                    JsonObject dropper = acdJson.get("dropper").getAsJsonObject();
+
+                    chain.append(new PlainText("\n    游玩次数: "));
+                    if (game_played(dropper)) {
+                        chain.append(new PlainText(String.valueOf(dropper.get("games_played").getAsInt())));
+                    } else chain.append(new PlainText("null"));
+
+                    chain.append(new PlainText(" | 胜场: "));
+                    if (wins_dropper(dropper)){
+                        chain.append(new PlainText(String.valueOf(dropper.get("wins").getAsInt())));
+                    } else chain.append(new PlainText("null"));
+
+                    chain.append(new PlainText(" | 无暇胜利: "));
+                    if (flawless_games(dropper)){
+                        chain.append(new PlainText(String.valueOf(dropper.get("flawless_games").getAsInt())));
+                    } else chain.append(new PlainText("null"));
+
+                } else chain.append(new PlainText("null"));
+
                 //派对游戏
                 chain.append(new PlainText("\n派对游戏数据如下: "));
                 chain.append(new PlainText("\n    胜场数: "));
@@ -67,6 +89,11 @@ public class Arcade {
                 chain.append(new PlainText("\n    胜场数: "));
                 if (wins_dayone(acdJson)){
                     chain.append(new PlainText(String.valueOf(acdJson.get("wins_dayone").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                chain.append(new PlainText(" | 击杀数: "));
+                if (kills_dayone(acdJson)){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("kills_dayone").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 chain.append(new PlainText(" | 爆头数: "));
@@ -102,24 +129,6 @@ public class Arcade {
                 chain.append(new PlainText(" | 击杀数: "));
                 chain.append(new PlainText("null"));
                  */
-
-                //心跳水立方
-                chain.append(new PlainText("\n心跳水立方数据如下: "));
-                if (acdJson.has("dropper")){
-                    JsonObject dropper = acdJson.get("dropper").getAsJsonObject();
-
-                    chain.append(new PlainText("\n    已玩次数: "));
-                    if (game_played(dropper)) {
-                        chain.append(new PlainText(String.valueOf(dropper.get("games_played").getAsInt())));
-                    } else chain.append(new PlainText("null"));
-
-                    chain.append(new PlainText(" | 完成次数: "));
-                    if (games_finished(dropper)){
-                        chain.append(new PlainText(String.valueOf(dropper.get("games_finished").getAsInt())));
-                    } else chain.append(new PlainText("null"));
-
-                } else chain.append(new PlainText("null"));
-
 
                 //末影掘战
                 /*
@@ -388,7 +397,7 @@ public class Arcade {
                     } else chain.append(new PlainText("null"));
 
                     chain.append(new PlainText("\n    胜场数: "));
-                    if (wins(pixel_party)){
+                    if (pixel_party(pixel_party)){
                         chain.append(new PlainText(String.valueOf(pixel_party.get("wins").getAsInt())));
                     } else chain.append(new PlainText("null"));
 

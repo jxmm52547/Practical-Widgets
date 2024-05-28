@@ -29,6 +29,9 @@ public class ArcadeDetermine {
     public static Boolean headshots_dayone(JsonObject acdJson){
         return acdJson.has("headshots_dayone");
     }
+    public static Boolean kills_dayone(JsonObject acdJson){
+        return acdJson.has("kills_dayone");
+    }
 
 //进击的苦力怕
     public static Boolean crreper_Attack(JsonObject acdJson){
@@ -41,6 +44,8 @@ public class ArcadeDetermine {
 //心跳水立方
     public static Boolean game_played(JsonObject dropper){return dropper.has("games_played");}
     public static Boolean games_finished(JsonObject dropper){return dropper.has("games_finished");}
+    public static Boolean flawless_games(JsonObject dropper){return dropper.has("flawless_games");}
+    public static Boolean wins_dropper(JsonObject dropper){return dropper.has("wins");}
 
 
 //末影掘战
@@ -171,7 +176,7 @@ public class ArcadeDetermine {
     public static Boolean rounds_completed(JsonObject pixel_party){
         return pixel_party.has("rounds_completed");
     }
-    public static Boolean wins(JsonObject pixel_party){
+    public static Boolean wins_pixel_party(JsonObject pixel_party){
         return pixel_party.has("wins");
     }
     public static Boolean wins_normal(JsonObject pixel_party){
