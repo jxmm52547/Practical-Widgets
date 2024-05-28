@@ -45,6 +45,10 @@ public class MurderMysteryDetermine {
         return jsonObject.has("murderer_wins");
     }
 
+    public static boolean was_hero(JsonObject jsonObject) { return jsonObject.has("was_hero"); }
+
+    public static boolean coins_pickedup(JsonObject jsonObject) { return  jsonObject.has("coins_pickedup");}
+
     //周胜场算法
     public static boolean quests(JsonObject jsonObject){
         return jsonObject.has("quests");
@@ -68,7 +72,7 @@ public class MurderMysteryDetermine {
         return jsonObject.has("mm_weekly_kills_as_murderer");
     }
 
-    //今典模式
+    //经典模式
     public static boolean games_MURDER_CLASSIC(JsonObject jsonObject){return jsonObject.has("games_MURDER_CLASSIC");}
     public static boolean wins_MURDER_CLASSIC(JsonObject jsonObject){return jsonObject.has("wins_MURDER_CLASSIC");}
     public static boolean bow_kills_MURDER_CLASSIC(JsonObject jsonObject){return jsonObject.has("bow_kills_MURDER_CLASSIC");}
@@ -93,6 +97,8 @@ public class MurderMysteryDetermine {
     public static boolean deaths_MURDER_CLASSIC(JsonObject jsonObject){
         return jsonObject.has("deaths_MURDER_CLASSIC");
     }
+    public static boolean was_hero_MURDER_CLASSIC(JsonObject jsonObject) { return  jsonObject.has("was_hero_MURDER_CLASSIC");}
+
 
     //双倍模式
     public static boolean games_MURDER_DOUBLE_UP(JsonObject jsonObject){
@@ -125,6 +131,9 @@ public class MurderMysteryDetermine {
     public static boolean deaths_MURDER_DOUBLE_UP(JsonObject jsonObject){
         return jsonObject.has("deaths_MURDER_DOUBLE_UP");
     }
+    public static boolean was_hero_MURDER_DOUBLE_UP(JsonObject jsonObject) {
+        return jsonObject.has("was_hero_MURDER_DOUBLE_UP");
+    }
 
     //刺客模式
     public static boolean games_MURDER_ASSASSINS(JsonObject jsonObject){
@@ -144,12 +153,6 @@ public class MurderMysteryDetermine {
     }
     public static boolean trap_kills_MURDER_ASSASSINS(JsonObject jsonObject){
         return jsonObject.has("trap_kills_MURDER_ASSASSINS");
-    }
-    public static boolean detective_wins_MURDER_ASSASSINS(JsonObject jsonObject){
-        return jsonObject.has("detective_wins_MURDER_ASSASSINS");
-    }
-    public static boolean murderer_wins_MURDER_ASSASSINS(JsonObject jsonObject){
-        return jsonObject.has("murderer_wins_MURDER_ASSASSINS");
     }
     public static boolean kills_MURDER_ASSASSINS(JsonObject jsonObject){
         return jsonObject.has("kills_MURDER_ASSASSINS");

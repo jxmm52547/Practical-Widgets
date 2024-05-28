@@ -40,43 +40,67 @@ public class MurderMystery {
                     chain.append(new PlainText(String.valueOf(mmJson.get("coins").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //总胜场
-                chain.append(new PlainText(" | 总胜场: "));
-                if (wins(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("wins").getAsInt())));
+                //捡起金锭
+                chain.append(new PlainText(" | 捡起金锭: "));
+                if (coins_pickedup(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("coins_pickedup").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //总场次
-                chain.append(new PlainText("\n总场次: "));
+                //游戏次数
+                chain.append(new PlainText("\n游戏次数: "));
                 if (games(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("games").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //总胜率
-                chain.append(new PlainText(" | 总胜率: "));
-                if (wins(mmJson) && games(mmJson)){
+                //胜场
+                chain.append(new PlainText(" | 胜场: "));
+                if (wins(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("wins").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //胜率
+                chain.append(new PlainText(" | 胜率: "));
+                if (games_MURDER_CLASSIC(mmJson) && wins_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(decimalFormat.format(
-                            (float)mmJson.get("wins").getAsInt() /
-                                    (float) mmJson.get("games").getAsInt() *
+                            (float)mmJson.get("wins_MURDER_CLASSIC").getAsInt() /
+                                    (float) mmJson.get("games_MURDER_CLASSIC").getAsInt() *
                                     100
                     )));
                     chain.append(new PlainText("%"));
                 } else chain.append(new PlainText("null"));
 
+                //侦探胜场
+                chain.append(new PlainText("\n侦探胜场: "));
+                if (detective_wins(mmJson) && games(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("detective_wins").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //杀手胜场
+                chain.append(new PlainText(" | 杀手胜场: "));
+                if (murderer_wins(mmJson) && games(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("murderer_wins").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //杀手胜场
+                chain.append(new PlainText(" | 英雄胜场: "));
+                if (was_hero(mmJson) && games(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("was_hero").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
                 //总击杀
-                chain.append(new PlainText("\n总击杀数: "));
+                chain.append(new PlainText("\n击杀数: "));
                 if (kills(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("kills").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总死亡
-                chain.append(new PlainText("| 总死亡数: "));
+                chain.append(new PlainText(" | 死亡数: "));
                 if (deaths(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("deaths").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总KD
-                chain.append(new PlainText(" | 总KD: "));
+                chain.append(new PlainText(" | K/D: "));
                 if (games(mmJson) && deaths(mmJson)){
                     chain.append(new PlainText(decimalFormat.format(
                             (float)mmJson.get("kills").getAsInt() /
@@ -85,39 +109,27 @@ public class MurderMystery {
                 } else chain.append(new PlainText("null"));
 
                 //总弓箭击杀
-                chain.append(new PlainText("\n总弓箭击杀: "));
+                chain.append(new PlainText("\n弓箭击杀: "));
                 if (bow_kills(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总匕首击杀
-                chain.append(new PlainText(" | 总匕首击杀: "));
+                chain.append(new PlainText(" | 匕首击杀: "));
                 if (knife_kills(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("knife_kills").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总飞刀击杀
-                chain.append(new PlainText("\n总飞刀击杀: "));
+                chain.append(new PlainText("\n飞刀击杀: "));
                 if (thrown_knife_kills(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("thrown_knife_kills").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //总陷阱击杀
-                chain.append(new PlainText(" | 总陷阱击杀: "));
+                chain.append(new PlainText(" | 陷阱击杀: "));
                 if (trap_kills(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("trap_kills").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //侦探总胜场
-                chain.append(new PlainText("\n总侦探胜场: "));
-                if (detective_wins(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("detective_wins").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //总杀手胜场
-                chain.append(new PlainText(" | 总杀手胜场: "));
-                if (murderer_wins(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("murderer_wins").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 //周胜场
@@ -156,11 +168,12 @@ public class MurderMystery {
                     } else chain.append(new PlainText("null"));
                 } else chain.append(new PlainText("null"));
 
+
                 //经典模式
-                chain.append(new PlainText("\n经典模式数据如下: "));
+                chain.append(new PlainText("\n经典模式: "));
 
                 //场次
-                chain.append(new PlainText("\n场次: "));
+                chain.append(new PlainText("\n  游戏次数: "));
                 if (games_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("games_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -182,32 +195,8 @@ public class MurderMystery {
                     chain.append(new PlainText("%"));
                 } else chain.append(new PlainText("null"));
 
-                //弓箭击杀
-                chain.append(new PlainText("\n弓箭击杀: "));
-                if (bow_kills_MURDER_CLASSIC(mmJson)) {
-                    chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_CLASSIC").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //匕首击杀
-                chain.append(new PlainText(" | 匕首击杀: "));
-                if (knife_kills_MURDER_CLASSIC(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("knife_kills_MURDER_CLASSIC").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //飞刀击杀
-                chain.append(new PlainText("\n飞刀击杀: "));
-                if (thrown_knife_kills_MURDER_CLASSIC(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("thrown_knife_kills_MURDER_CLASSIC").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //陷阱击杀
-                chain.append(new PlainText(" | 陷阱击杀: "));
-                if (trap_kills_MURDER_CLASSIC(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("trap_kills_MURDER_CLASSIC").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
                 //侦探胜场
-                chain.append(new PlainText("\n侦探胜场: "));
+                chain.append(new PlainText("\n  侦探胜场: "));
                 if (detective_wins_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("detective_wins_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -218,14 +207,20 @@ public class MurderMystery {
                     chain.append(new PlainText(String.valueOf(mmJson.get("murderer_wins_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //经典模式总击杀
-                chain.append(new PlainText("\n经典模式总击杀: "));
+                //英雄胜场
+                chain.append(new PlainText(" | 英雄胜场: "));
+                if (was_hero_MURDER_CLASSIC(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("was_hero_MURDER_CLASSIC").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //经典模式击杀
+                chain.append(new PlainText("\n  击杀数: "));
                 if (kills_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("kills_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //经典模式总死亡
-                chain.append(new PlainText(" | 死亡: "));
+                //经典模式死亡
+                chain.append(new PlainText(" | 死亡数: "));
                 if (deaths_MURDER_CLASSIC(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("deaths_MURDER_CLASSIC").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -239,11 +234,35 @@ public class MurderMystery {
                     )));
                 }
 
+                //弓箭击杀
+                chain.append(new PlainText("\n  弓箭击杀: "));
+                if (bow_kills_MURDER_CLASSIC(mmJson)) {
+                    chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_CLASSIC").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //匕首击杀
+                chain.append(new PlainText(" | 匕首击杀: "));
+                if (knife_kills_MURDER_CLASSIC(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("knife_kills_MURDER_CLASSIC").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //飞刀击杀
+                chain.append(new PlainText(" \n  飞刀击杀: "));
+                if (thrown_knife_kills_MURDER_CLASSIC(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("thrown_knife_kills_MURDER_CLASSIC").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //陷阱击杀
+                chain.append(new PlainText(" | 陷阱击杀: "));
+                if (trap_kills_MURDER_CLASSIC(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("trap_kills_MURDER_CLASSIC").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
                 //双倍模式
-                chain.append(new PlainText("\n双倍模式数据如下: "));
+                chain.append(new PlainText("\n双倍模式: "));
 
                 //场次
-                chain.append(new PlainText("\n场次: "));
+                chain.append(new PlainText("\n  游戏次数: "));
                 if (games_MURDER_DOUBLE_UP(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("games_MURDER_DOUBLE_UP").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -265,32 +284,8 @@ public class MurderMystery {
                     chain.append(new PlainText("%"));
                 } else chain.append(new PlainText("null"));
 
-                //弓箭击杀
-                chain.append(new PlainText("\n弓箭击杀: "));
-                if (bow_kills_MURDER_DOUBLE_UP(mmJson)) {
-                    chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_DOUBLE_UP").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //匕首击杀
-                chain.append(new PlainText(" | 匕首击杀: "));
-                if (knife_kills_MURDER_DOUBLE_UP(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("knife_kills_MURDER_DOUBLE_UP").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //飞刀击杀
-                chain.append(new PlainText("\n飞刀击杀: "));
-                if (thrown_knife_kills_MURDER_DOUBLE_UP(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("thrown_knife_kills_MURDER_DOUBLE_UP").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //陷阱击杀
-                chain.append(new PlainText(" | 陷阱击杀: "));
-                if (trap_kills_MURDER_DOUBLE_UP(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("trap_kills_MURDER_DOUBLE_UP").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
                 //侦探胜场
-                chain.append(new PlainText("\n侦探胜场: "));
+                chain.append(new PlainText("\n  侦探胜场: "));
                 if (detective_wins_MURDER_DOUBLE_UP(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("detective_wins_MURDER_DOUBLE_UP").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -301,8 +296,14 @@ public class MurderMystery {
                     chain.append(new PlainText(String.valueOf(mmJson.get("murderer_wins_MURDER_DOUBLE_UP").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
+                //英雄胜场
+                chain.append(new PlainText(" | 英雄胜场: "));
+                if (was_hero_MURDER_DOUBLE_UP(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("was_hero_MURDER_DOUBLE_UP").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
                 //双倍模式总击杀
-                chain.append(new PlainText("\n今典模式总击杀: "));
+                chain.append(new PlainText("\n  击杀: "));
                 if (kills_MURDER_DOUBLE_UP(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("kills_MURDER_DOUBLE_UP").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -322,11 +323,35 @@ public class MurderMystery {
                     )));
                 } else chain.append(new PlainText("null"));
 
+                //弓箭击杀
+                chain.append(new PlainText("\n  弓箭击杀: "));
+                if (bow_kills_MURDER_DOUBLE_UP(mmJson)) {
+                    chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_DOUBLE_UP").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //匕首击杀
+                chain.append(new PlainText(" | 匕首击杀: "));
+                if (knife_kills_MURDER_DOUBLE_UP(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("knife_kills_MURDER_DOUBLE_UP").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //飞刀击杀
+                chain.append(new PlainText("\n  飞刀击杀: "));
+                if (thrown_knife_kills_MURDER_DOUBLE_UP(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("thrown_knife_kills_MURDER_DOUBLE_UP").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //陷阱击杀
+                chain.append(new PlainText(" | 陷阱击杀: "));
+                if (trap_kills_MURDER_DOUBLE_UP(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("trap_kills_MURDER_DOUBLE_UP").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
                 //刺客模式
-                chain.append(new PlainText("\n刺客模式数据如下: "));
+                chain.append(new PlainText("\n刺客模式: "));
 
                 //场次
-                chain.append(new PlainText("\n场次: "));
+                chain.append(new PlainText("\n  场次: "));
                 if (games_MURDER_ASSASSINS(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("games_MURDER_ASSASSINS").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -348,8 +373,29 @@ public class MurderMystery {
                     chain.append(new PlainText("%"));
                 } else chain.append(new PlainText("null"));
 
+                //刺客击杀
+                chain.append(new PlainText("\n  击杀: "));
+                if (kills_MURDER_ASSASSINS(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("kills_MURDER_ASSASSINS").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //刺客死亡
+                chain.append(new PlainText(" | 死亡: "));
+                if (deaths_MURDER_ASSASSINS(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("deaths_MURDER_ASSASSINS").getAsInt())));
+                } else chain.append(new PlainText("null"));
+
+                //刺客KD
+                chain.append(new PlainText(" | KD: "));
+                if (kills_MURDER_ASSASSINS(mmJson) && deaths_MURDER_ASSASSINS(mmJson)){
+                    chain.append(new PlainText(decimalFormat.format(
+                            (float) mmJson.get("kills_MURDER_ASSASSINS").getAsInt() /
+                                    (float) mmJson.get("deaths_MURDER_ASSASSINS").getAsInt()
+                    )));
+                } else chain.append(new PlainText("null"));
+
                 //弓箭击杀
-                chain.append(new PlainText("\n弓箭击杀: "));
+                chain.append(new PlainText("\n  弓箭击杀: "));
                 if (bow_kills_MURDER_ASSASSINS(mmJson)) {
                     chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_ASSASSINS").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -361,7 +407,7 @@ public class MurderMystery {
                 } else chain.append(new PlainText("null"));
 
                 //飞刀击杀
-                chain.append(new PlainText("\n飞刀击杀: "));
+                chain.append(new PlainText("\n  飞刀击杀: "));
                 if (thrown_knife_kills_MURDER_ASSASSINS(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("thrown_knife_kills_MURDER_ASSASSINS").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -372,44 +418,11 @@ public class MurderMystery {
                     chain.append(new PlainText(String.valueOf(mmJson.get("trap_kills_MURDER_ASSASSINS").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //侦探胜场
-                chain.append(new PlainText("\n侦探胜场: "));
-                if (detective_wins_MURDER_ASSASSINS(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("detective_wins_MURDER_ASSASSINS").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //杀手胜场
-                chain.append(new PlainText(" | 杀手胜场: "));
-                if (murderer_wins_MURDER_ASSASSINS(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("murderer_wins_MURDER_ASSASSINS").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //双倍模式总击杀
-                chain.append(new PlainText("\n今典模式总击杀: "));
-                if (kills_MURDER_ASSASSINS(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("kills_MURDER_ASSASSINS").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //双倍模式总死亡
-                chain.append(new PlainText(" | 死亡: "));
-                if (deaths_MURDER_ASSASSINS(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("deaths_MURDER_ASSASSINS").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //双倍模式KD
-                chain.append(new PlainText(" | KD: "));
-                if (kills_MURDER_ASSASSINS(mmJson) && deaths_MURDER_ASSASSINS(mmJson)){
-                    chain.append(new PlainText(decimalFormat.format(
-                            (float) mmJson.get("kills_MURDER_ASSASSINS").getAsInt() /
-                                    (float) mmJson.get("deaths_MURDER_ASSASSINS").getAsInt()
-                    )));
-                } else chain.append(new PlainText("null"));
-
                 //感染模式
-                chain.append(new PlainText("\n感染模式数据如下: "));
+                chain.append(new PlainText("\n感染模式: "));
 
                 //总场次
-                chain.append(new PlainText("\n场次: "));
+                chain.append(new PlainText("\n  场次: "));
                 if (games_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("games_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -432,7 +445,7 @@ public class MurderMystery {
                 } else chain.append(new PlainText("null"));
 
                 //总击杀
-                chain.append(new PlainText("\n击杀: "));
+                chain.append(new PlainText("\n  击杀: "));
                 if (kills_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("wins_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
@@ -453,35 +466,22 @@ public class MurderMystery {
                 } else chain.append(new PlainText("null"));
 
                 //幸存者击杀
-                chain.append(new PlainText("\n幸存者击杀: "));
+                chain.append(new PlainText("\n  幸存者击杀: "));
                 if (kills_as_survivor_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("kills_as_survivor_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-                //弓箭击杀
-                chain.append(new PlainText(" | 弓箭击杀: "));
-                if (bow_kills_MURDER_INFECTION(mmJson)){
-                    chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_INFECTION").getAsInt())));
-                } else chain.append(new PlainText("null"));
-
-                //弓箭击杀率
-                chain.append(new PlainText(" | 弓箭击杀率: "));
-                if(kills_as_survivor_MURDER_INFECTION(mmJson) && bow_kills_MURDER_INFECTION(mmJson)){
-                    chain.append(new PlainText(decimalFormat.format(
-                            (float) mmJson.get("bow_kills_MURDER_INFECTION").getAsInt() /
-                                    (float) mmJson.get("kills_as_survivor_MURDER_INFECTION").getAsInt() *
-                                    100
-                    )));
-                    chain.append(new PlainText("%"));
-                } else chain.append(new PlainText("null"));
-
                 //感染者击杀
-                chain.append(new PlainText("\n感染者击杀: "));
+                chain.append(new PlainText(" | 感染者击杀: "));
                 if (kills_as_infected_MURDER_INFECTION(mmJson)){
                     chain.append(new PlainText(String.valueOf(mmJson.get("kills_as_infected_MURDER_INFECTION").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
-
+                //弓箭击杀
+                chain.append(new PlainText("\n  弓箭击杀: "));
+                if (bow_kills_MURDER_INFECTION(mmJson)){
+                    chain.append(new PlainText(String.valueOf(mmJson.get("bow_kills_MURDER_INFECTION").getAsInt())));
+                } else chain.append(new PlainText("null"));
 
             } else {
                 chain.append(new PlainText("无法得到 密室杀手 数据"));
