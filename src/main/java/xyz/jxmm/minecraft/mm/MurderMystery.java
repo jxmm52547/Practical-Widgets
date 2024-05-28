@@ -133,6 +133,7 @@ public class MurderMystery {
                 } else chain.append(new PlainText("null"));
 
                 //周胜场
+                /*不能正确获取
                 chain.append(new PlainText("\n周胜场: "));
                 if (quests(playerJson)){
                     quests = playerJson.get("quests").getAsJsonObject();
@@ -166,7 +167,7 @@ public class MurderMystery {
                             } else chain.append(new PlainText("null"));
                         } else chain.append(new PlainText("null"));
                     } else chain.append(new PlainText("null"));
-                } else chain.append(new PlainText("null"));
+                } else chain.append(new PlainText("null"));*/
 
                 chain.append(new PlainText("\n"));
 
