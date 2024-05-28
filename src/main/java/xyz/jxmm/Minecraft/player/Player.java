@@ -14,22 +14,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import xyz.jxmm.minecraft.player.PlayerDetermine;
+
 public class Player {
     public static void player(JsonObject json,JsonObject recentGames,JsonObject guild,JsonObject online, Long sender, Group group){
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
         MessageChainBuilder chain = new MessageChainBuilder().append(at);
         JsonObject playerJson;
         JsonObject giftingMeta;
-        /*
-        JsonObject bwJson;
-        JsonObject swJson;
-        JsonObject arcade;
-        JsonObject TNTGames;
-        JsonObject achievements;
-        V0.4.2版本更新注释
-         */
         DecimalFormat decimalFormat = new DecimalFormat("0.000");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年-MM月-dd日-HH时-mm分-ss秒", Locale.CHINA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒", Locale.CHINA);
 
         if (json.get("player").isJsonObject()){
             playerJson = json.get("player").getAsJsonObject();
@@ -38,29 +32,30 @@ public class Player {
             chain.append(new PlainText("\n" + Nick.nick(playerJson))); //玩家名称前缀
             chain.append(new PlainText(playerJson.get("displayname").getAsString()));
 
-            chain.append(new PlainText(" | 在线状态: "));
+            chain.append(new PlainText("\n在线状态: "));
             if (PlayerDetermine.online(online)){
                 JsonObject session = online.get("session").getAsJsonObject();
                 boolean onlineStatus = session.get("online").getAsBoolean();
                 if (onlineStatus) {
                     chain.append(new PlainText("ONLINE\uD83D\uDFE2"));
-                    chain.append(new PlainText("\n" + session.get("gameType").getAsString() + " 大厅"));
-                    if (PlayerDetermine.mode(session) && session.get("mode").getAsString().equals("LOBBY")){
-                        chain.append(new PlainText(" | 闲置中"));
-                    } else {
+                    chain.append(new PlainText("\n" + session.get("gameType").getAsString()));
+                     {
                         if (PlayerDetermine.mode(session)){
-                            chain.append(new PlainText(" | 游戏模式:\n"));
+                            chain.append(new PlainText(" | "));
                             chain.append(new PlainText(session.get("mode").getAsString()));
                         }
                         if (PlayerDetermine.map(session)){
-                            chain.append(new PlainText("\n地图: "));
+                            chain.append(new PlainText(" | "));
                             chain.append(new PlainText(session.get("map").getAsString()));
                         }
 
                     }
                 }
                 else {
-                    chain.append(new PlainText("OFFLINE\uD83D\uDD34"));
+                    if (PlayerDetermine.lastLogin(playerJson)){
+                        chain.append(new PlainText("OFFLINE\uD83D\uDD34"));
+                    } else {chain.append(new PlainText("未开启在线状态API"));}
+
                 }
 
             } else {
@@ -82,22 +77,22 @@ public class Player {
                 chain.append(new PlainText("null"));
             }
 
-            chain.append(new PlainText("\n最后登录时间: "));
             if (PlayerDetermine.lastLogin(playerJson)){
+                chain.append(new PlainText("\n最后登录时间: "));
                 chain.append(new PlainText(simpleDateFormat.format(new Date(playerJson.get("lastLogin").getAsLong()))));
-            } else {chain.append(new PlainText("null"));}
+            }
 
-            chain.append(new PlainText("\n最后退出时间: "));
             if (PlayerDetermine.lastLogout(playerJson)){
+                chain.append(new PlainText("\n最后退出时间: "));
                 chain.append(new PlainText(simpleDateFormat.format(new Date(playerJson.get("lastLogout").getAsLong()))));
-            } else {chain.append(new PlainText("null"));}
+            }
 
-            chain.append(new PlainText("\n玩家使用的语言: "));
+            chain.append(new PlainText("\n使用的语言: "));
             if (PlayerDetermine.userLanguage(playerJson)){
                 chain.append(new PlainText(playerJson.get("userLanguage").getAsString()));
             } else {chain.append(new PlainText("null"));}
 
-            chain.append(new PlainText("\n玩家所属公会: "));
+            chain.append(new PlainText("\n所属公会: "));
             if (PlayerDetermine.guild(guild)){
                 chain.append(new PlainText(guild.get("guild").getAsJsonObject().get("name").getAsString()));
             } else {chain.append(new PlainText("无"));}
@@ -111,10 +106,10 @@ public class Player {
                 chain.append(new PlainText(decimalFormat.format(xp)));
             } else {chain.append(new PlainText("null"));}
 
-            chain.append(new PlainText("\n玩家最近游玩的模式: "));
             if (PlayerDetermine.recentGames(recentGames)){
+                chain.append(new PlainText("\n最近游玩的模式: "));
                 chain.append(new PlainText(recentGames.get("games").getAsJsonArray().get(0).getAsJsonObject().get("gameType").getAsString()));
-            } else {chain.append(new PlainText("null"));}
+            }
 
             chain.append(new PlainText("\n成就点数: "));
             if (PlayerDetermine.achievementPoints(playerJson)){
@@ -126,61 +121,6 @@ public class Player {
                 chain.append(new PlainText(String.valueOf(playerJson.get("karma").getAsInt())));
             } else {chain.append(new PlainText("null"));}
 
-            /* V0.4.2版本更新  注释这部分代码  用于简化player字段代码
-
-            if (playerJson.get("stats").getAsJsonObject().has("Arcade")){
-                arcade = playerJson.get("stats").getAsJsonObject().get("Arcade").getAsJsonObject();
-
-                if (PlayerDetermine.arcade_arcade_winner(arcade, achievements)){
-                    chain.append(new PlainText("\n街机金币: "));
-                    chain.append(new PlainText(String.valueOf(arcade.get("coins").getAsInt())));
-                    chain.append(new PlainText(" | 街机总胜利数: "));
-                    chain.append(new PlainText(String.valueOf(achievements.get("arcade_arcade_winner").getAsInt())));
-
-                } else {chain.append(new PlainText("\n街机游戏数据null"));}
-            }
-
-            if(playerJson.get("stats").getAsJsonObject().has("Bedwars")){
-                bwJson = playerJson.get("stats").getAsJsonObject().get("Bedwars").getAsJsonObject();
-                if (PlayerDetermine.bedWars(achievements,bwJson)){
-                    chain.append(new PlainText("\n起床战争等级: "));
-                    chain.append(new PlainText(String.valueOf(achievements.get("bedwars_level").getAsInt())));
-                    chain.append(new PlainText(" | 起床战争金币: "));
-                    chain.append(new PlainText(String.valueOf(bwJson.get("coins").getAsInt())));
-                    chain.append(new PlainText(" | 起床战争连胜: "));
-                    chain.append(new PlainText(String.valueOf(bwJson.get("winstreak").getAsInt())));
-
-                } else {chain.append(new PlainText("\n起床战争数据null"));}
-            }
-
-            if (playerJson.get("stats").getAsJsonObject().has("SkyWars")){
-                swJson = playerJson.get("stats").getAsJsonObject().get("SkyWars").getAsJsonObject();
-                if (PlayerDetermine.skyWars(swJson)){
-                    chain.append(new PlainText("\n空岛战争等级: "));
-                    chain.append(new PlainText(swJson.get("levelFormatted").getAsString().replace(swJson.get("levelFormatted").getAsString().substring(0,2),"").replace("⋆","✨")));
-                    chain.append(new PlainText(" | 空岛战争金币: "));
-                    chain.append(new PlainText(String.valueOf(swJson.get("coins").getAsInt())));
-                    chain.append(new PlainText(" | 空岛战争连胜: "));
-                    chain.append(new PlainText(String.valueOf(swJson.get("win_streak").getAsInt())));
-                } else {
-                    chain.append(new PlainText("\n空岛战争数据null"));
-                }
-            }
-
-            if (playerJson.get("stats").getAsJsonObject().has("TNTGames")){
-                TNTGames = playerJson.get("stats").getAsJsonObject().get("TNTGames").getAsJsonObject();
-                if (PlayerDetermine.TNTGames(TNTGames)){
-                    chain.append(new PlainText("\nTNT游戏金币: "));
-                    chain.append(new PlainText(String.valueOf(TNTGames.get("coins").getAsInt())));
-                    chain.append(new PlainText(" | TNT游戏胜场: "));
-                    chain.append(new PlainText(String.valueOf(TNTGames.get("wins").getAsInt())));
-                    chain.append(new PlainText(" | TNT游戏连胜: "));
-                    chain.append(new PlainText(String.valueOf(TNTGames.get("winstreak").getAsInt())));
-                } else {
-                    chain.append(new PlainText("\nTNT游戏数据null"));
-                }
-            }
-             */
 
             URL url;
             byte[] data;
