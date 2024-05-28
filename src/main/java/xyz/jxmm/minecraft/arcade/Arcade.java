@@ -65,8 +65,8 @@ public class Arcade {
                 //行尸走肉
                 chain.append(new PlainText("\n行尸走肉数据如下: "));
                 chain.append(new PlainText("\n    胜场数: "));
-                if (wins_zombies_deadend(acdJson)){
-                    chain.append(new PlainText(String.valueOf(acdJson.get("wins_zombies_deadend").getAsInt())));
+                if (wins_dayone(acdJson)){
+                    chain.append(new PlainText(String.valueOf(acdJson.get("wins_dayone").getAsInt())));
                 } else chain.append(new PlainText("null"));
 
                 chain.append(new PlainText(" | 爆头数: "));

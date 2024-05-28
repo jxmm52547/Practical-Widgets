@@ -23,8 +23,8 @@ public class ArcadeDetermine {
     public static Boolean total_stars_party(JsonObject acdJson){
         return acdJson.has("total_stars_party");
     }
-    public static Boolean wins_zombies_deadend(JsonObject acdJson){
-        return acdJson.has("wins_zombies_deadend");
+    public static Boolean wins_dayone(JsonObject acdJson){
+        return acdJson.has("wins_dayone");
     }
     public static Boolean headshots_dayone(JsonObject acdJson){
         return acdJson.has("headshots_dayone");
