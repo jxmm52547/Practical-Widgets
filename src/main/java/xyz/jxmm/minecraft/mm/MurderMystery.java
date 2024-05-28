@@ -168,6 +168,7 @@ public class MurderMystery {
                     } else chain.append(new PlainText("null"));
                 } else chain.append(new PlainText("null"));
 
+                chain.append(new PlainText("\n"));
 
                 //经典模式
                 chain.append(new PlainText("\n经典模式: "));
