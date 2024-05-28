@@ -131,7 +131,7 @@
 
 ## 四.关于
 
-如果您发现BUG或对本插件有任何建议欢迎在<a href="/issues">issues</a>提出
+如果您发现BUG或对本插件有任何建议欢迎在<a href="../issues">issues</a>提出
 
 **如果你也觉得 *Practical-Widgets* 做的好的话可以给开发者赞助(备注上您的任意 平台主页地址 及 ID 将会列入赞助列表)**
 
