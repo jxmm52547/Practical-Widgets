@@ -61,8 +61,9 @@ public class BedWars {
                     chain.append(new PlainText(String.valueOf(json.get("player").getAsJsonObject().get("achievements").getAsJsonObject().get("bedwars_level").getAsInt())));
                     chain.append(new PlainText(" | 当前经验值: "));
                     chain.append(new PlainText(String.valueOf(bwJson.get("Experience").getAsInt())));
+                    /*部分玩家的连胜获取不成功
                     chain.append(new PlainText(" \n 当前连胜: "));
-                    chain.append(new PlainText(String.valueOf(bwJson.get("winstreak").getAsInt())));
+                    chain.append(new PlainText(String.valueOf(bwJson.get("winstreak").getAsInt())));*/
                 }
 
                 if (beds_broken_bedwars(bwJson)){
