@@ -62,7 +62,9 @@ public class Guild {
             group.sendMessage(chain.build());
         } else {
             json = json.get("guild").getAsJsonObject();
+            /* ranks不是一定存在的
             ranks = json.get("ranks").getAsJsonArray();
+            */
             members = json.get("members").getAsJsonArray();
             if (json.has("achievements")) achievements = json.get("achievements").getAsJsonObject();
             if (json.has("preferredGames")) preferredGames = json.get("preferredGames").getAsJsonArray();
