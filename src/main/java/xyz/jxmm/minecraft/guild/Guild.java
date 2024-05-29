@@ -178,6 +178,7 @@ public class Guild {
             }
             achievementChain.append(new PlainText(formatExp(sum)));
             int weekExp = sum; //周 平均每位成员经验
+            boolean activation = sum == 0;
 
             //周每日
             for (String s : set) {
@@ -270,9 +271,13 @@ public class Guild {
                                 int x = 1;
                                 for (String string : uuidList){
                                     if (string.equals(uuid)){
-                                        membersChain.append(new PlainText(String.valueOf(x)));
+                                        if (activation){
+                                            membersChain.append(new PlainText("1"));
+                                        } else {
+                                            membersChain.append(new PlainText(String.valueOf(x)));
+                                        }
                                         membersChain.append(new PlainText("/"));
-                                        membersChain.append(new PlainText(String.valueOf(members.size() + 1)));
+                                        membersChain.append(new PlainText(String.valueOf(members.size())));
                                         break;
                                     } else x++;
                                 }
