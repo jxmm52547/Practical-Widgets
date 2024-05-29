@@ -15,8 +15,6 @@ public class Nick {
             String rank = json.get("newPackageRank").getAsString();
             boolean rankPlus = json.has("monthlyPackageRank");
             switch (rank){
-                case "YOUTUBER":
-                    return "【YOUTUBER】";
 
                 case "MVP_PLUS":
                     String n1 = "";
@@ -31,18 +29,31 @@ public class Nick {
                         if (n2.equals("")) { System.out.println(json.get("monthlyRankColor").getAsString());}
                     }
 
+                    if (json.has("rank")){
+                        String r1 = json.get("rank").getAsString();
+                        switch (r1){
+                            case "YOUTUBER":
+                                return "[YOUTUBE]";
+                            case "ADMIN":
+                                return "[ADMIN]";
+                            case "GAME_MASTER":
+                                return "[GM]";
+                            default:
+                                return "[" + r1 + "]";
+                        }
+                    }
                     if (rankPlus && json.get("monthlyPackageRank").getAsString().equals("SUPERSTAR")){
-                       return "【" + n2 + "MVP" + n1 + "++】";
+                       return "[" + n2 + "MVP" + n1 + "++]";
                     }
                     else{
-                        return "【MVP" + n1 + "+】";
+                        return "[MVP" + n1 + "+]";
                     }
                 case "MVP":
-                    return "【MVP】";
+                    return "[MVP]";
                 case "VIP_PLUS":
-                    return "【VIP+】";
+                    return "[VIP+]";
                 case "VIP":
-                    return "【VIP】";
+                    return "[VIP]";
             }
         }
         return "";

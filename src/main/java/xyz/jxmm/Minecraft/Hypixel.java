@@ -2,20 +2,18 @@ package xyz.jxmm.minecraft;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
-
 import xyz.jxmm.minecraft.arcade.Arcade;
 import xyz.jxmm.minecraft.bw.BedWars;
 import xyz.jxmm.minecraft.duels.Duels;
 import xyz.jxmm.minecraft.fish.Fish;
 import xyz.jxmm.minecraft.guild.Guild;
-import xyz.jxmm.minecraft.mm.MurderMystery;
 import xyz.jxmm.minecraft.guild.Tool;
+import xyz.jxmm.minecraft.mm.MurderMystery;
 import xyz.jxmm.minecraft.player.Online;
 import xyz.jxmm.minecraft.player.Player;
 import xyz.jxmm.minecraft.player.RecentGames;
@@ -27,9 +25,9 @@ import static xyz.jxmm.minecraft.HypURLConnect.hypixelURLConnect;
 
 public class Hypixel {
 
-    public static void hypixel(String msg, Long sender, Group group){
+    public static void hypixel(String msg, Long sender, Group group) {
         //信息部分
-        String handle = msg.replaceAll("hyp","");
+        String handle = msg.replaceAll("hyp", "");
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
         MessageChainBuilder chain = new MessageChainBuilder().append(at);
 
@@ -39,94 +37,93 @@ public class Hypixel {
         StringBuilder type = new StringBuilder();
         JsonObject json;
 
-        if (handle.startsWith(" bw")){
-            ID.append(handle.replaceAll(" bw ",""));//得到玩家ID
+        if (handle.startsWith(" bw")) {
+            ID.append(handle.replaceAll(" bw ", ""));//得到玩家ID
             type.append("bw");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                run(type.toString(),json,chain,sender,group);
+            if (!stringBuilder.toString().equals("")) {
+                run(type.toString(), json, chain, sender, group);
             }
 
         } else if (handle.startsWith(" sw")) {
-            ID.append(handle.replaceAll(" sw ",""));
+            ID.append(handle.replaceAll(" sw ", ""));
             type.append("sw");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                run(type.toString(),json,chain,sender,group);
+            if (!stringBuilder.toString().equals("")) {
+                run(type.toString(), json, chain, sender, group);
             }
 
 
-        } else if (handle.startsWith(" player")){
-            ID.append(handle.replaceAll(" player ",""));
+        } else if (handle.startsWith(" player")) {
+            ID.append(handle.replaceAll(" player ", ""));
             type.append("player");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                JsonObject recentGames = new Gson().fromJson(RecentGames.main(ID.toString(),group,chain), JsonObject.class);
-                JsonObject guild = new Gson().fromJson(Tool.main(ID.toString(),group,chain,"player"), JsonObject.class);
-                JsonObject online = new Gson().fromJson(Online.main(ID.toString(),group,chain), JsonObject.class);
+            if (!stringBuilder.toString().equals("")) {
+                JsonObject recentGames = new Gson().fromJson(RecentGames.main(ID.toString(), group, chain), JsonObject.class);
+                JsonObject guild = new Gson().fromJson(Tool.main(ID.toString(), group, chain, "player"), JsonObject.class);
+                JsonObject online = new Gson().fromJson(Online.main(ID.toString(), group, chain), JsonObject.class);
 
-                if (error(json,chain,group) && error(recentGames,chain,group) && error(guild,chain,group) && error(online,chain,group)){
-                    Player.player(json,recentGames,guild,online,sender,group);
+                if (error(json, chain, group) && error(recentGames, chain, group) && error(guild, chain, group) && error(online, chain, group)) {
+                    Player.player(json, recentGames, guild, online, sender, group);
                 }
             }
-
 
 
         } else if (handle.startsWith(" arc")) {
             ID.append(handle.replaceAll(" arc ", ""));
             type.append("arc");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                run(type.toString(),json,chain,sender,group);
+            if (!stringBuilder.toString().equals("")) {
+                run(type.toString(), json, chain, sender, group);
             }
 
         } else if (handle.startsWith(" mm")) {
             ID.append(handle.replaceAll(" mm ", ""));
             type.append("mm");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                run(type.toString(),json,chain,sender,group);
+            if (!stringBuilder.toString().equals("")) {
+                run(type.toString(), json, chain, sender, group);
             }
 
         } else if (handle.startsWith(" duels")) {
             ID.append(handle.replaceAll(" duels ", ""));
             type.append("duels");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                run(type.toString(),json,chain,sender,group);
+            if (!stringBuilder.toString().equals("")) {
+                run(type.toString(), json, chain, sender, group);
             }
 
-        } else if (handle.startsWith(" fish")){
+        } else if (handle.startsWith(" fish")) {
             ID.append(handle.replaceAll(" fish ", ""));
             type.append("fish");
 
-            stringBuilder.append(analysis(ID.toString(),group,chain));//将玩家信息写入stringBuilder
+            stringBuilder.append(analysis(ID.toString(), group, chain));//将玩家信息写入stringBuilder
             json = new Gson().fromJson(stringBuilder.toString(), JsonObject.class);
 
-            if (!stringBuilder.toString().equals("")){
-                run(type.toString(),json,chain,sender,group);
+            if (!stringBuilder.toString().equals("")) {
+                run(type.toString(), json, chain, sender, group);
             }
         } else if (handle.startsWith(" guild")) {
             ID.append(handle.replaceAll(" guild ", ""));
-            Guild.common(ID.toString(),sender,group,chain);
+            Guild.common(ID.toString(), sender, group, chain);
 
         } else {
             chain.append(new PlainText("指令不完整, 缺少关键字或关键字错误"));
@@ -149,54 +146,52 @@ public class Hypixel {
         }
 
 
-
-
     }
 
-    public static void run(String type,JsonObject json,MessageChainBuilder chain,Long sender,Group group){
-        if (error(json,chain,group)) {
-            switch (type){
+    public static void run(String type, JsonObject json, MessageChainBuilder chain, Long sender, Group group) {
+        if (error(json, chain, group)) {
+            switch (type) {
                 case "bw":
-                    BedWars.bw(json,sender,group);
+                    BedWars.bw(json, sender, group);
                     break;
 
                 case "sw":
-                    SkyWars.sw(json,sender,group);
+                    SkyWars.sw(json, sender, group);
                     break;
 
                 case "arc":
-                    Arcade.arc(json,sender,group);
+                    Arcade.arc(json, sender, group);
                     break;
 
                 case "mm":
-                    MurderMystery.mm(json,sender,group);
+                    MurderMystery.mm(json, sender, group);
                     break;
 
                 case "duels":
-                    Duels.duels(json,sender,group);
+                    Duels.duels(json, sender, group);
                     break;
 
                 case "fish":
-                    Fish.fish(json,sender,group);
+                    Fish.fish(json, sender, group);
                     break;
 
             }
         }
     }
 
-    public static Boolean error(JsonObject json, MessageChainBuilder chain, Group group){
+    public static Boolean error(JsonObject json, MessageChainBuilder chain, Group group) {
         return Error.err(json, chain, group);
     }
 
-    public static String analysis(String ID , Group group,MessageChainBuilder chain){
+    public static String analysis(String ID, Group group, MessageChainBuilder chain) {
         StringBuilder uuid = new StringBuilder();
-        if (ID.length() < 32){
-            uuid.append(MJURLConnect.moJangURLConnect(ID,"name"));
-            return mojangErr(uuid.toString(),group,chain);
-        } else if (ID.length() == 32){
-            return mojangErr(ID,group,chain);
-        } else if (ID.length() == 36){
-            return mojangErr(ID,group,chain);
+        if (ID.length() < 32) {
+            uuid.append(MJURLConnect.moJangURLConnect(ID, "name"));
+            return mojangErr(uuid.toString(), group, chain);
+        } else if (ID.length() == 32) {
+            return mojangErr(ID, group, chain);
+        } else if (ID.length() == 36) {
+            return mojangErr(ID, group, chain);
         } else {
             chain.append(new PlainText("<playerID> 错误"));
             group.sendMessage(chain.build());
@@ -206,7 +201,7 @@ public class Hypixel {
 
     }
 
-    public static String mojangErr(String uuid,Group group,MessageChainBuilder chain){
+    public static String mojangErr(String uuid, Group group, MessageChainBuilder chain) {
         switch (uuid) {
             case "":
                 chain.append(new PlainText("NULL\n未知错误, 从MJ官方无法得到任何信息"));
@@ -250,13 +245,13 @@ public class Hypixel {
         }
     }
 
-    public static void perm(String msg,Long sender,Group group){
-        if (Determine.main(sender,group,"hyp")){
-            hypixel(msg,sender,group);
+    public static void perm(String msg, Long sender, Group group) {
+        if (Determine.main(sender, group, "hyp")) {
+            hypixel(msg, sender, group);
         }
     }
 
-    public static Boolean value(String ID, Group group, MessageChainBuilder chain){
+    public static Boolean value(String ID, Group group, MessageChainBuilder chain) {
         return !analysis(ID, group, chain).equals("");
     }
 }
