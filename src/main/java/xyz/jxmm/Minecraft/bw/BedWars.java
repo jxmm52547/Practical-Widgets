@@ -1,16 +1,15 @@
 package xyz.jxmm.minecraft.bw;
 
-import static xyz.jxmm.minecraft.bw.BedWarsDetermine.*;
-
 import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
-import xyz.jxmm.minecraft.player.PlayerDetermine;
 
 import java.text.DecimalFormat;
+
+import static xyz.jxmm.minecraft.bw.BedWarsDetermine.*;
 
 public class BedWars {
     //起床战争解析
@@ -24,32 +23,9 @@ public class BedWars {
         if (json.get("player").isJsonObject()){
             playerJson = json.get("player").getAsJsonObject();
 
-            chain.append(new PlainText("\n玩家名: "));
-            if (PlayerDetermine.rank(playerJson)){
-                String rank = playerJson.get("newPackageRank").getAsString();
-                boolean rankPlus = playerJson.has("monthlyPackageRank");
-                switch (rank){
-                    case "MVP_PLUS":
-                        if (rankPlus && playerJson.get("monthlyPackageRank").getAsString().equals("SUPERSTAR")){
-                            chain.append(new PlainText("【MVP++】"));
-                        }
-                        else{
-                            chain.append(new PlainText("【MVP+】"));
-                        }
-                        break;
-                    case "MVP":
-                        chain.append(new PlainText("【MVP】"));
-                        break;
-                    case "VIP_PLUS":
-                        chain.append(new PlainText("【VIP+】"));
-                        break;
-                    case "VIP":
-                        chain.append(new PlainText("【VIP】"));
-                        break;
-                }
-            }
+            chain.append(new PlainText(xyz.jxmm.minecraft.Nick.nick(playerJson) + " ")); //玩家名称前缀
             chain.append(new PlainText(json.get("player").getAsJsonObject().get("displayname").getAsString()));
-            chain.append(new PlainText(" | 起床战争 数据如下:"));
+            chain.append(new PlainText(" | 起床战争数据:"));
 
             if (json.get("player").getAsJsonObject().get("stats").getAsJsonObject().has("Bedwars")){
                 bwJson = json.get("player").getAsJsonObject().get("stats").getAsJsonObject().get("Bedwars").getAsJsonObject();

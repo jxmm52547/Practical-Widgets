@@ -3,18 +3,23 @@ package xyz.jxmm.minecraft.player;
 import com.google.gson.JsonObject;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.code.MiraiCode;
-import net.mamoe.mirai.message.data.*;
+import net.mamoe.mirai.message.data.Image;
+import net.mamoe.mirai.message.data.MessageChain;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.PlainText;
 import net.mamoe.mirai.utils.ExternalResource;
 import xyz.jxmm.minecraft.Nick;
+import xyz.jxmm.minecraft.player.PlayerDetermine;
 
-import java.io.*;
-import java.net.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import xyz.jxmm.minecraft.player.PlayerDetermine;
 
 public class Player {
     public static void player(JsonObject json,JsonObject recentGames,JsonObject guild,JsonObject online, Long sender, Group group){
@@ -29,7 +34,7 @@ public class Player {
             playerJson = json.get("player").getAsJsonObject();
 //            achievements = playerJson.get("achievements").getAsJsonObject();  V0.4.2版本更新注释
 
-            chain.append(new PlainText("\n" + Nick.nick(playerJson))); //玩家名称前缀
+            chain.append(new PlainText("\n" + Nick.nick(playerJson) + " ")); //玩家名称前缀
             chain.append(new PlainText(playerJson.get("displayname").getAsString()));
 
             chain.append(new PlainText("\n在线状态: "));
