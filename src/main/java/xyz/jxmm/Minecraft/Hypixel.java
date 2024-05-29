@@ -27,7 +27,7 @@ public class Hypixel {
 
     public static void hypixel(String msg, Long sender, Group group) {
         //信息部分
-        String handle = msg.replaceAll("hyp", "");
+        String handle = msg.substring(3);
         MessageChain at = MiraiCode.deserializeMiraiCode("[mirai:at:" + sender + "]");
         MessageChainBuilder chain = new MessageChainBuilder().append(at);
 
