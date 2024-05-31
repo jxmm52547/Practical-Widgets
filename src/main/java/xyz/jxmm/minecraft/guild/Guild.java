@@ -75,7 +75,11 @@ public class Guild {
             chain.append(new PlainText(json.get("name").getAsString()));
 
             chain.append(new PlainText("\n会长: "));
-            chain.append(new PlainText(MJURLConnect.moJangURLConnect(members.get(0).getAsJsonObject().get("uuid").getAsString(), "uuid")));
+            for (int i = 0; i < members.size(); i++) {
+                if (members.get(i).getAsJsonObject().get("rank").getAsString().equals("Guild Master")){
+                    chain.append(new PlainText(MJURLConnect.moJangURLConnect(members.get(i).getAsJsonObject().get("uuid").getAsString(),"uuid")));
+                }
+            }
 
             chain.append(new PlainText("\n成员数量: "));
             chain.append(new PlainText(String.valueOf(members.size())));
