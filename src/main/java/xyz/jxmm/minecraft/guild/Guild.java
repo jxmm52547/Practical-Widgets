@@ -271,7 +271,8 @@ public class Guild {
                                 membersChain.append(new PlainText("/"));
                                 membersChain.append(new PlainText(String.valueOf(members.size())));
 
-                                /*Map<String, Integer> name = new HashMap<>();
+                                /*
+                                Map<String, Integer> name = new HashMap<>();
 //                                Map<String,Integer> vue = new HashMap<>();
                                 for (int j = 0; j < members.size(); j++) {
                                     name.put(members.get(j).getAsJsonObject().get("uuid").getAsString(),
@@ -299,7 +300,8 @@ public class Guild {
                                         membersChain.append(new PlainText(String.valueOf(members.size())));
                                         break;
                                     } else x++;
-                                }*/
+                                }
+                                */
 
 
                             }
