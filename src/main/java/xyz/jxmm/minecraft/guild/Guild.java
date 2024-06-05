@@ -257,9 +257,21 @@ public class Guild {
                             for (String s : set) {
                                 membersChain.append(new PlainText("\n    " + s + ": "));
                                 membersChain.append(new PlainText(formatExp(expHistory.get(s).getAsInt())));
+
                                 //排名
                                 membersChain.append(new PlainText(" #"));
-                                Map<String, Integer> name = new HashMap<>();
+                                int e = expHistory.get(s).getAsInt();
+                                int x = 1;
+                                for (int m = 0; m < members.size(); m++) {
+                                    if (e < members.get(m).getAsJsonObject().get("expHistory").getAsJsonObject().get(s).getAsInt()) {
+                                        x++;
+                                    }
+                                }
+                                membersChain.append(new PlainText(String.valueOf(x)));
+                                membersChain.append(new PlainText("/"));
+                                membersChain.append(new PlainText(String.valueOf(members.size())));
+
+                                /*Map<String, Integer> name = new HashMap<>();
 //                                Map<String,Integer> vue = new HashMap<>();
                                 for (int j = 0; j < members.size(); j++) {
                                     name.put(members.get(j).getAsJsonObject().get("uuid").getAsString(),
@@ -287,7 +299,7 @@ public class Guild {
                                         membersChain.append(new PlainText(String.valueOf(members.size())));
                                         break;
                                     } else x++;
-                                }
+                                }*/
 
 
                             }
