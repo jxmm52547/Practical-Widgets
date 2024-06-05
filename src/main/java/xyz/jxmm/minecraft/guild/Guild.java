@@ -52,7 +52,7 @@ public class Guild {
         MessageChainBuilder membersChain = new MessageChainBuilder();
 
 
-        JsonArray members = new JsonArray();
+        JsonArray members;
         JsonArray ranks = new JsonArray();
         JsonObject achievements = new JsonObject();
         JsonArray preferredGames = new JsonArray();
@@ -76,8 +76,8 @@ public class Guild {
 
             chain.append(new PlainText("\n会长: "));
             for (int i = 0; i < members.size(); i++) {
-                if (members.get(i).getAsJsonObject().get("rank").getAsString().equals("Guild Master")){
-                    chain.append(new PlainText(MJURLConnect.moJangURLConnect(members.get(i).getAsJsonObject().get("uuid").getAsString(),"uuid")));
+                if (members.get(i).getAsJsonObject().get("rank").getAsString().equals("Guild Master")) {
+                    chain.append(new PlainText(MJURLConnect.moJangURLConnect(members.get(i).getAsJsonObject().get("uuid").getAsString(), "uuid")));
                 }
             }
 
