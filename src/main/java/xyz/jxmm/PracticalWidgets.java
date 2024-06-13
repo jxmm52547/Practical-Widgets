@@ -139,7 +139,6 @@ public final class PracticalWidgets extends JavaPlugin {
         });
 
 
-
         //群成员离开通知
         eventChannel.subscribeAlways(MemberLeaveEvent.class, ml ->{
 
