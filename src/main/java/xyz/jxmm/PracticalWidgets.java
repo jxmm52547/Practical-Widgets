@@ -39,7 +39,7 @@ public final class PracticalWidgets extends JavaPlugin {
     }
 
     public static String version(){
-        return "0.6.0";  //每次更新修改
+        return "0.6.1";  //每次更新修改
     }
 
     public static String perfix(){
@@ -123,8 +123,8 @@ public final class PracticalWidgets extends JavaPlugin {
             QuoteReply music = source.getOriginalMessage().get(QuoteReply.Key);
             if(music != null && msg.length() <= 2){
                 String musicName = music.getSource().getOriginalMessage().contentToString();
-                if (musicName.startsWith("/点歌 ")){
-                    musicName = musicName.replaceAll("/点歌 ","");
+                if (musicName.startsWith(prefix + "点歌")){
+                    musicName = musicName.replaceAll(prefix +  "点歌 ","");
                     int id = Integer.parseInt(msg);
                     if (id > 0 && id <= 10){
                         xyz.jxmm.music.Main.perm(musicName, sender, group, source, true,id);
