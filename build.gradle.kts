@@ -4,6 +4,7 @@ plugins {
     kotlin("plugin.serialization") version kotlinVersion
 
     id("net.mamoe.mirai-console") version "2.13.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "xyz.jxmm"
@@ -31,6 +32,7 @@ allprojects {
         maven("https://maven.aliyun.com/repository/public")
         maven("https://maven.aliyun.com/repository/google")
         maven("https://maven.aliyun.com/repository/apache-snapshots")
+        maven("com.google.zxing")
         mavenLocal()
         mavenCentral()
     }
@@ -40,8 +42,13 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10")
     implementation("org.json:json:20220924")
     implementation("org.apache.httpcomponents:httpclient:4.5.13")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     api("com.alibaba:fastjson:1.2.83")
     implementation("xyz.jxmm:MinecraftInfo:1.1")
 
+    implementation("com.google.zxing:core:3.4.1")
+    implementation("com.google.zxing:javase:3.4.1")
+
 }
+
 
