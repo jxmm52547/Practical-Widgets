@@ -76,7 +76,7 @@ public class Determine {
         return true;
     }
 
-    public static Boolean admin(Group group,Long sender){
+    public static Boolean admin(Long sender){
         JsonArray adminJson = gson.fromJson(fileReader(admin.getPath()), JsonObject.class).get("value").getAsJsonArray();
 
         boolean TF = false;

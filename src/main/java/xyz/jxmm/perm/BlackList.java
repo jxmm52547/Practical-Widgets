@@ -41,7 +41,7 @@ public class BlackList {
     }
 
     public static void blackLIst(String msg, Long sender, Group group){
-        if (Determine.admin(group,sender)){
+        if (Determine.admin(sender)){
             String type = msg.replaceAll("bl ","");
             if (type.startsWith("add")){
                 String value = type.replaceAll("add ","").replaceAll(" ","");
