@@ -8,7 +8,9 @@ import java.nio.file.Files;
 import java.util.Properties;
 
 public class Main {
-    static Properties properties = new Properties();
+    public static Properties properties = new Properties();
+    static Properties propertiesExample = new Properties();
+
     static File file = new File("./PracticalWidgets/config.properties");
 
     public static String example(){
@@ -60,6 +62,19 @@ public class Main {
         return properties;
     }
 
+    public static void main() throws IOException {
+        propertiesExample.load(new StringReader(example()));
+
+        if (!file.exists()){  //如果文件不存在则执行 example() 方法生成配置文件
+            FileWriterMethod.fileWriter(file.getPath(), example());
+        }
+        properties = properties();
+
+        FileWriterMethod.fileWriter(file.getPath(), latest());
+    }
+
+    // 已迭代的配置文件更新
+    /*
 
     public static void main() throws IOException {
 
@@ -421,28 +436,28 @@ public class Main {
         FileWriterMethod.fileWriter(file.getPath(),latest());
         //以上内容为储存用户填写的value
     }
+*/
 
     //保持最新版
-    public static String latest() throws IOException {
-        properties = properties();
-
-        String prefix = null;
-        String ALAPIToken = null;
-        String $0 = null;
-        String $1$20 = null;
-        String $21$40 = null;
-        String $41$60 = null;
-        String $61$80 = null;
-        String $81$99 = null;
-        String $100 = null;
-        String HypixelAPI = null;
+    public static String latest() {
+        String prefix = properties.get("prefix").toString();
+        String ALAPIToken = properties.get("ALAPIToken").toString();
+        String $0 = properties.get("0").toString();
+        String $1$20 = properties.get("1到20").toString();
+        String $21$40 = properties.get("21到40").toString();
+        String $41$60 = properties.get("41到60").toString();
+        String $61$80 = properties.get("61到80").toString();
+        String $81$99 = properties.get("81到99").toString();
+        String $100 = properties.get("100").toString();
+        String HypixelAPI = properties.get("HypixelAPI").toString();
 //        String memberQuitSwitch = null;
-        String quit = null;
-        String quitExpress = null;
-        String hasBeenSigned = null;
-        String hasBeenSignedExpress = null;
-        String sign = null;
-        String signExpress = null;
+        String quit = properties.get("quit").toString();
+        String quitExpress = properties.get("quitExpress").toString();
+        String hasBeenSigned = properties.get("hasBeenSigned").toString();
+        String hasBeenSignedExpress = properties.get("hasBeenSignedExpress").toString();
+        String sign = properties.get("sign").toString();
+        String signExpress = properties.get("signExpress").toString();
+
         if (properties.containsKey("prefix")){prefix = properties.getProperty("prefix");}
 
         if (properties.containsKey("ALAPIToken")){ALAPIToken = properties.getProperty("ALAPIToken");}
@@ -490,12 +505,10 @@ public class Main {
                 + "#请前往 https://developer.hypixel.net/dashboard/ 获取自己的API填写  (以后有望取消这个key, 用靖暄的APP API)\n"
                 + "HypixelAPI = " + HypixelAPI + "\n\n"
 
-                /*
-                //0.4.3更新内容
-                + "#退群提醒开关  默认开启\n"
-                + "memberQuitSwitch = " + memberQuitSwitch + "\n\n"
-                //结束
-                 */
+
+                // 0.4.3更新内容
+                // + "#退群提醒开关  默认开启\n"
+                // + "memberQuitSwitch = " + memberQuitSwitch + "\n\n"
 
                 + "#当群成员退出群聊时自定义回复\n"
                 + "#格式: $memberNick + $quit + , QQ号: + $memberID, 群昵称: + $memberNick , $quitExpress\n"
