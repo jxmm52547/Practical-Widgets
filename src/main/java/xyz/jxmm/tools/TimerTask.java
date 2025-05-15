@@ -1,5 +1,9 @@
 package xyz.jxmm.tools;
 
+import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.contact.Friend;
+import xyz.jxmm.PracticalWidgets;
+import xyz.jxmm.kokomi.Kokomi;
 import xyz.jxmm.new_object.ResetObject;
 import xyz.jxmm.jrrp.ResetJrrpTop;
 
@@ -27,6 +31,18 @@ public class TimerTask {
                 System.out.println("new对象已重置");
             }
         }, date.getTime(), daySpan); //daySpan是一天的毫秒数，也是执行间隔
+
+        long oneHour = 60 * 60 * 1000;
+
+        t.schedule(new java.util.TimerTask() {
+            public void run() {
+                //run中填写定时器主要执行的代码块
+                Kokomi.save();
+                Friend friend = Bot.getInstance(2931519915L).getFriend(1250838250L);
+                friend.sendMessage("已自动保存聊天记录");
+
+            }
+        }, date.getTime(), oneHour); //daySpan是一天的毫秒数，也是执行间隔
 
     }
 }
