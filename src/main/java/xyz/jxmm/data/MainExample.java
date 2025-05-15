@@ -68,7 +68,7 @@ public class MainExample {
     }
 
     public static void perm(Group group,Long sender){
-        if (Determine.admin(group,sender)){
+        if (Determine.admin(sender)){
             update(group);
         } else {
             group.sendMessage("你没有管理员权限!");

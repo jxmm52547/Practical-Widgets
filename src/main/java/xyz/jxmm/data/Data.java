@@ -1,6 +1,9 @@
 package xyz.jxmm.data;
 
 import com.google.gson.*;
+import xyz.jxmm.kokomi.Kokomi;
+import xyz.jxmm.tools.FileReaderMethod;
+import xyz.jxmm.tools.FileWriterMethod;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,7 +14,7 @@ public class Data {
     static File data = new File("./PracticalWidgets/data.json");
 
     static File jrrpTop = new File("./PracticalWidgets/JrrpTop.json");
-
+    public static File TidewhisperScrolls = new File("./PracticalWidgets/TidewhisperScrolls.json");
     static JsonObject json;
 
     {
@@ -31,6 +34,11 @@ public class Data {
 
         if (!jrrpTop.exists()){
             xyz.jxmm.data.JrrpTop.write();
+        }
+
+        if (!TidewhisperScrolls.exists()) {
+            TidewhisperScrolls.createNewFile();
+            FileWriterMethod.fileWriter(TidewhisperScrolls.getPath(), gson.toJson(Kokomi.TidewhisperScrolls));
         }
 
     }
